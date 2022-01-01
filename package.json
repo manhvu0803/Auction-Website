@@ -4,10 +4,12 @@
   "description": "A website for online auction",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.2",
     "firebase-admin": "^10.0.1"
   },
   "devDependencies": {},
+  "type": "module",
   "scripts": {
     "test": "node index.js"
   },

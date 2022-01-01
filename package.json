@@ -1,0 +1,24 @@
+{
+  "name": "auction-website",
+  "version": "1.0.0",
+  "description": "A website for online auction",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.2",
+    "firebase-admin": "^10.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nmvu19/Auction-Website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nmvu19/Auction-Website/issues"
+  },
+  "homepage": "https://github.com/nmvu19/Auction-Website#readme"
+}

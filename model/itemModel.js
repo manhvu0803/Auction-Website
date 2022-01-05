@@ -76,8 +76,9 @@ export default class userModel
 	 * @param {string} id 
 	 * @returns {Promise<url>} url of the main images
 	 */
-	async getMainImageUrl(id) {
-		let res = await this.bucket.getFiles({prefix: "items/${id}"})
+	async getMainImageUrl(id)
+	{
+		let res = await this.bucket.getFiles({prefix: `items/${id}`})
 		for (let file of res[0])
 			if (parsePrefix(file.name) == "main")
 				return await getUrl(file);
@@ -88,13 +89,71 @@ export default class userModel
 	 * @param {string} id 
 	 * @returns {Promise<[url]>} array of urls of images
 	 */
-	async getImageUrls(id)
+	async getExtraImageUrls(id)
 	{
-		let res = await this.bucket.getFiles({prefix: "items/${id}"})
+		let res = await this.bucket.getFiles({prefix: `items/${id}`})
 		let urls = [];
-		for (let file of res[0])
+		for (let i = 1; i < res[0].length; i++) {
+			let file = res[0][i];
 			if (parsePrefix(file.name) != "main")
 				urls.push(await getUrl(file));
+		}
 		return urls;
+	}
+
+	async addImages(id, data)
+	{
+		let mainImageSave = this.bucket.file(`items/${id}/main.jpg`).save(data.mainImage);
+		let imageSaves = [];
+		for (let i = 0; i < data.images.length; i++)
+			imageSaves.push(this.bucket.file(`items/${id}/${i}.jpg`).save(data.images[i]));
+
+		await mainImageSave;
+		for (let promise of imageSaves)
+			await promise;
+		
+		if (debug) 
+			console.log(`Uploaded ${imageSaves.length + 1} images for item ${id}`);
+	}
+
+	/**
+	 * Add item to database. Item must have: 
+	 * ```javascript
+	 * {
+	 * 	maximumPrice: number, 
+	 * 	category: string,
+	 * 	step: number,
+	 * 	description: string,
+	 * 	postedTime: Date,
+	 * 	autoExtend: boolean,
+	 * 	seller: string,
+	 * 	startingPrice: number
+	 * 	mainImage: binary
+	 * 	images: [
+	 * 		binaries
+	 * 	]
+	 * }
+	 * ```
+	 * @param {itemData} item 
+	 * @returns {Promise<String>} item id
+	 */
+	async addItem(item)
+	{
+		let itemData = {
+			maximumPrice: item.maximumPrice,
+			category: item.category,
+			step: item.step,
+			description: item.description,
+			postedTime: item.postedTime,
+			autoExtend: item.autoExtend,
+			seller: item.seller,
+			startingPrice: item.startingPrice
+		}
+
+		let doc = await this.itemsRef.add(itemData);
+
+		this.addImages(doc.id, item);
+
+		return doc.id;
 	}
 }

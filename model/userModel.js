@@ -119,7 +119,7 @@ export default class userModel
 	 * @param {*} start default: 0. The starting index (page) of reviews to get
 	 * @param {*} count default: 5. The number of reviews to get
 	 * @param {("time"|"upvote")} order default: "time". The sort order of reviews
-	 * @returns {Promise<[review]} array of reviews: {username: string, upvote: boolean, review: string}
+	 * @returns {Promise<[review]} array of reviews:``` {rater: string, review: string, time: Date, upvote: boolean}```
 	 */
 	async getReviews(username, start = 0, count = 5, order = "time")
 	{
@@ -133,6 +133,7 @@ export default class userModel
 
 		return docs.docs.map((doc) => {
 			let data = doc.data();
+			data.rater = doc.id;
 			data.time = data.time.toDate();
 			return data;
 		});

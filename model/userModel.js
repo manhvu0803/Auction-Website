@@ -130,7 +130,7 @@ export default class userModel
 									.startAfter(start)
 									.limit(count)
 									.get();
-		
+
 		return docs.docs.map((doc) => {
 			let data = doc.data();
 			data.time = data.time.toDate();

@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt"
-import * as fs from "firebase-admin/firestore";
+import * as firestore from "firebase-admin/firestore";
 
 const saltRound = 10;
 const debug = true;
@@ -68,8 +68,6 @@ export default class userModel
 	{
 		let oldData = oldDoc.data();
 		let change = {upvote: 0, total: 0};
-		console.log("old data");
-		console.log(oldData);
 		if (oldData) {
 			if (oldData.upvote != upvote) {
 				if (upvote)
@@ -84,13 +82,13 @@ export default class userModel
 				change.upvote = 1;
 		}
 
-		console.log(change);
 		await this.usersRef.doc(username).update({
-			upvoteCount: fs.FieldValue.increment(change.upvote),
-			totalVote: fs.FieldValue.increment(change.total)
+			upvoteCount: firestore.FieldValue.increment(change.upvote),
+			totalVote: firestore.FieldValue.increment(change.total)
 		});
 
-		console.log(`Update vote count for user ${username}`)
+		if (debug)
+			console.log(`Update vote count for user ${username}`)
 	}
 
 	/**
@@ -109,7 +107,7 @@ export default class userModel
 		await reviewRef.set({
 			upvote: upvote,
 			review: review,
-			time: fs.Timestamp.fromDate(new Date())
+			time: firestore.Timestamp.fromDate(new Date())
 		}, {merge: true});
 		
 		if (debug)
@@ -118,15 +116,10 @@ export default class userModel
 
 	/**
 	 * @param {*} username
-	 * @param {*} start default: 0
-	 * @param {*} count default: 5
-	 * @param {("time"|"upvote")} order default: "time"
-	 * @returns reviews {
-	 *		username: {
-	 *	 		upvote: boolean, 
-	 *			review: string
-	 *		}
-	 *	}
+	 * @param {*} start default: 0. The starting index (page) of reviews to get
+	 * @param {*} count default: 5. The number of reviews to get
+	 * @param {("time"|"upvote")} order default: "time". The sort order of reviews
+	 * @returns {Promise<[review]} array of reviews: {username: string, upvote: boolean, review: string}
 	 */
 	async getReviews(username, start = 0, count = 5, order = "time")
 	{

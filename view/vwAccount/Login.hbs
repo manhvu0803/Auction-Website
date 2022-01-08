@@ -150,6 +150,14 @@
                     <a href="#">Signup</a>
                 </div>
             </form>
+            {{#if err_message}}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Login failed!</strong> {{err_message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {{/if}}
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -171,16 +179,6 @@
                     hide.style.display = "block";
                 }
             }
-        </script>
-        <script id="submitLogin">
-            $('#formLogin').on('submit', function (e) {
-                e.preventDefault();
-                const username = $('#txtUsername').val();
-                if (username.length === 0) {
-                    alert('Invalid data!');
-                    return;
-                }
-            });
         </script>
     </body>
     

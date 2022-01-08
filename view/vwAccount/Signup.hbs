@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <title>Auction-Website</title>
@@ -8,33 +9,33 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
         <style>
             body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc);
-            height: 100vh;
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc);
+                height: 100vh;
             }
             .signup_box{
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 400px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                width: 400px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 0 8px rgba(0,0,0,0.2);
             }
             h1:after{
-            position: absolute;
-            content: attr(data-text);
-            top: 15; left: 0; right: 0;
-            background: linear-gradient(-90deg, #71b7e6, #69a6ce,#b98acc);
-            background-size: 400%;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0,25);
+                position: absolute;
+                content: attr(data-text);
+                top: 15; left: 0; right: 0;
+                background: linear-gradient(-90deg, #71b7e6, #69a6ce,#b98acc);
+                background-size: 400%;
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                text-shadow: 1px 1px 2px rgba(255, 255, 255, 0,25);
             }
             form{
-            padding: 0 40px;
+                padding: 0 40px;
             }
             form .input_field{
                 margin-bottom: 10px;
@@ -52,6 +53,7 @@
                 border-bottom-width: 3px;
             }
             form h5{
+                margin-top: 25px;
                 color: lightskyblue;
             }
             form label{
@@ -99,31 +101,33 @@
             }
         </style>
     </head>
+
     <body>
         <div class="signup_box">
             <h1 data-text="SIGN-UP" style="position: relative; text-align: center; padding: 15px 0 0 0;
                                             margin-bottom: 15px;">
                 SIGN-UP
             </h1>
-            <form id="frmRegister" method="post">
+            <form id="formRegister" method="post">
                 <div class="AccInfo">
                     <h5>Account Information</h5>
                     <div class="input_field">
                         <label for="txtUsername">Username</label>
-                        <input type="text"id="txtUsername" name="username" />
+                        <input type="text" id="txtUsername" name="username" required/>
                     </div>
                     <div class="input_field">
                         <label for="txtPassword">Password</label>
-                        <input type="password" id="txtPassword" name="password" />
+                        <input type="password" id="txtPassword" name="password" required/>
                         <span class="eye_icon" onclick="mySetHidePassword()">
                             <i id="show" class="fa fa-eye" aria-hidden="true" 
                                 style="color: lightskyblue; display: none;"></i>
-                            <i id="hide" class="fa fa-eye-slash" aria-hidden="true" style="color: lightgray;"></i>
+                            <i id="hide" class="fa fa-eye-slash" aria-hidden="true" 
+                                style="color: lightgray;"></i>
                         </span>
                     </div>
                     <div class="input_field">
                         <label for="txtConfirm">Confirm Password</label>
-                        <input type="password" id="txtConfirm" />
+                        <input type="password" id="txtConfirm" required/>
                         <span class="eye_icon_confirm" onclick="mySetHideConfirmPassword()">
                             <i id="showconfirm" class="fa fa-eye" aria-hidden="true" 
                                 style="color: lightskyblue; display: none;"></i>
@@ -136,15 +140,15 @@
                     <h5>Profile Information</h5>
                     <div class="input_field">
                         <label for="txtName">Name</label>
-                        <input type="text" id="txtName" name="name" />
+                        <input type="text" id="txtName" name="name" required/>
                     </div>
                     <div class="input_field">
                         <label for="txtEmail">Email</label>
-                        <input type="text" id="txtEmail" name="email" />
+                        <input type="text" id="txtEmail" name="email" required/>
                     </div>
                     <div class="input_field">
                         <label for="txtDOB">DOB</label>
-                        <input type="text" id="txtDOB" name="dob" />
+                        <input type="text" id="txtDOB" name="dob" required/>
                     </div>
                 </div>
                 <div class="submit_path">
@@ -161,33 +165,40 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
         <script>
-            $('#frmRegister').on('submit', function (e) {
-            e.preventDefault();
+            $('#formRegister').on('submit', function (e) {
+                e.preventDefault();
 
-            const username = $('#txtUsername').val();
-            if (username.length === 0) {
-                alert('Invalid data!');
-                return;
-            }
-
-            $.getJSON(`/account/is-available?user=${username}`, function (data) {
-                if (data === false) {
-                alert('Not available!');
-                } else {
-                $('#frmRegister').off('submit').submit();
+                const password = $('#txtPassword').val();
+                const confirmpassword = $("#txtConfirm").val();
+                if (password.length < 0) {
+                    alert('Password must have at least 8 characters!');
+                    return;
                 }
-            });
+                else if (password !== confirmpassword){
+                    alert('Error: Invalid confirm password\n' 
+                            + '(password and confirm password must exactly the same!)');
+                    return;
+                }
+
+                $.getJSON(`/account/is-available?user=${username}`, function (data) {
+                    if (data === false) {
+                        alert('Error: User name has already been used.');
+                    } 
+                    else {
+                        $('#frmRegister').off('submit').submit();
+                    }
+                });
             });
 
             $('#txtDOB').datetimepicker({
-            timepicker: false,
-            format: 'd/m/Y',
-            mask: true
+                timepicker: false,
+                format: 'd/m/Y',
+                mask: true
             });
 
             $('#txtUsername').select();
         </script>
-        <script class="setShowHidePassField">
+        <script id="setShowHidePassField">
             function mySetHidePassword(){
                 let passfield = document.getElementById("txtPassword");
                 let hide = document.getElementById("hide");
@@ -222,4 +233,5 @@
             }
         </script>
     </body>
+
 </html>

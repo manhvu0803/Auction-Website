@@ -1,5 +1,7 @@
 import * as firestore from "firebase-admin/firestore";
 import lunr from "lunr-mutable-indexes";
+import { getDatabase } from "firebase-admin/database";
+import admin from "firebase-admin";
 
 const fileDuration = 10000000000;
 const debug = true;
@@ -45,6 +47,7 @@ export default class itemModel
 	{
 		this.itemsRef = database.collection("auctionItems");
 		this.categoryRef = database.collection("categories");
+		this.rtdbRef = getDatabase().ref("bids/");
 		this.bucket = bucket;
 
 		this.index = lunr(function() {
@@ -279,5 +282,42 @@ export default class itemModel
 			console.log(`Added item ${itemData.name} to database with id ${doc.id}`);
 
 		return doc.id;
+	}
+
+	/**
+	 * Write a bid to database. Please note that this function **does not** check for data validity (username or item existence, amount is high enough or not)
+	 * @param {string} itemId 
+	 * @param {string} username 
+	 * @param {number} amount 
+	 */
+	async bid(itemId, username, amount)
+	{
+		await this.rtdbRef.child(itemId).child(username).set({
+			time: Date.now(),
+			amount: amount
+		});
+
+		if (debug)
+			console.log(`User ${username} bid ${amount} for item ${itemId}`);
+	}
+
+	/**
+	 * 
+	 * @param {string} itemId 
+	 * @returns array of bid sorted by bid time
+	 */
+	async getBid(itemId)
+	{
+		let snapshot = await this.rtdbRef.child(itemId).get();
+		let data = snapshot.val();
+		let res = []
+		for (let bid in data)
+			res.push({
+				user: bid,
+				amount: data[bid].amount,
+				time: new Date(data[bid].time)
+			})
+
+		return res.sort((a, b) => b.time > a.time ? 1 : -1);
 	}
 }

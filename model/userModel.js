@@ -54,7 +54,6 @@ export default class userModel
 		let userDoc = await this.usersRef.doc(username).get();
 		let data = userDoc.data();
 		delete data.password;
-		delete data.email;
 		return data;
 	}
 

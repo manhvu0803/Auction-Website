@@ -10,7 +10,8 @@ const serviceAccount =  JSON.parse(fs.readFileSync("model/serviceAccountKey.json
 
 const app = firebase.initializeApp({
 	credential: firebase.cert(serviceAccount),
-	storageBucket: "auction-database-db506.appspot.com"
+	storageBucket: "auction-database-db506.appspot.com",
+	databaseURL: "https://auction-database-db506-default-rtdb.firebaseio.com"
 });
 
 const bucket = getStorage().bucket();

@@ -170,7 +170,7 @@
                 <div class="input_row">
                     <div class="submit_path">
                         <div class="btnbg"></div>
-                        <button type="submit">
+                        <button type="submit" class="btn">
                             <i class="fa fa-check" aria-hidden="true"></i>
                             Create account
                         </button>
@@ -191,8 +191,6 @@
         <script>
             $('#formRegister').on('submit', function (e) {
                 
-                console.log('1');
-
                 e.preventDefault();
 
                 const password = $('#txtPassword').val();
@@ -206,15 +204,10 @@
                             + '(password and confirm password must exactly the same!)');
                     return;
                 }
-
-                $.getJSON(`/account/is-available?user=${username}`, function (data) {
-                    if (data === false) {
-                        alert('Error: User name has already been used.');
-                    } 
-                    else {
-                        $('#frmRegister').off('submit').submit();
-                    }
-                });
+                else{
+                    alert('Success: Your account has been created!');
+                    $('#formRegister').off('submit').submit();
+                }
             });
 
             $('#txtDOB').datetimepicker({

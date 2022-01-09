@@ -13,15 +13,17 @@ router.get('/signup', (req, res) => {
 
 router.get('/is-available', async (req, res) => {
     const name  = req.query.user;
-    const username = await user.getUser(name);
-    if(username===null){
+    try{
+        const username = await user.getUser(name);
+        res.json(false);
+    }
+    catch{
         return res.json(true)
     }
-    res.json(false);
 })
 
 router.post('/signup', async (req, res) => {
-    await user.newUser(req.body.username, req.body.password,req.body.email, 'bidder');
+    await user.newUser(req.body.username, req.body.name, req.body.password,req.body.email, 'bidder');
     res.render('vwAccount/Signup');
 });
 

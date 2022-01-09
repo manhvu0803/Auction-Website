@@ -11,17 +11,29 @@ const app = express();
 app.use(morgan("dev"));
 
 app.engine('hbs',engine({
-    defaultLayout: 'main',
+    defaultLayout: 'main.hbs',
 }));
 app.set('view engine','hbs');
-app.set('views',_dirname+'/view');
+app.set('views','./view');
 
-app.get('/',function(req,res){
+app.get('/',(req,res)=>{
     res.render('home');
 });
 
-app.get('/login',function(req,res){
+app.get('/login',(req,res)=>{
     res.render('vwAccount/Login');
+});
+
+app.get('/signup',(req,res)=>{
+    res.render('vwAccount/Signup');
+});
+
+app.get('/error',(req,res)=>{
+    res.render('vwError/500');
+});
+
+app.get('/*',(req,res)=>{
+    res.render('vwError/404');
 });
 
 const port = 3000;

@@ -13,12 +13,14 @@ export default class userModel
 
 	/**
 	 * 
-	 * @param {String} username 
-	 * @param {String} password 
-	 * @param {String} email 
+	 * @param {string} username 
+	 * @param {string} password 
+	 * @param {string} fullName 
+	 * @param {Date} dob 
+	 * @param {string} email 
 	 * @param {("bidder"|"seller"|"admin")} type 
 	 */
-	async newUser(username, fullName, password, email, type)
+	async newUser(username, password, fullName, dob, email, type)
 	{
 		if (type != "bidder" && type != "seller" && type != "admin")
 			throw new Error(`Invalid user type: ${type}`);
@@ -29,6 +31,7 @@ export default class userModel
 			password: hash,
 			name: fullName,
 			email: email,
+			dob: dob,
 			type: type,
 			upvoteCount: 0,
 			totalVote: 0
@@ -57,6 +60,8 @@ export default class userModel
 		if (!data)
 			throw new Error("User not found");
 		
+		if (data.dob instanceof firestore.Timestamp) 
+			data.dob = data.dob.toDate();
 		delete data.password;
 		return data;
 	}

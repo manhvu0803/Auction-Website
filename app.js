@@ -12,6 +12,7 @@ console.log(_dirname);
 
 const app = express();
 app.use(morgan("dev"));
+app.use(express.urlencoded({extended:true}));
 
 app.engine('hbs',engine({
     defaultLayout: 'main.hbs',

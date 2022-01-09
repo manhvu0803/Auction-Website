@@ -11,9 +11,17 @@ router.get('/signup', (req, res) => {
     res.render('vwAccount/Signup');
 });
 
+router.get('/is-available', async (req, res) => {
+    const name  = req.query.user;
+    const username = await user.getUser(name);
+    if(username===null){
+        return res.json(true)
+    }
+    res.json(false);
+})
+
 router.post('/signup', async (req, res) => {
-    console.log(req.body);
-    // await user.newUser(req.body.username, req.body.password,req.body.email, req.body.type);
+    await user.newUser(req.body.username, req.body.password,req.body.email, 'bidder');
     res.render('vwAccount/Signup');
 });
 

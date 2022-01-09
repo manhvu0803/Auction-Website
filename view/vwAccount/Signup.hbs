@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Auction-Website</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc);
+                height: 100vh;
+            }
+            .signup_box{
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                width: 400px;
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 0 8px rgba(0,0,0,0.2);
+            }
+            h1:after{
+                position: absolute;
+                content: attr(data-text);
+                top: 15; left: 0; right: 0;
+                background: linear-gradient(-90deg, #71b7e6, #69a6ce,#b98acc);
+                background-size: 400%;
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                text-shadow: 1px 1px 2px rgba(255, 255, 255, 0,25);
+            }
+            form{
+                padding: 0 40px;
+            }
+            form .input_field{
+                margin-bottom: 10px;
+            }
+            .input_field input{
+                width: 100%; height: 40px;
+                font-size: 17px;
+                border-radius: 5px;
+                outline: none;
+                border: 1px solid silver;
+            }
+            .input_field input:focus{
+                border-color: lightskyblue;
+                border-width: 2px;
+                border-bottom-width: 3px;
+            }
+            form h5{
+                margin-top: 25px;
+                color: lightskyblue;
+            }
+            form label{
+                font-size: 17px;
+                margin: 0; padding: 0;
+                font-weight: 500;
+                width: 100%;
+                color: #da98f8;
+            }
+            .eye_icon, .eye_icon_confirm{
+                position: absolute;
+                left: 82%;
+            }
+            .eye_icon i, .eye_icon_confirm i{
+                position: absolute;
+                font-size: 25px;
+                margin-top: 7px;
+            }
+            form .submit_path{
+                height: 45px; width: 100%;
+                margin: 20px 0;
+                position: relative;
+                overflow: hidden;
+            }
+            .submit_path .btnbg{
+                height: 100%; width: 300%;
+                position: absolute;
+                left: -100%;
+                z-index: -1;
+                transition: all 0.4s;
+                background: -webkit-linear-gradient(right, #71b7e6, #69a6ce,#b98acc, 
+                                                    #71b7e6, #69a6ce,#b98acc);
+            }
+            .submit_path:hover .btnbg{
+                left: 0;
+            }
+            .submit_path button{
+                height: 100%; width: 100%;
+                color: #fff;
+                border: none;
+                background: none;
+                font-size: 17px;
+                font-weight: 500;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="signup_box">
+            <h1 data-text="SIGN-UP" style="position: relative; text-align: center; padding: 15px 0 0 0;
+                                            margin-bottom: 15px;">
+                SIGN-UP
+            </h1>
+            <form id="formRegister" method="post">
+                <div class="AccInfo">
+                    <h5>Account Information</h5>
+                    <div class="input_field">
+                        <label for="txtUsername">Username</label>
+                        <input type="text" id="txtUsername" name="username" required/>
+                    </div>
+                    <div class="input_field">
+                        <label for="txtPassword">Password</label>
+                        <input type="password" id="txtPassword" name="password" required/>
+                        <span class="eye_icon" onclick="mySetHidePassword()">
+                            <i id="show" class="fa fa-eye" aria-hidden="true" 
+                                style="color: lightskyblue; display: none;"></i>
+                            <i id="hide" class="fa fa-eye-slash" aria-hidden="true" 
+                                style="color: lightgray;"></i>
+                        </span>
+                    </div>
+                    <div class="input_field">
+                        <label for="txtConfirm">Confirm Password</label>
+                        <input type="password" id="txtConfirm" required/>
+                        <span class="eye_icon_confirm" onclick="mySetHideConfirmPassword()">
+                            <i id="showconfirm" class="fa fa-eye" aria-hidden="true" 
+                                style="color: lightskyblue; display: none;"></i>
+                            <i id="hideconfirm" class="fa fa-eye-slash" aria-hidden="true" 
+                                style="color: lightgray;"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="ProfileInfo">
+                    <h5>Profile Information</h5>
+                    <div class="input_field">
+                        <label for="txtName">Name</label>
+                        <input type="text" id="txtName" name="name" required/>
+                    </div>
+                    <div class="input_field">
+                        <label for="txtEmail">Email</label>
+                        <input type="text" id="txtEmail" name="email" required/>
+                    </div>
+                    <div class="input_field">
+                        <label for="txtDOB">DOB</label>
+                        <input type="text" id="txtDOB" name="dob" required/>
+                    </div>
+                </div>
+                <div class="submit_path">
+                    <div class="btnbg"></div>
+                    <button type="submit">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Create account
+                    </button>
+                </div>
+            </form>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+        <script>
+            $('#formRegister').on('submit', function (e) {
+                e.preventDefault();
+
+                const password = $('#txtPassword').val();
+                const confirmpassword = $("#txtConfirm").val();
+                if (password.length < 0) {
+                    alert('Password must have at least 8 characters!');
+                    return;
+                }
+                else if (password !== confirmpassword){
+                    alert('Error: Invalid confirm password\n' 
+                            + '(password and confirm password must exactly the same!)');
+                    return;
+                }
+
+                $.getJSON(`/account/is-available?user=${username}`, function (data) {
+                    if (data === false) {
+                        alert('Error: User name has already been used.');
+                    } 
+                    else {
+                        $('#frmRegister').off('submit').submit();
+                    }
+                });
+            });
+
+            $('#txtDOB').datetimepicker({
+                timepicker: false,
+                format: 'd/m/Y',
+                mask: true
+            });
+
+            $('#txtUsername').select();
+        </script>
+        <script id="setShowHidePassField">
+            function mySetHidePassword(){
+                let passfield = document.getElementById("txtPassword");
+                let hide = document.getElementById("hide");
+                let show = document.getElementById("show");
+
+                if(passfield.type === "password"){
+                    passfield.type = "text";
+                    hide.style.display = "none";
+                    show.style.display = "block";
+                }
+                else{
+                    passfield.type = "password";
+                    show.style.display = "none";
+                    hide.style.display = "block";
+                }
+            }
+            function mySetHideConfirmPassword(){
+                let passfield = document.getElementById("txtConfirm");
+                let hide = document.getElementById("hideconfirm");
+                let show = document.getElementById("showconfirm");
+
+                if(passfield.type === "password"){
+                    passfield.type = "text";
+                    hide.style.display = "none";
+                    show.style.display = "block";
+                }
+                else{
+                    passfield.type = "password";
+                    show.style.display = "none";
+                    hide.style.display = "block";
+                }
+            }
+        </script>
+    </body>
+
+</html>

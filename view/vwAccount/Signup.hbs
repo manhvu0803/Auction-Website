@@ -18,7 +18,7 @@
                 position: absolute;
                 top: 50%; left: 50%;
                 transform: translate(-50%, -50%);
-                width: 400px;
+                width: 800px;
                 background: white;
                 border-radius: 10px;
                 box-shadow: 0 0 8px rgba(0,0,0,0.2);
@@ -35,17 +35,27 @@
                 text-shadow: 1px 1px 2px rgba(255, 255, 255, 0,25);
             }
             form{
-                padding: 0 40px;
+                padding: 0 55px;
+            }
+            form .input_row{
+                display: inline-flex;
+                width: 100%;
             }
             form .input_field{
+                width: 50%;
+                margin-right: 10px;
                 margin-bottom: 10px;
             }
             .input_field input{
                 width: 100%; height: 40px;
+                padding-left: 10px; padding-right: 10px;
                 font-size: 17px;
                 border-radius: 5px;
                 outline: none;
                 border: 1px solid silver;
+            }
+            .input_field input[type="password"]{
+                padding-right: 40px;
             }
             .input_field input:focus{
                 border-color: lightskyblue;
@@ -63,9 +73,13 @@
                 width: 100%;
                 color: #da98f8;
             }
-            .eye_icon, .eye_icon_confirm{
+            .eye_icon{
                 position: absolute;
-                left: 82%;
+                left: 44%;
+            }
+            .eye_icon_confirm{
+                position: absolute;
+                left: 87%;
             }
             .eye_icon i, .eye_icon_confirm i{
                 position: absolute;
@@ -73,7 +87,7 @@
                 margin-top: 7px;
             }
             form .submit_path{
-                height: 45px; width: 100%;
+                height: 45px; width: 40%;
                 margin: 20px 0;
                 position: relative;
                 overflow: hidden;
@@ -99,65 +113,88 @@
                 font-weight: 500;
                 cursor: pointer;
             }
+            .signin_link{
+                margin: 30px 10px;
+                text-align: center;
+                font-size: 16px;
+                color: #666666;
+            }
+            .signin_link a{
+                color: #2691d9;
+                text-decoration: none;
+            }
+            .signin_link a:hover{
+                font-weight: bolder;
+                text-decoration: underline;
+            }
         </style>
     </head>
 
     <body>
         <div class="signup_box">
-            <h1 data-text="SIGN-UP" style="position: relative; text-align: center; padding: 15px 0 0 0;
-                                            margin-bottom: 15px;">
-                SIGN-UP
+            <h1 data-text="REGISTRATION" style="position: relative; padding: 15px 0 0 0;
+                                            margin-bottom: 15px; margin-left: 53px;">
+                REGISTRATION
             </h1>
             <form id="formRegister" method="post">
-                <div class="AccInfo">
-                    <h5>Account Information</h5>
-                    <div class="input_field">
-                        <label for="txtUsername">Username</label>
-                        <input type="text" id="txtUsername" name="username" required/>
+                <div class="Acc_Profile_Info">
+                    <div class="input_row">
+                        <div class="input_field">
+                            <label for="txtUsername">Username</label>
+                            <input type="text" id="txtUsername" name="username" required/>
+                        </div>
+                        <div class="input_field">
+                            <label for="txtEmail">Email</label>
+                            <input type="text" id="txtEmail" name="email" required/>
+                        </div>
                     </div>
-                    <div class="input_field">
-                        <label for="txtPassword">Password</label>
-                        <input type="password" id="txtPassword" name="password" required/>
-                        <span class="eye_icon" onclick="mySetHidePassword()">
-                            <i id="show" class="fa fa-eye" aria-hidden="true" 
-                                style="color: lightskyblue; display: none;"></i>
-                            <i id="hide" class="fa fa-eye-slash" aria-hidden="true" 
-                                style="color: lightgray;"></i>
-                        </span>
+                    <div class="input_row">
+                        <div class="input_field">
+                            <label for="txtPassword">Password</label>
+                            <input type="password" id="txtPassword" name="password" required/>
+                            <span class="eye_icon" onclick="mySetHidePassword()">
+                                <i id="show" class="fa fa-eye" aria-hidden="true" 
+                                    style="color: lightskyblue; display: none;"></i>
+                                <i id="hide" class="fa fa-eye-slash" aria-hidden="true" 
+                                    style="color: lightgray;"></i>
+                            </span>
+                        </div>
+                        <div class="input_field">
+                            <label for="txtConfirm">Confirm Password</label>
+                            <input type="password" id="txtConfirm" required/>
+                            <span class="eye_icon_confirm" onclick="mySetHideConfirmPassword()">
+                                <i id="showconfirm" class="fa fa-eye" aria-hidden="true" 
+                                    style="color: lightskyblue; display: none;"></i>
+                                <i id="hideconfirm" class="fa fa-eye-slash" aria-hidden="true" 
+                                    style="color: lightgray;"></i>
+                            </span>
+                        </div>
                     </div>
-                    <div class="input_field">
-                        <label for="txtConfirm">Confirm Password</label>
-                        <input type="password" id="txtConfirm" required/>
-                        <span class="eye_icon_confirm" onclick="mySetHideConfirmPassword()">
-                            <i id="showconfirm" class="fa fa-eye" aria-hidden="true" 
-                                style="color: lightskyblue; display: none;"></i>
-                            <i id="hideconfirm" class="fa fa-eye-slash" aria-hidden="true" 
-                                style="color: lightgray;"></i>
-                        </span>
+                    <div class="input_row">
+                        <div class="input_field">
+                            <label for="txtName">Name</label>
+                            <input type="text" id="txtName" name="name" required/>
+                        </div>
+                        <div class="input_field">
+                            <label for="txtDOB">DOB</label>
+                            <input type="text" id="txtDOB" name="dob" required/>
+                        </div>
                     </div>
                 </div>
-                <div class="ProfileInfo">
-                    <h5>Profile Information</h5>
-                    <div class="input_field">
-                        <label for="txtName">Name</label>
-                        <input type="text" id="txtName" name="name" required/>
+                <div class="input_row">
+                    <div class="submit_path">
+                        <div class="btnbg"></div>
+                        <button type="submit" class="btn">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Create account
+                        </button>
                     </div>
-                    <div class="input_field">
-                        <label for="txtEmail">Email</label>
-                        <input type="text" id="txtEmail" name="email" required/>
-                    </div>
-                    <div class="input_field">
-                        <label for="txtDOB">DOB</label>
-                        <input type="text" id="txtDOB" name="dob" required/>
+                    <div class="signin_link">
+                        Already have an account?
+                        <a href="/login">Sign-in</a>
                     </div>
                 </div>
-                <div class="submit_path">
-                    <div class="btnbg"></div>
-                    <button type="submit">
-                        <i class="fa fa-check" aria-hidden="true"></i>
-                        Create account
-                    </button>
-                </div>
+                
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
@@ -166,6 +203,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
         <script>
             $('#formRegister').on('submit', function (e) {
+                
                 e.preventDefault();
 
                 const password = $('#txtPassword').val();
@@ -179,15 +217,10 @@
                             + '(password and confirm password must exactly the same!)');
                     return;
                 }
-
-                $.getJSON(`/account/is-available?user=${username}`, function (data) {
-                    if (data === false) {
-                        alert('Error: User name has already been used.');
-                    } 
-                    else {
-                        $('#frmRegister').off('submit').submit();
-                    }
-                });
+                else if()
+                else{
+                    $('#formRegister').off('submit').submit();
+                }
             });
 
             $('#txtDOB').datetimepicker({
@@ -206,6 +239,7 @@
 
                 if(passfield.type === "password"){
                     passfield.type = "text";
+                    passfield.style.paddingRight="41px";
                     hide.style.display = "none";
                     show.style.display = "block";
                 }
@@ -222,6 +256,7 @@
 
                 if(passfield.type === "password"){
                     passfield.type = "text";
+                    passfield.style.paddingRight="41px";
                     hide.style.display = "none";
                     show.style.display = "block";
                 }

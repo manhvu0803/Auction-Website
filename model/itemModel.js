@@ -43,7 +43,7 @@ function parseItemDoc(doc)
 
 export default class itemModel
 {
-	constructor(database, bucket)
+	constructor(database, bucket, buildIndex = true)
 	{
 		this.itemsRef = database.collection("auctionItems");
 		this.categoryRef = database.collection("categories");
@@ -57,7 +57,8 @@ export default class itemModel
 			this.field("category");
 		})
 
-		this.createIndex();
+		if (buildIndex)
+			 this.createIndex();
 	}
 
 	async createIndex()

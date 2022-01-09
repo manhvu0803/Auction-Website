@@ -53,6 +53,9 @@ export default class userModel
 	{
 		let userDoc = await this.usersRef.doc(username).get();
 		let data = userDoc.data();
+		if (!data)
+			return data;
+		
 		delete data.password;
 		return data;
 	}

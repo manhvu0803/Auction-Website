@@ -1,6 +1,7 @@
 import * as firestore from "firebase-admin/firestore";
 
 const fileDuration = 10000000000;
+const debug = true;
 
 function parsePrefix(dir)
 {
@@ -24,6 +25,7 @@ export default class userModel
 	constructor(database, bucket)
 	{
 		this.itemsRef = database.collection("auctionItems");
+		this.categoryRef = database.collection("categories");
 		this.bucket = bucket;	
 	}
 
@@ -101,14 +103,68 @@ export default class userModel
 		return urls;
 	}
 
+	/**
+	 * 
+	 * @returns an object:
+	 * ```javascript
+	 * {
+	 * 		catgories: [] // category names
+	 * 		|category|: [] // subcategories
+	 * }	
+	 * ```
+	 */
+	async getAllCategories() {
+		let snapshot = await this.categoryRef.get();
+		let res = {
+			categories: []
+		}
+		
+		snapshot.forEach((doc) => {
+			res.categories.push(doc.id);
+			res[doc.id] = [];
+			for (let subcat in doc.data()) 
+				res[doc.id].push(subcat);
+		})
+
+		return res;
+	}
+
+	/**
+	 * @param {string} category
+	 * @returns {Promise<[string]} array of subcategory names
+	 */
+	 async getSubcategories(category) {
+		let snapshot = await this.categoryRef.get(category);
+		let res = []
+		for (let subcat in snapshot.data()) 
+			res.push(subcat);
+		return res;
+	}
+
+	/**
+	 * Add item image to storage
+	 * @param {string} id item id
+	 * @param data
+	 * ```
+	 * {
+	 * 	mainImage: binary
+	 * 	images: [binary]
+	 * }
+	 * ```
+	 */
 	async addImages(id, data)
 	{
-		let mainImageSave = this.bucket.file(`items/${id}/main.jpg`).save(data.mainImage);
+		let mainImageSave = null;
+		if (data.mainImage)
+			mainImageSave = this.bucket.file(`items/${id}/main.jpg`).save(data.mainImage);
+		
 		let imageSaves = [];
-		for (let i = 0; i < data.images.length; i++)
-			imageSaves.push(this.bucket.file(`items/${id}/${i}.jpg`).save(data.images[i]));
+		if (data.images && data.images.length)
+			for (let i = 0; i < data.images.length; i++)
+				imageSaves.push(this.bucket.file(`items/${id}/${i}.jpg`).save(data.images[i]));
 
-		await mainImageSave;
+		if (mainImageSave)
+			await mainImageSave;
 		for (let promise of imageSaves)
 			await promise;
 		
@@ -120,6 +176,7 @@ export default class userModel
 	 * Add item to database. Item must have: 
 	 * ```javascript
 	 * {
+	 * 	name: string,
 	 * 	maximumPrice: number, 
 	 * 	category: string,
 	 * 	step: number,
@@ -129,9 +186,7 @@ export default class userModel
 	 * 	seller: string,
 	 * 	startingPrice: number
 	 * 	mainImage: binary
-	 * 	images: [
-	 * 		binaries
-	 * 	]
+	 * 	images: [binaries]
 	 * }
 	 * ```
 	 * @param {itemData} item 
@@ -140,6 +195,7 @@ export default class userModel
 	async addItem(item)
 	{
 		let itemData = {
+			name: item.name,
 			maximumPrice: item.maximumPrice,
 			category: item.category,
 			step: item.step,
@@ -147,12 +203,16 @@ export default class userModel
 			postedTime: item.postedTime,
 			autoExtend: item.autoExtend,
 			seller: item.seller,
+			listing: true,
 			startingPrice: item.startingPrice
 		}
 
 		let doc = await this.itemsRef.add(itemData);
 
 		this.addImages(doc.id, item);
+
+		if (debug)
+			console.log(`Added item ${itemData.name} to database with id ${doc.id}`);
 
 		return doc.id;
 	}

@@ -3,6 +3,7 @@ import morgan from "morgan";
 import {dirname} from "path";
 import { fileURLToPath } from "url";
 import { engine } from "express-handlebars";
+import {user, item} from "./model";
 
 const _dirname = dirname(fileURLToPath(import.meta.url));
 console.log(_dirname);
@@ -16,7 +17,7 @@ app.engine('hbs',engine({
 app.set('view engine','hbs');
 app.set('views','./view');
 
-app.get('/',(req,res)=>{
+app.get('/', (req,res)=>{
     res.render('home');
 });
 
@@ -41,4 +42,8 @@ const port = 3000;
 
 app.listen(port,function(){
     console.log('Hi, I am listening on port '+port);
+})
+
+(async()=>{
+    console.log(await item.getAllCategories());
 })

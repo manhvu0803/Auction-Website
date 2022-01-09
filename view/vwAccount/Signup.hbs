@@ -167,13 +167,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="submit_path">
-                    <div class="btnbg"></div>
-                    <button type="submit">
-                        <i class="fa fa-check" aria-hidden="true"></i>
-                        Create account
-                    </button>
+                <div class="input_row">
+                    <div class="submit_path">
+                        <div class="btnbg"></div>
+                        <button type="submit">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Create account
+                        </button>
+                    </div>
+                    <div>
+                        <h5>
+                            <a class="btn" href="/login">Already have an account?</a>
+                        </h5>
+                    </div>
                 </div>
+                
             </form>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
@@ -182,6 +190,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
         <script>
             $('#formRegister').on('submit', function (e) {
+                
+                console.log('1');
+
                 e.preventDefault();
 
                 const password = $('#txtPassword').val();

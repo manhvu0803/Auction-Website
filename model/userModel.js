@@ -54,7 +54,7 @@ export default class userModel
 		let userDoc = await this.usersRef.doc(username).get();
 		let data = userDoc.data();
 		if (!data)
-			return data;
+			throw new Error("User not found");
 		
 		delete data.password;
 		return data;

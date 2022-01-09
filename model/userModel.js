@@ -18,7 +18,7 @@ export default class userModel
 	 * @param {String} email 
 	 * @param {("bidder"|"seller"|"admin")} type 
 	 */
-	async newUser(username, password, email, type)
+	async newUser(username, fullName, password, email, type)
 	{
 		if (type != "bidder" && type != "seller" && type != "admin")
 			throw new Error(`Invalid user type: ${type}`);
@@ -27,6 +27,7 @@ export default class userModel
 		let doc = this.usersRef.doc(username);
 		await doc.set({
 			password: hash,
+			name: fullName,
 			email: email,
 			type: type,
 			upvoteCount: 0,

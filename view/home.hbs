@@ -1,0 +1,84 @@
+<head>
+	<style>
+		.card-product .img-wrap {
+			border-radius: 3px 3px 0 0;
+			overflow: hidden;
+			position: relative;
+			height: 220px;
+			text-align: center;
+		}
+		.card-product .img-wrap img {
+			max-height: 100%;
+			max-width: 100%;
+			object-fit: cover;
+		}
+		.card-product .info-wrap {
+			overflow: hidden;
+			padding: 15px;
+			border-top: 1px solid #eee;
+		}
+		.card-product .bottom-wrap {
+			padding: 15px;
+			border-top: 1px solid #eee;
+		}
+
+		.label-rating { margin-right:10px;
+			color: #333;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.desc {
+			text-overflow: ellipsis;
+			max-width: 10em;
+			max-height: 1.5em;
+			overflow: hidden;
+			white-space: nowrap;
+			margin-bottom: 0%;
+		}
+
+		.card-product .price-old {
+			color: #999;
+		}
+	</style>
+</head>
+
+<div class="container">
+	<div class="row">
+		{{#each items}}
+		<div class="col">
+			<figure class="card card-product">
+				<div class="img-wrap"><img src="{{this.mainImage}}"></div>
+				<figcaption class="info-wrap">
+					<h4 class="title">{{this.name}}</h4>
+					<p class="desc">{{{this.description}}}</p>	
+				</figcaption>
+				<div class="bottom-wrap">
+					<div class="price-wrap h5">
+						<span class="price-new">{{this.price}}</span>
+					</div> <!-- price-wrap.// -->
+					<a href="" class="btn btn-sm btn-primary float-right">Bid</a>	
+				</div> <!-- bottom-wrap.// -->
+			</figure>
+		</div> <!-- col // -->
+		{{/each}}
+	</div> <!-- row.// -->
+</div> 
+<!--container.//-->
+
+<br><br><br>
+<article class="bg-secondary mb-3">  
+	<div class="card-body text-center">
+		<h4 class="text-white">HTML UI KIT <br> Ready to use Bootstrap 4 components and templates </h4>
+		<p class="h5 text-white"> for Ecommerce, marketplace, booking websites and product landing pages</p>
+		<br>
+		<p>
+			<a class="btn btn-warning" target="_blank" href="http://bootstrap-ecommerce.com/"> Bootstrap-ecommerce.com  
+				<i class="fa fa-window-restore "></i>
+			</a>
+		</p>
+	</div>
+	<br>
+	<br>
+	<br>
+</article>

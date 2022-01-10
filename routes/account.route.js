@@ -2,21 +2,21 @@ import express from "express";
 import {user} from "../model/model.js";
 
 const router = express.Router();
-
+const account='';
 router.get('/login', (req, res) => {
     res.render('vwAccount/login');
 });
 
 router.post('/login', async (req, res) => {
-    const account = await user.checkPassword(req.body.username, req.body.password);
-    req.render('vwAccount/login');
-    // try{
-    // }
-    // catch{
-    //     res.render('vwAccount/Login',{
-    //     err_message: "Invalid username or password"})
-    // }
-    // res.redirect('/');
+    
+        if(await user.checkPassword(req.body.username, req.body.password)){
+            res.redirect('/');
+        }
+        else
+        {
+            res.render('vwAccount/Login',{
+            err_message: "Invalid username or password"})
+        }
 });
 
 router.get('/signup', (req, res) => {

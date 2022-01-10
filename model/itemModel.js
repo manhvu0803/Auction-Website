@@ -1,7 +1,6 @@
 import * as firestore from "firebase-admin/firestore";
 import lunr from "lunr-mutable-indexes";
 import { getDatabase } from "firebase-admin/database";
-import admin from "firebase-admin";
 
 const fileDuration = 10000000000;
 const debug = true;
@@ -71,10 +70,10 @@ export default class itemModel
 		console.log("Full-text search index has been built");
 	}
 
-	updateIndex(item)
+	updateIndex(item, itemId = null)
 	{
 		this.index.add({
-			id: item.id,
+			id: (itemId) ? itemId : item.id,
 			name: item.name,
 			description: item.description,
 			seller: item.seller,
@@ -285,6 +284,18 @@ export default class itemModel
 		return doc.id;
 	}
 
+	async update(itemId, data)
+	{
+		let update = this.itemsRef.doc(itemId).update(data);
+
+		this.updateIndex(data, itemId);
+
+		await update;
+		
+		if (debug)
+			console.log(`Updated item ${itemId}`)
+	}
+
 	/**
 	 * Write a bid to database. Please note that this function **does not** check for data validity (username or item existence, amount is high enough or not)
 	 * @param {string} itemId 
@@ -320,5 +331,27 @@ export default class itemModel
 			})
 
 		return res.sort((a, b) => b.time > a.time ? 1 : -1);
+	}
+
+	/**
+	 * Finish an item auction. The highest bidder would be written to database and return
+	 * @param {string} itemId 
+	 * @param {boolean} waitForUpdate default false. If true, wait until the database is fully updated before return
+	 * @returns {string} username of the highest bidder
+	 */
+	async finalizeBid(itemId, waitForUpdate = false)
+	{
+		let bids = await this.getBid(itemId);
+		if (bids.length < 1)
+			throw Error(`No bid found for item ${itemId}`);
+
+		let update = this.update(itemId, { 
+			listing: false,
+			buyer: bids[0].user 
+		})
+		if (waitForUpdate)
+			await update;
+
+		return bids[0].user;
 	}
 }

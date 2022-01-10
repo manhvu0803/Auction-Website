@@ -11,5 +11,4 @@ export default function(app){
     }));
     app.set('view engine','hbs');
     app.set('views','./view');
-    
 }

@@ -4,6 +4,7 @@ import {item} from "./model/model.js";
 import mailing from "./mail/mail.js";
 import session from "express-session";
 import viewMdw from "./middlewares/view.mdw.js";
+import localsMdw from "./middlewares/locals.mdw.js";
 import routeMdw from "./middlewares/route.mdw.js";
 import asyncError from "express-async-errors";
 
@@ -24,6 +25,7 @@ app.use(session({
     }
 }))
 
+localsMdw(app);
 viewMdw(app);
 routeMdw(app);
 

@@ -1,0 +1,170 @@
+    <head>
+        <style>
+             body {
+                 margin: 0;
+                 padding-right: 0;
+                 background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc) repeat fixed;
+                 height: 100vh;
+             }
+             .box{
+                 position: absolute;
+                 padding-left: 40px; padding-right: 40px;
+                 left: 15.5%;
+                 width: 70%;
+                 background: white;
+                 box-shadow: 0 0 8px rgba(0,0,0,0.2);
+             }
+             .top_container img{
+                 width: 100%;
+             }
+             .top_container .generalInf, .biddingPart{
+                 width: 100%;
+             }
+             .top_container .generalInf span,
+             .top_container .biddingPart span{
+                 font-weight: 500;
+                 margin-right: 5px;
+                 font-size: 17px;
+             }
+             .top_container .generalInf p,
+             .top_container .biddingPart p{
+                 font-size: 17px;
+             }
+             .top_container .biddingPart button{
+                 border-radius: 10px; 
+                 border: none; 
+                 background: #384aeb; color: white;
+                 font-weight: 500;
+                 width: 30%; height: 40px;
+                 cursor: pointer;
+             }
+             .top_container .biddingPart button:hover{
+                 background: white; color: #384aeb;
+                 border: 2px solid #384aeb;
+             }
+             .mid_container{
+                 margin-top: 20px;
+             }
+             .mid_container .DescriptionInf{
+                 width: 100%;
+                 margin: 0;
+             }
+             .mid_container .DescriptionInf span{
+                 font-weight: 500;
+                 margin-right: 5px;
+                 font-size: 17px;
+             }
+         </style>
+     </head>
+ 
+     <body>
+         <div class="box">
+             <div class="top_container">
+                 <div class="row" style="margin-top: 25px;">
+                     <div class="col-lg-6">
+                         <div id="slideImgs" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                             style="box-shadow: 0 0 4px rgba(0,0,0,0.2);">
+                             <div class="carousel-inner">
+                                 <div class="carousel-item active">
+                                     <img src="../../imgs/sp/27/main.jpg">
+                                 </div>
+                                 <div class="carousel-item">
+                                     <img src="../../imgs/sp/27/1.jpg">
+                                 </div>
+                                 <div class="carousel-item">
+                                     <img src="../../imgs/sp/27/2.jpg">
+                                 </div>
+                             </div>
+                             <button class="carousel-control-prev" type="button"
+                                 data-bs-target="#slideImgs" data-bs-slide="prev">
+                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                 <span class="visually-hidden">Previous</span>
+                             </button>
+                             <button class="carousel-control-next" type="button"
+                                 data-bs-target="#slideImgs" data-bs-slide="next">
+                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                 <span class="visually-hidden">Next</span>
+                             </button>
+                         </div>
+                     </div>
+                     <div class="col-lg-6">
+                         <h2 style="font-weight: bold; margin-bottom: 20px;">Nhẫn kim cương cao cấp</h2>
+                         <div class="generalInf" style="display: inline-flex;">
+                             <span>Purchase price:</span>
+                             <p style="font-weight: 700; color: rgb(84, 206, 84);">50.000.000VNĐ</p>
+                         </div>
+                         <div class="generalInf" style="display: inline-flex;">
+                             <span>Current highest price:</span>
+                             <p style="color: rgb(84, 206, 84);">30.000.000VNĐ</p>
+                         </div>
+                         <div class="generalInf" style="display: inline-flex;">
+                             <span>Date Start:</span>
+                             <p style="color: rgb(85, 146, 238); font-weight: 700;">22:03:59 10/01/2022</p>
+                         </div>
+                         <div class="generalInf" style="display: inline-flex;">
+                             <span>Date End:</span>
+                             <p style="color: rgb(240, 22, 22); font-weight: 700">22:03:59 15/01/2022</p>
+                         </div>
+                         <div class="generalInf" style="display: inline-flex;">
+                             <span>Seller:</span>
+                             <p>UchihaItachi</p>
+                         </div>
+                         <div class="generalInf" style="display: inline-flex;">
+                             <span>Bidder with highest price:</span>
+                             <p>SonGoku</p>
+                         </div>
+                         <form>
+                         <div class="biddingPart">
+                             <span>Your bidding price:</span>
+                             <input type="text" name="biddingprice" required
+                                 style="border-radius: 10px; width: 20%; text-align: center; margin-right: 10px;">
+                             <button type="submit">
+                                 Bidding
+                             </button>
+                         </form>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <div class="mid_container">
+                 <h4>Description:</h4>
+                 <div class="DescriptionInf" style="display: inline-flex;">
+                     <span>Category:</span>
+                     <p>Jewelry</p>
+                 </div>
+                 <div class="DescriptionInf">
+                     <span>Detail:</span>
+                     <p>Created from the most valuable diamonds</p>
+                 </div>
+                 <div class="DescriptionInf">
+                     <span>Bidders list:</span>
+                     <table class="table table-bordered" style="width: 50%; border: 2px">
+                         <thead>
+                             <tr>
+                                 <th scope="col">Time</th>
+                                 <th scope="col">Bidder</th>
+                                 <th scope="col">Bidding price</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             <tr>
+                                 <td>23:59:59 10/01/2022</td>
+                                 <td>SonGoku</td>
+                                 <td>30.000.000VNĐ</td>
+                             </tr>
+                             <tr>
+                                 <td>23:59:59 10/01/2022</td>
+                                 <td>SonGoku</td>
+                                 <td>30.000.000VNĐ</td>
+                             </tr>
+                             <tr>
+                                 <td>23:59:59 10/01/2022</td>
+                                 <td>SonGoku</td>
+                                 <td>30.000.000VNĐ</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             </div>
+         </div>
+    </body>

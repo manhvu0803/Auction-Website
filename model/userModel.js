@@ -66,6 +66,12 @@ export default class userModel
 		return data;
 	}
 
+	async getEmail(username)
+	{
+		let userDoc = await this.usersRef.doc(username).get();
+		return userDoc.get("email");
+	}
+
 	/**
 	 * Do not call this function
 	 * @param {string} username 

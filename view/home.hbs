@@ -31,54 +31,151 @@
 		.desc {
 			text-overflow: ellipsis;
 			max-width: 10em;
-			max-height: 1.5em;
+			height: 3em;
 			overflow: hidden;
 			white-space: nowrap;
 			margin-bottom: 0%;
 		}
-
-		.card-product .price-old {
-			color: #999;
+		
+		.groupTitle {
+			display: flex;
+			justify-content: center;
+			margin-top: 3em;
+			margin-bottom: 3em;
 		}
 	</style>
 </head>
 
+<br>
+<div class="groupTitle">
+	<h1>Almost finish</h1>
+</div>
 <div class="container">
 	<div class="row">
-		{{#each items}}
+		{{#each items.almostFinish}}
 		<div class="col">
-			<figure class="card card-product">
-				<div class="img-wrap"><img src="{{this.mainImage}}"></div>
-				<figcaption class="info-wrap">
-					<h4 class="title">{{this.name}}</h4>
-					<p class="desc">{{{this.description}}}</p>	
-				</figcaption>
-				<div class="bottom-wrap">
-					<div class="price-wrap h5">
-						<span class="price-new">{{this.price}}</span>
-					</div> <!-- price-wrap.// -->
-					<a href="" class="btn btn-sm btn-primary float-right">Bid</a>	
-				</div> <!-- bottom-wrap.// -->
-			</figure>
+			<a href="/item/{{this.id}}" style="text-decoration: none; color: black">
+				<figure class="card card-product">
+					<div class="img-wrap"><img src="{{this.mainImage}}"></div>
+					<figcaption class="info-wrap">
+						<h4 class="title">{{this.name}}</h4>
+						<p class="desc">{{{this.description}}}</p>
+					</figcaption>
+					<div class="bottom-wrap">
+						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
+						<div class="price-wrap h5">
+							<span class="price-new">{{this.price}}</span>
+						</div> <!-- price-wrap.// -->
+					</div> <!-- bottom-wrap.// -->
+				</figure>
+			</a>
 		</div> <!-- col // -->
 		{{/each}}
 	</div> <!-- row.// -->
 </div> 
 <!--container.//-->
+<hr>
+
+<br>
+<div class="groupTitle">
+	<h1>Popular</h1>
+</div>
+<div class="container">
+	<div class="row">
+		{{#each items.almostFinish}}
+		<div class="col">
+			<a href="/item/{{this.id}}" style="text-decoration: none; color: black">
+				<figure class="card card-product">
+					<div class="img-wrap"><img src="{{this.mainImage}}"></div>
+					<figcaption class="info-wrap">
+						<h4 class="title">{{this.name}}</h4>
+						<p class="desc">{{{this.description}}}</p>
+					</figcaption>
+					<div class="bottom-wrap">
+						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
+						<div class="price-wrap h5">
+							<span class="price-new">{{this.price}}</span>
+						</div> <!-- price-wrap.// -->
+					</div> <!-- bottom-wrap.// -->
+				</figure>
+			</a>
+		</div> <!-- col // -->
+		{{/each}}
+	</div> <!-- row.// -->
+</div>
+<!--container.//-->
+<hr>
+
+<br>
+<div class="groupTitle">
+	<h1>Highest bidded</h1>
+</div>
+<div class="container">
+	<div class="row">
+		{{#each items.almostFinish}}
+		<div class="col">
+			<a href="/item/{{this.id}}" style="text-decoration: none; color: black">
+				<figure class="card card-product">
+					<div class="img-wrap"><img src="{{this.mainImage}}"></div>
+					<figcaption class="info-wrap">
+						<h4 class="title">{{this.name}}</h4>
+						<p class="desc">{{{this.description}}}</p>
+					</figcaption>
+					<div class="bottom-wrap">
+						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
+						<div class="price-wrap h5">
+							<span class="price-new">{{this.price}}</span>
+						</div> <!-- price-wrap.// -->
+					</div> <!-- bottom-wrap.// -->
+				</figure>
+			</a>
+		</div> <!-- col // -->
+		{{/each}}
+	</div> <!-- row.// -->
+</div>
+<!--container.//-->
+
 
 <br><br><br>
 <article class="bg-secondary mb-3">  
 	<div class="card-body text-center">
-		<h4 class="text-white">HTML UI KIT <br> Ready to use Bootstrap 4 components and templates </h4>
-		<p class="h5 text-white"> for Ecommerce, marketplace, booking websites and product landing pages</p>
-		<br>
-		<p>
-			<a class="btn btn-warning" target="_blank" href="http://bootstrap-ecommerce.com/"> Bootstrap-ecommerce.com  
-				<i class="fa fa-window-restore "></i>
-			</a>
-		</p>
+		<h4 class="text-white">Online Auction House</h4>
 	</div>
 	<br>
 	<br>
 	<br>
 </article>
+
+<script>
+	var spans = document.getElementsByClassName("timer");
+	
+	for (let span of spans) {
+		span.expireTime = new Date(parseInt(span.innerText));
+	}
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+		var now = Date.now();
+
+		for (let span of spans) {
+			var distance = span.expireTime - now;
+
+			if (!distance)
+				distance = -1;
+
+			if (distance < 0) {
+				span.innerHTML = "Expired";
+			}
+			else {
+				// Time calculations for days, hours, minutes and seconds
+				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+				// Display the result in the element with id="demo"
+				span.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+			}
+		}
+	}, 1000);
+</script>

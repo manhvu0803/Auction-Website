@@ -11,5 +11,6 @@ export default {
 			this._sections = {};
 		}
 		this._sections[name] = options.fn(this);
+		return null;
 	}
 }

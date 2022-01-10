@@ -46,7 +46,6 @@ export default class itemModel
 	{
 		this.itemsRef = database.collection("auctionItems");
 		this.categoryRef = database.collection("categories");
-		this.rtdbRef = getDatabase().ref("bids/");
 		this.bucket = bucket;
 
 		this.index = lunr(function() {
@@ -304,8 +303,8 @@ export default class itemModel
 	 */
 	async bid(itemId, username, amount)
 	{
-		await this.rtdbRef.child(itemId).child(username).set({
-			time: Date.now(),
+		await this.itemsRef.doc(itemId).collection("bids").doc(username).set({
+			time: new Date(),
 			amount: amount
 		});
 
@@ -316,19 +315,24 @@ export default class itemModel
 	/**
 	 * 
 	 * @param {string} itemId 
-	 * @returns array of bid sorted by bid time
+	 * @param {number} limit the number of bids to get. Default 6
+	 * @returns array of latest bid sorted by bid time, with length equal `limit`
 	 */
-	async getBid(itemId)
+	async getBid(itemId, limit = 6)
 	{
-		let snapshot = await this.rtdbRef.child(itemId).get();
-		let data = snapshot.val();
-		let res = []
-		for (let bid in data)
-			res.push({
-				user: bid,
-				amount: data[bid].amount,
-				time: new Date(data[bid].time)
-			})
+		let snapshot = await this.itemsRef
+									.doc(itemId)
+									.collection("bids")
+									.orderBy("time", "desc")
+									.limit(limit)
+									.get();
+
+		let res = snapshot.docs.map((doc) => {
+			let data = doc.data();
+			data.user = doc.id;
+			data.time = data.time.toDate();
+			return data;
+		});
 
 		return res.sort((a, b) => b.time > a.time ? 1 : -1);
 	}
@@ -336,12 +340,12 @@ export default class itemModel
 	/**
 	 * Finish an item auction. The highest bidder would be written to database and return
 	 * @param {string} itemId 
-	 * @param {boolean} waitForUpdate default false. If true, wait until the database is fully updated before return
+	 * @param {boolean} waitForUpdate if true, wait until the database is fully updated before return. Default false
 	 * @returns {string} username of the highest bidder
 	 */
 	async finalizeBid(itemId, waitForUpdate = false)
 	{
-		let bids = await this.getBid(itemId);
+		let bids = await this.getBid(itemId, 1);
 		if (bids.length < 1)
 			throw Error(`No bid found for item ${itemId}`);
 

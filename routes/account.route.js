@@ -8,15 +8,21 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-    
+    try{
+
         if(await user.checkPassword(req.body.username, req.body.password)){
             res.redirect('/');
         }
         else
         {
             res.render('vwAccount/Login',{
-            err_message: "Invalid username or password"})
+                err_message: "Invalid username or password"})
+            }
         }
+    catch{
+        res.render('vwAccount/Login',{
+            err_message: "Invalid username or password"})
+    }
 });
 
 router.get('/signup', (req, res) => {

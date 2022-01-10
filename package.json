@@ -10,6 +10,7 @@
     "express": "^4.17.2",
     "express-handlebars": "^6.0.2",
     "express-handlebars-sections": "^1.0.1",
+    "express-session": "^1.17.2",
     "firebase-admin": "^10.0.1",
     "lunr": "^2.3.9",
     "lunr-mutable-indexes": "^2.3.2",

@@ -7,6 +7,7 @@ import { item } from "../model/model.js"
 export default function(app){
     app.get('/', async (req,res)=>{
         const data=(await item.getAllItems()).slice(0,5);
+        console.log(data);
         res.render("home", { items: {
             almostFinish: data,
             popular: data,
@@ -27,7 +28,6 @@ export default function(app){
     });
 
     app.use((err,req,res,next)=>{
-        console.log(err);
         res.status(500).render('vwError/500');
     });
 }

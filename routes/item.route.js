@@ -7,11 +7,8 @@ router.get('/:id', async (req, res) => {
     const proID = req.params.id;
     try{
     const itemData = await item.getItem(proID);
-    console.log(itemData);
     const mainImage = await item.getMainImageUrl(proID);
-    console.log(mainImage);
     const images = await item.getExtraImageUrls(proID);
-    console.log(images);
     res.render('vwProduct/detail.hbs', {
         itemData,
         mainImage,

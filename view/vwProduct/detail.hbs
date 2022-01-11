@@ -1,6 +1,26 @@
 {{#section 'js'}}
     <script>
-        $('#bid').on('submit', function (e) {
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        function toTimeZone(date, zone, type='en-US'){
+            return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString(type, {timeZone: zone}));
+        }
+        var start = toTimeZone(document.getElementById('start').innerHTML, timezone).toString();
+        var expire = toTimeZone(document.getElementById('expire').innerHTML, timezone).toString();
+
+        start = start.substring(0, start.length - 25);
+        expire = expire.substring(0, expire.length - 25);
+
+        document.getElementById('start').innerHTML = start;
+        document.getElementById('expire').innerHTML = expire;
+
+        var bidTimes = document.getElementsByClassName('bid-time');
+        for(let time of bidTimes){
+            time.innerHTML = toTimeZone(time.innerHTML, timezone,'en-GB').toString();
+            time.innerHTML = time.innerHTML.substring(0, time.innerHTML.length - 25);
+        }
+    </script>
+    <script>
+        $('#bidForm').on('submit', function (e) {
 		e.preventDefault();
         var biddingprice = +$('input[name=biddingprice]').val();
 
@@ -144,8 +164,8 @@
                     </div>
                     <div class="biddingPart">
                         <span>Your bid:</span>
-                        <form action="bid/{{this.itemData.id}}" method="post">
-                            <input name="bid" type="text" style="border-radius: 10px; width: 30%; text-align: center; margin-right: 10px;">
+                        <form id="bidForm" method="post">
+                            <input name="bid" type="text" required style="border-radius: 10px; width: 30%; text-align: center; margin-right: 10px;">
                             <button type="submit">Bid</button>
                         </form>
                     </div>
@@ -175,11 +195,11 @@
                     </thead>
                     <tbody>
                         {{#each pastBids}}
-                        <tr>
-                            <td>{{this.time}}</td>
-                            <td>{{this.user}}</td>
-                            <td>{{this.amount}}</td>
-                        </tr>
+                            <tr>
+                                <td class='bid-time' >{{this.time}}</td>
+                                <td>{{this.user}}</td>
+                                <td>{{this.amount}}</td>
+                            </tr>
                         {{/each}}
                     </tbody>
                 </table>
@@ -193,48 +213,4 @@
         <br>
         <br>
     </div>
-
-    <script>
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        function toTimeZone(date, zone){
-            return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: zone}));
-        }
-        var start = toTimeZone(document.getElementById('start').innerHTML, timezone).toString();
-        var expire = toTimeZone(document.getElementById('expire').innerHTML, timezone).toString();
-        start = start.substring(0, start.length - 25);
-        expire = expire.substring(0, expire.length - 25);
-        document.getElementById('start').innerHTML = start;
-        document.getElementById('expire').innerHTML = expire;
-        var spans = document.getElementsByClassName("timer");
-        
-        for (let span of spans) {
-            span.expireTime = new Date(span.innerText);
-        }
-
-        // Update the count down every 1 second
-        var x = setInterval(function() {
-            var now = Date.now();
-
-            for (let span of spans) {
-                var distance = span.expireTime - now;
-
-                if (!distance)
-                    distance = -1;
-
-                if (distance < 0) {
-                    span.innerHTML = "Expired";
-                }
-                else {
-                    // Time calculations for days, hours, minutes and seconds
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                    // Display the result in the element with id="demo"
-                    span.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-                }
-            }
-        }, 1000);
-    </script>
 </body>

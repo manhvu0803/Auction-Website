@@ -57,119 +57,166 @@
          </style>
      </head>
  
-     <body>
-         <div class="box">
-             <div class="top_container">
-                 <div class="row" style="margin-top: 25px;">
-                     <div class="col-lg-6">
-                         <div id="slideImgs" class="carousel carousel-dark slide" data-bs-ride="carousel"
-                             style="box-shadow: 0 0 4px rgba(0,0,0,0.2);">
-                             <div class="carousel-inner">
-                                 <div class="carousel-item active">
-                                     <img src="{{this.mainImages}}">
-                                 </div>
-                                 {{#each this.images}}
-                                    <div class="carousel-item">
-                                        <img src="{{this}}">
-                                    </div>
-                                 {{/each}}
-                             </div>
-                             {{#if pluralImages}}
-                             <button class="carousel-control-prev" type="button"
-                                 data-bs-target="#slideImgs" data-bs-slide="prev">
-                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                 <span class="visually-hidden">Previous</span>
-                             </button>
-                             <button class="carousel-control-next" type="button"
-                                 data-bs-target="#slideImgs" data-bs-slide="next">
-                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                 <span class="visually-hidden">Next</span>
-                             </button>
-                             {{/if}}
-                         </div>
-                     </div>
-                     <div class="col-lg-6">
-                         <h2 style="font-weight: bold; margin-bottom: 20px;">{{this.itemData.name}}</h2>
-                         <div class="generalInf" style="display: inline-flex;">
-                             <span>Purchase price:</span>
-                             <p style="font-weight: 700; color: rgb(84, 206, 84);">{{this.itemData.maximumPrice}} VNĐ</p>
-                         </div>
-                         <div class="generalInf" style="display: inline-flex;">
-                             <span>Current highest price:</span>
-                             <p style="color: rgb(84, 206, 84);">{{this.itemData.startingPrice}} VNĐ</p>
-                         </div>
-                         <div class="generalInf" style="display: inline-flex;">
-                             <span>Step:</span>
-                             <p style="color: rgb(84, 206, 84);">{{this.itemData.step}} VNĐ</p>
-                         </div>
-                         <div class="generalInf" style="display: inline-flex;">
-                             <span>Date Start:</span>
-                             <p style="color: rgb(85, 146, 238); font-weight: 700;">{{this.itemData.postedTime}}</p>
-                         </div>
-                         <div class="generalInf" style="display: inline-flex;">
-                             <span>Date End:</span>
-                             <p style="color: rgb(240, 22, 22); font-weight: 700">{{this.itemData.expireTime}}</p>
-                         </div>
-                         <div class="generalInf" style="display: inline-flex;">
-                             <span>Seller:</span>
-                             <p>{{this.itemData.seller}}</p>
-                         </div>
-                         <div class="generalInf" style="display: inline-flex;">
-                             <span>Bidder with highest price:</span>
-                             <p>{{this.itemData.buyer}}</p>
-                         </div>
-                         <form>
-                             <div class="biddingPart">
-                                 <span>Your bidding price:</span>
-                                 <input type="text" name="biddingprice" required
-                                     style="border-radius: 10px; width: 20%; text-align: center; margin-right: 10px;">
-                                 <button type="submit">
-                                     Bidding
-                                 </button>
-                             </div>
-                         </form>
-                     </div>
-                 </div>
-             </div>
-             <div class="mid_container">
-                 <h4>Description:</h4>
-                 <div class="DescriptionInf" style="display: inline-flex;">
-                     <span>Category:</span>
-                     <p>{{this.itemData.category}}</p>
-                 </div>
-                 <div class="DescriptionInf">
-                     <span>Detail:</span>
-                     <p>{{{this.itemData.description}}}</p>
-                 </div>
-                 <div class="DescriptionInf">
-                     <span>Bidders list:</span>
-                     <table class="table table-bordered" style="width: 50%; border: 2px">
-                         <thead>
-                             <tr>
-                                 <th scope="col">Time</th>
-                                 <th scope="col">Bidder</th>
-                                 <th scope="col">Bidding price</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr>
-                                 <td>23:59:59 10/01/2022</td>
-                                 <td>SonGoku</td>
-                                 <td>30.000.000VNĐ</td>
-                             </tr>
-                             <tr>
-                                 <td>23:59:59 10/01/2022</td>
-                                 <td>SonGoku</td>
-                                 <td>30.000.000VNĐ</td>
-                             </tr>
-                             <tr>
-                                 <td>23:59:59 10/01/2022</td>
-                                 <td>SonGoku</td>
-                                 <td>30.000.000VNĐ</td>
-                             </tr>
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-    </body>
+    <body>
+        <div class="box">
+            <div class="top_container">
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-lg-6">
+                        <div id="slideImgs" class="carousel carousel-dark slide" data-bs-ride="carousel"
+                            style="box-shadow: 0 0 4px rgba(0,0,0,0.2);">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="{{this.mainImages}}">
+                                </div>
+                                {{#each this.images}}
+                                <div class="carousel-item">
+                                    <img src="{{this}}">
+                                </div>
+                                {{/each}}
+                            </div>
+                            {{#if pluralImages}}
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#slideImgs" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#slideImgs" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                            {{/if}}
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 style="font-weight: bold; margin-bottom: 20px;">{{this.itemData.name}}</h2>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Purchase price:</span>
+                            <p style="font-weight: 700; color: rgb(84, 206, 84);">{{this.itemData.maximumPrice}} VNĐ</p>
+                        </div>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Current highest price:</span>
+                            <p style="color: rgb(84, 206, 84);">{{this.itemData.startingPrice}} VNĐ</p>
+                        </div>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Step:</span>
+                            <p style="color: rgb(84, 206, 84);">{{this.itemData.step}} VNĐ</p>
+                        </div>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Date Start:</span>
+                            <p style="color: rgb(85, 146, 238); font-weight: 700;" id='start'>{{this.itemData.postedTime}}</p>
+                        </div>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Date End:</span>
+                            <p style="color: rgb(240, 22, 22); font-weight: 700" id='expire'>{{this.itemData.expireTime}}</p>
+                        </div>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Time left: </span>
+                            <p style="color: rgb(240, 22, 22); font-weight: 700" class='timer'>{{this.itemData.expireTime}}</p>
+                        </div>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Seller:</span>
+                            <p>{{this.itemData.seller}}</p>
+                        </div>
+                        <div class="generalInf" style="display: inline-flex;">
+                            <span>Bidder with highest price:</span>
+                            <p>{{this.itemData.buyer}}</p>
+                        </div>
+                        <form>
+                            <div class="biddingPart">
+                                <span>Your bidding price:</span>
+                                <input type="text" name="biddingprice" required
+                                    style="border-radius: 10px; width: 20%; text-align: center; margin-right: 10px;">
+                                <button type="submit">
+                                    Bidding
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mid_container">
+                <h4>Description:</h4>
+                <div class="DescriptionInf" style="display: inline-flex;">
+                    <span>Category:</span>
+                    <p>{{this.itemData.category}}:{{this.itemData.subcategory}}</p>
+                </div>
+                <div class="DescriptionInf" >
+                    <span>Detail:</span>
+                    <p>{{{this.itemData.description}}}</p>
+                </div>
+                <div class="DescriptionInf">
+                    <span>Bidders list:</span>
+                    <table class="table table-bordered" style="width: 50%; border: 2px">
+                        <thead>
+                            <tr>
+                                <th scope="col">Time</th>
+                                <th scope="col">Bidder</th>
+                                <th scope="col">Bidding price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>23:59:59 10/01/2022</td>
+                                <td>SonGoku</td>
+                                <td>30.000.000VNĐ</td>
+                            </tr>
+                            <tr>
+                                <td>23:59:59 10/01/2022</td>
+                                <td>SonGoku</td>
+                                <td>30.000.000VNĐ</td>
+                            </tr>
+                            <tr>
+                                <td>23:59:59 10/01/2022</td>
+                                <td>SonGoku</td>
+                                <td>30.000.000VNĐ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</body>
+<script>
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    function toTimeZone(date, zone){
+        return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: zone}));
+    }
+    var start = toTimeZone(document.getElementById('start').innerHTML, timezone).toString();
+    var expire = toTimeZone(document.getElementById('expire').innerHTML, timezone).toString();
+    start = start.substring(0, start.length - 25);
+    expire = expire.substring(0, expire.length - 25);
+    document.getElementById('start').innerHTML = start;
+    document.getElementById('expire').innerHTML = expire;
+    var spans = document.getElementsByClassName("timer");
+	
+	for (let span of spans) {
+		span.expireTime = new Date(span.innerText);
+	}
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+		var now = Date.now();
+
+		for (let span of spans) {
+			var distance = span.expireTime - now;
+
+			if (!distance)
+				distance = -1;
+
+			if (distance < 0) {
+				span.innerHTML = "Expired";
+			}
+			else {
+				// Time calculations for days, hours, minutes and seconds
+				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+				// Display the result in the element with id="demo"
+				span.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+			}
+		}
+	}, 1000);
+</script>

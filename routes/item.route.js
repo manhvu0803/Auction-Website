@@ -6,14 +6,14 @@ const router = express.Router();
 router.get('/:id', async (req, res) => {
     const proID = req.params.id;
     try{
-    const itemData = await item.getItem(proID);
-    const mainImage = await item.getMainImageUrl(proID);
-    const images = await item.getExtraImageUrls(proID);
-    res.render('vwProduct/detail.hbs', {
-        itemData,
-        mainImage,
-        images,
-        pluralImages: images.length >= 1
+        const itemData = await item.getItem(proID);
+        const mainImage = await item.getMainImageUrl(proID);
+        const images = await item.getExtraImageUrls(proID);
+        res.render('vwProduct/detail.hbs', {
+            itemData,
+            mainImage,
+            images,
+            pluralImages: images.length >= 1
     })}
     catch(err){
         console.log(err);

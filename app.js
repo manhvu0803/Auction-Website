@@ -2,8 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import {item} from "./model/model.js";
 import mailing from "./mail/mail.js";
-import session from "express-session";
 import viewMdw from "./middlewares/view.mdw.js";
+import sessionMdw from "./middlewares/session.mdw.js";
 import localsMdw from "./middlewares/locals.mdw.js";
 import routeMdw from "./middlewares/route.mdw.js";
 import asyncError from "express-async-errors";
@@ -15,16 +15,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.urlencoded({extended:true}));
 
-app.set('trust proxy', 1) // trust first proxy
-app.use(session({
-  secret: 'fF(.qLPzV"rUMhZjN^cV2"KKb*HcoU*BlCwj{Fc)<)+!6CL,y$qBoQ#h+>#p`7=',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { 
-    //   secure: true
-    }
-}))
-
+sessionMdw(app);
 localsMdw(app);
 viewMdw(app);
 routeMdw(app);

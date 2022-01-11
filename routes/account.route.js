@@ -3,14 +3,22 @@ import {user} from "../model/model.js";
 
 const router = express.Router();
 const account='';
+
 router.get('/login', (req, res) => {
-    res.render('vwAccount/login');
+    if(req.session.auth){
+        res.redirect('/account/info');
+    }
+    else{
+        res.render('vwAccount/login');
+    }
 });
 
 router.post('/login', async (req, res) => {
     try{
-
         if(await user.checkPassword(req.body.username, req.body.password)){
+            req.session.auth = true;
+            req.session.authUser = await user.getUser(req.body.username);
+            req.session.authUser.minName=req.session.authUser.name.split(' ')[0];
             res.redirect('/');
         }
         else
@@ -25,8 +33,19 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.get('/logout', (req, res) => {
+    req.session.auth = false;
+    req.session.authUser = null;
+    res.redirect('/');
+});
+
 router.get('/signup', (req, res) => {
-    res.render('vwAccount/signup');
+    if(req.session.auth){
+        res.redirect('/account/info');
+    }
+    else{
+        res.render('vwAccount/signup');
+    }
 });
 
 router.get('/is-available', async (req, res) => {
@@ -42,7 +61,16 @@ router.get('/is-available', async (req, res) => {
 
 router.post('/signup', async (req, res) => {
     await user.newUser(req.body.username, req.body.name, req.body.password,req.body.email, 'bidder');
-    res.render('vwAccount/login');
+    res.redirect('/account/login');
 });
+
+router.get('/info', async (req, res) => {
+    if(req.session.auth){
+        res.render('vwAccount/profile');
+    }
+    else{
+        res.redirect('/account/login');
+    }
+})
 
 export default router;

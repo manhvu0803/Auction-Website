@@ -7,17 +7,17 @@ import { item } from "../model/model.js"
 export default function(app){
     app.get('/', async (req,res)=>{
         let data=(await item.getAllItems()).slice(0,5);
-        data.forEach(async(element) => {
-            element.mainImage= await item.getMainImageUrl(element.id);
-            const highestBidder = await item.getBid(element.id,1);
+        for(let i=0;i<data.length;i++){
+            data[i]['mainImage']= await item.getMainImageUrl(data[i].id);
+            const highestBidder = await item.getBid(data[i].id,1);
             if(highestBidder.length>0){
-                element.price = highestBidder[0].amount;
+                data[i]['price'] = highestBidder[0].amount;
             }
             else{
-                element.price = element.startingPrice;
+                data[i]['price'] = data[i].startingPrice;
             }
-            console.log(element);
-        });
+        }
+        console.log(data);
         res.render("home", { items: {
             almostFinish: data,
             popular: data,

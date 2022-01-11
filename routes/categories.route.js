@@ -22,17 +22,17 @@ router.get("/:category/:subcategory/:page", async (req, res) => {
     let current = parseInt(req.params.page);
     let itemDatas=await item.getItemsByCategory(req.params.category,req.params.subcategory);
     
-    itemDatas.forEach(async (itemData)=>{
-        itemData.mainImage= await item.getMainImageUrl(itemData.id);
-        const highestBidder = await item.getBid(itemData.id,1);
+    for(let i=0;i<itemDatas.length;i++){
+        itemDatas[i].mainImage= await item.getMainImageUrl(itemDatas[i].id);
+        const highestBidder = await item.getBid(itemDatas[i].id,1);
         if(highestBidder.length>0){
             console.log(1);
-            itemData.price = highestBidder[0].amount;
+            itemDatas[i].price = highestBidder[0].amount;
         }
         else{
-            itemData.price = itemData.startingPrice;
+            itemDatas[i].price = itemDatas[i].startingPrice;
         }
-    })
+    }
     const cats = await item.getAllCategories();
     const names = cats.categories;
 

@@ -7,7 +7,6 @@ import { item } from "../model/model.js"
 export default function(app){
     app.get('/', async (req,res)=>{
         const data=(await item.getAllItems()).slice(0,5);
-        console.log(data);
         res.render("home", { items: {
             almostFinish: data,
             popular: data,
@@ -22,6 +21,14 @@ export default function(app){
     app.use('/categories',categoriesRoute);
 
     app.use('/item',itemRoute);
+
+    app.get("/search", async (req, res) => {
+        console.log(req.query);
+        
+        const data = await item.getItemByQuery(req.query.query);
+    
+        res.render("search_result", { itemCount: data.length, items: data });
+    })
 
     app.use((req,res,next)=>{
         res.render('vwError/404');

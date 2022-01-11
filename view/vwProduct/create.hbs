@@ -47,7 +47,7 @@
 	}
 </script>
 
-<form style="margin: 2em 6em 2em 6em;" action="/item/create" method="post">
+<form style="margin: 2em 6em 2em 6em;" action="/item/create" method="post" enctype="multipart/form-data">
 	<div class="form-group">
 		<label for="exampleFormControlInput1">Name</label>
 		<input type="text" class="form-control" name="name" placeholder="Name">
@@ -75,7 +75,7 @@
 		<div>
 			<div id="msg"></div>
 			<div id="image-form">
-				<input type="file" name="img[]" class="file" accept="image/*">
+				<input type="file" name="img" class="file" accept="image/*">
 					<div class="input-group my-3">
 					<input type="text" class="form-control" disabled placeholder="Upload File" id="file">
 					<div class="input-group-append">

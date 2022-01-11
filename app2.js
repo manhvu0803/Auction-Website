@@ -1,5 +1,6 @@
 import express from "express"
 import expressHbs from "express-handlebars"
+import multer from "multer"
 
 const app = express();
 
@@ -114,7 +115,8 @@ app.get("/create", (req, res) => {
     res.render("vwProduct/create", data);
 })
 
-app.post("/item/create", (req, res) => {
+var multiHandler = multer({ dest: "uploads/" });
+app.post("/item/create", multiHandler.single("img"), (req, res) => {
     console.log(req.body);
     res.send("OK");
 })

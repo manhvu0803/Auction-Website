@@ -18,6 +18,7 @@ router.post('/login', async (req, res) => {
         if(await user.checkPassword(req.body.username, req.body.password)){
             req.session.auth = true;
             req.session.authUser = await user.getUser(req.body.username);
+            req.session.authUser.username = req.body.username;
             req.session.authUser.minName=req.session.authUser.name.split(' ')[0];
             res.redirect('/');
         }

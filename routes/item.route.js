@@ -37,7 +37,7 @@ router.post('/:id', async (req, res) => {
     }
     else{
         const proID = req.params.id;
-        const itemData = await item.getItem(proID);
+        await item.bid(proID,req.session.authUser.username,req.body.bid);
         res.redirect('/item/'+req.params.id)
     }
     

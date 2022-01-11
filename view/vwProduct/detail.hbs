@@ -24,10 +24,10 @@
 		e.preventDefault();
         var biddingprice = +$('input[name=bid]').val();
 
-        if(biddingprice < {{this.itemData.step}}){
-            alert('Bidding price must be greater than step price: {{this.itemData.step}}VNĐ!');
+        if(biddingprice < {{this.itemData.step}} + {{this.highestBidder.amount}}){
+            alert('Each bidding price must be greater than step price: {{this.itemData.step}}VNĐ!');
             return;
-        }else if(biddingprice+{{this.itemData.startingPrice}} > {{this.itemData.maximumPrice}}){
+        }else if(biddingprice > {{this.itemData.maximumPrice}}){
             alert('You should buy this item with: {{this.itemData.maximumPrice}}VNĐ instead!');
             return;
         }
@@ -165,7 +165,9 @@
                     <div class="biddingPart">
                         <span>Your bid:</span>
                         <form id="bidForm" method="post">
-                            <input name="bid" type="text" required style="border-radius: 10px; width: 30%; text-align: center; margin-right: 10px;">
+                            <input name="bid" type="number" required 
+                            style="border-radius: 10px; width: 30%; text-align: center; margin-right: 10px;"
+                            min="{{this.highestBidder.amount}}">
                             <button type="submit">Bid</button>
                         </form>
                     </div>

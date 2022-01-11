@@ -31,6 +31,17 @@ export default function(app){
             data.push(await item.getItem(idList[i]));
         }
 
+        if(req.query.sort!==undefined){
+            if(req.query.sort=="price"){
+                data.sort((a,b)=>{
+                    return a.startingPrice-b.startingPrice;
+                });
+                
+            }else if(req.query.sort=="timeLeft"){
+                data.sort((a,b)=>{
+                    return b.time-a.time});
+            }
+        }
         console.log(data);
 
         res.render("search_result", { itemCount: data.length, items: data });

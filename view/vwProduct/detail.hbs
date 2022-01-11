@@ -22,7 +22,7 @@
     <script>
         $('#bidForm').on('submit', function (e) {
 		e.preventDefault();
-        var biddingprice = +$('input[name=biddingprice]').val();
+        var biddingprice = +$('input[name=bid]').val();
 
         if(biddingprice < {{this.itemData.step}}){
             alert('Bidding price must be greater than step price: {{this.itemData.step}}VNĐ!');
@@ -32,7 +32,7 @@
             return;
         }
         else{
-            $('#bid').off('submit').submit();
+            $('#bidForm').off('submit').submit();
         }
         })
     </script>
@@ -136,7 +136,7 @@
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Current highest price:</span>
-                        <p>{{this.itemData.currentPrice}} VNĐ</p>
+                        <p>{{this.highestBidder.amount}} VNĐ</p>
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Step:</span>
@@ -160,7 +160,7 @@
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Price holder:</span>
-                        <p>{{this.itemData.buyer}}</p>
+                        <p>{{this.highestBidder.user}}</p>
                     </div>
                     <div class="biddingPart">
                         <span>Your bid:</span>

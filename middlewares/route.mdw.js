@@ -23,10 +23,18 @@ export default function(app){
     app.use('/item',itemRoute);
 
     app.get("/search", async (req, res) => {
-        console.log(req.query);
         
-        const data = await item.getItemByQuery(req.query.query);
-    
+        const idList = await item.getItemByQuery(req.query.query);
+
+        console.log(req.query)
+
+        let data = [];
+        for(let i = 0; i < idList.length; i++){
+            data.push(await item.getItem(idList[i]));
+        }
+
+        console.log(data);
+
         res.render("search_result", { itemCount: data.length, items: data });
     })
 

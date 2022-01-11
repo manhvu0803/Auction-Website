@@ -100,7 +100,7 @@
 					<span class="badge">New</span>
 					{{/if}}
 				</h3>
-				<p>{{this.discription}}</p>
+				<p>{{{this.description}}}</p>
 			</div>
 			<span class="clearfix borda"></span>
 		</article>
@@ -113,7 +113,7 @@
 	var spans = document.getElementsByClassName("timer");
 	
 	for (let span of spans) {
-		span.expireTime = new Date(parseInt(span.innerText));
+		span.expireTime = new Date(span.innerText);
 	}
 
 	// Update the count down every 1 second

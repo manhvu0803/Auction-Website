@@ -111,23 +111,23 @@
                         <h2 style="font-weight: bold; margin-bottom: 20px;">{{this.itemData.name}}</h2>
                         <div class="generalInf" style="display: inline-flex;">
                             <span>Purchase price:</span>
-                            <p style="font-weight: 700; color: rgb(84, 206, 84);">{{this.itemData.maximumPrice}} VNĐ</p>
+                            <p style="font-weight: 700;">{{this.itemData.maximumPrice}} VNĐ</p>
                         </div>
                         <div class="generalInf" style="display: inline-flex;">
                             <span>Current highest price:</span>
-                            <p style="color: rgb(84, 206, 84);">{{this.itemData.startingPrice}} VNĐ</p>
+                            <p>{{this.itemData.currentPrice}} VNĐ</p>
                         </div>
                         <div class="generalInf" style="display: inline-flex;">
                             <span>Step:</span>
-                            <p style="color: rgb(84, 206, 84);">{{this.itemData.step}} VNĐ</p>
+                            <p>{{this.itemData.step}} VNĐ</p>
                         </div>
                         <div class="generalInf" style="display: inline-flex;">
                             <span>Date Start:</span>
-                            <p style="color: rgb(85, 146, 238); font-weight: 700;" id='start'>{{this.itemData.postedTime}}</p>
+                            <p style="font-weight: 700;" id='start'>{{this.itemData.postedTime}}</p>
                         </div>
                         <div class="generalInf" style="display: inline-flex;">
                             <span>Date End:</span>
-                            <p style="color: rgb(240, 22, 22); font-weight: 700" id='expire'>{{this.itemData.expireTime}}</p>
+                            <p style="font-weight: 700" id='expire'>{{this.itemData.expireTime}}</p>
                         </div>
                         <div class="generalInf" style="display: inline-flex;">
                             <span>Time left: </span>
@@ -138,19 +138,16 @@
                             <p>{{this.itemData.seller}}</p>
                         </div>
                         <div class="generalInf" style="display: inline-flex;">
-                            <span>Bidder with highest price:</span>
+                            <span>Price holder:</span>
                             <p>{{this.itemData.buyer}}</p>
                         </div>
-                        <form id="bid" method="post">
-                            <div class="biddingPart">
-                                <span>Your bidding price:</span>
-                                <input type="text" name="biddingprice" required
-                                    style="border-radius: 10px; width: 20%; text-align: center; margin-right: 10px;">
-                                <button type="submit">
-                                    Bidding
-                                </button>
-                            </div>
-                        </form>
+                        <div class="biddingPart">
+                            <span>Your bid:</span>
+                            <form action="bid/{{this.itemData.id}}" method="post">
+                                <input name="bid" type="text" style="border-radius: 10px; width: 30%; text-align: center; margin-right: 10px;">
+                                <button type="submit">Bid</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

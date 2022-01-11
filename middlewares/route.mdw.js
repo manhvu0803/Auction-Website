@@ -6,7 +6,7 @@ import { item } from "../model/model.js"
 
 export default function(app){
     app.get('/', async (req,res)=>{
-        const data=await item.getAllItems().slice(0,5);
+        const data=(await item.getAllItems()).slice(0,5);
         res.render("home", { items: {
             almostFinish: data,
             popular: data,

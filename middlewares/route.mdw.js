@@ -6,7 +6,10 @@ import { item } from "../model/model.js"
 
 export default function(app){
     app.get('/', async (req,res)=>{
-        const data=(await item.getAllItems()).slice(0,5);
+        let data=(await item.getAllItems()).slice(0,5);
+        data.forEach(async(element) => {
+            element.mainImage= await item.getMainImageUrl(element.id);
+        });
         res.render("home", { items: {
             almostFinish: data,
             popular: data,

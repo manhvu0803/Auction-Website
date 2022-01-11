@@ -21,4 +21,9 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.post('/:id', async (req, res) => {
+    const itemData = await item.getItem(proID);
+    res.redirect('/item/'+req.params.id)
+})
+
 export default router;

@@ -1,61 +1,80 @@
-    <head>
-        <style>
-             body {
-                 margin: 0;
-                 padding-right: 0;
-                 background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc) repeat fixed;
-                 height: 100vh;
-             }
-             .box{
-                 position: absolute;
-                 padding-left: 40px; padding-right: 40px;
-                 left: 15.5%;
-                 width: 70%;
-                 background: white;
-                 box-shadow: 0 0 8px rgba(0,0,0,0.2);
-             }
-             .top_container img{
-                 width: 100%;
-             }
-             .top_container .generalInf, .biddingPart{
-                 width: 100%;
-             }
-             .top_container .generalInf span,
-             .top_container .biddingPart span{
-                 font-weight: 500;
-                 margin-right: 5px;
-                 font-size: 17px;
-             }
-             .top_container .generalInf p,
-             .top_container .biddingPart p{
-                 font-size: 17px;
-             }
-             .top_container .biddingPart button{
-                 border-radius: 10px; 
-                 border: none; 
-                 background: #384aeb; color: white;
-                 font-weight: 500;
-                 width: 30%; height: 40px;
-                 cursor: pointer;
-             }
-             .top_container .biddingPart button:hover{
-                 background: white; color: #384aeb;
-                 border: 2px solid #384aeb;
-             }
-             .mid_container{
-                 margin-top: 20px;
-             }
-             .mid_container .DescriptionInf{
-                 width: 100%;
-                 margin: 0;
-             }
-             .mid_container .DescriptionInf span{
-                 font-weight: 500;
-                 margin-right: 5px;
-                 font-size: 17px;
-             }
-         </style>
-     </head>
+{{#section 'js'}}
+    <script>
+        $('#bid').on('submit', function (e) {
+		e.preventDefault();
+        var biddingprice = +$('input[name=biddingprice]').val();
+
+        if(biddingprice < {{this.itemData.step}}){
+            alert('Bidding price must be greater than step price: {{this.itemData.step}}VNĐ!');
+            return;
+        }else if(biddingprice+{{this.itemData.startingPrice}} > {{this.itemData.maximumPrice}}){
+            alert('You should buy this item with: {{this.itemData.maximumPrice}}VNĐ instead!');
+            return;
+        }
+        else{
+            $('#bid').off('submit').submit();
+        }
+        })
+    </script>
+{{/section}}
+<head>
+    <style>
+            body {
+                margin: 0;
+                padding-right: 0;
+                background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc) repeat fixed;
+                height: 100vh;
+            }
+            .box{
+                position: absolute;
+                padding-left: 40px; padding-right: 40px;
+                left: 15.5%;
+                width: 70%;
+                background: white;
+                box-shadow: 0 0 8px rgba(0,0,0,0.2);
+            }
+            .top_container img{
+                width: 100%;
+            }
+            .top_container .generalInf, .biddingPart{
+                width: 100%;
+            }
+            .top_container .generalInf span,
+            .top_container .biddingPart span{
+                font-weight: 500;
+                margin-right: 5px;
+                font-size: 17px;
+            }
+            .top_container .generalInf p,
+            .top_container .biddingPart p{
+                font-size: 17px;
+            }
+            .top_container .biddingPart button{
+                border-radius: 10px; 
+                border: none; 
+                background: #384aeb; color: white;
+                font-weight: 500;
+                width: 30%; height: 40px;
+                cursor: pointer;
+            }
+            .top_container .biddingPart button:hover{
+                background: white; color: #384aeb;
+                border: 2px solid #384aeb;
+            }
+            .mid_container{
+                margin-top: 20px;
+            }
+            .mid_container .DescriptionInf{
+                width: 100%;
+                margin: 0;
+            }
+            .mid_container .DescriptionInf span{
+                font-weight: 500;
+                margin-right: 5px;
+                font-size: 17px;
+            }
+        </style>
+    </head>
  
     <body>
         <div class="box">
@@ -122,7 +141,7 @@
                             <span>Bidder with highest price:</span>
                             <p>{{this.itemData.buyer}}</p>
                         </div>
-                        <form>
+                        <form id="bid" method="post">
                             <div class="biddingPart">
                                 <span>Your bidding price:</span>
                                 <input type="text" name="biddingprice" required
@@ -139,7 +158,7 @@
                 <h4>Description:</h4>
                 <div class="DescriptionInf" style="display: inline-flex;">
                     <span>Category:</span>
-                    <p>{{this.itemData.category}}:{{this.itemData.subcategory}}</p>
+                    <p>{{this.itemData.category}}: {{this.itemData.subcategory}}</p>
                 </div>
                 <div class="DescriptionInf" >
                     <span>Detail:</span>
@@ -176,7 +195,6 @@
                 </div>
             </div>
         </div>
-</body>
 <script>
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     function toTimeZone(date, zone){
@@ -219,4 +237,6 @@
 			}
 		}
 	}, 1000);
+
 </script>
+</body>

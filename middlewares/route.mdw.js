@@ -2,10 +2,16 @@ import accountRoute from '../routes/account.route.js';
 import auctionRoute from '../routes/auction.route.js';
 import categoriesRoute from '../routes/categories.route.js';
 import itemRoute from '../routes/item.route.js';
+import { item } from "../model/model.js"
 
 export default function(app){
-    app.get('/', (req,res)=>{
-        res.render('home');
+    app.get('/', async (req,res)=>{
+        const data=await item.getAllItems();
+        res.render("home", { items: {
+            almostFinish: data,
+            popular: data,
+            highestBidded: data,
+        }});
     });
     
     app.use('/account',accountRoute);

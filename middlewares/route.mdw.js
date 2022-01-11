@@ -22,10 +22,6 @@ export default function(app){
 
     app.use('/item',itemRoute);
 
-    app.get('/err',(req,res)=>{
-        throw new Error('Error');
-    });
-
     app.use((req,res,next)=>{
         res.render('vwError/404');
     });

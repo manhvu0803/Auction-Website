@@ -60,7 +60,7 @@ router.get('/is-available', async (req, res) => {
 })
 
 router.post('/signup', async (req, res) => {
-    await user.newUser(req.body.username, req.body.password,  req.body.name, req.body.dob ,req.body.email, 'bidder');
+    await user.newUser(req.body.username, req.body.password,  req.body.name, req.body.dob ,req.body.email, "bidder");
     res.redirect('/account/login');
 });
 

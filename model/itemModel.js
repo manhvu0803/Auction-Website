@@ -53,6 +53,7 @@ export default class itemModel
 			this.field("description");
 			this.field("seller");
 			this.field("category");
+			this.field("subcategory");
 		})
 
 		if (buildIndex)
@@ -76,7 +77,8 @@ export default class itemModel
 			name: item.name,
 			description: item.description,
 			seller: item.seller,
-			category: item.category
+			category: item.category,
+			subcategory: item.subcategory
 		})
 	}
 
@@ -104,14 +106,26 @@ export default class itemModel
 	/**
 	 * 
 	 * @param {string} category 
-	 * @param {number} start 
-	 * @param {number} count 
-	 * @param {("postedTime")} order 
+	 * @param {string} subcategory default null
+	 * @param {number} start default 0
+	 * @param {number} count default 5
+	 * @param {("postedTime")} order default "postedTime"
 	 * @returns {Promise<[item]>} array of items
 	 */
-	async getItemsByCategory(category, start = 0, count = 5, order = "postedTime")
+	async getItemsByCategory(category, subcategory = null, start = 0, count = 5, order = "postedTime")
 	{
-		let res = await this.itemsRef
+		let res;
+		if (res.subcategory)
+			res = await this.itemsRef
+								.where("listing", "==", true)
+								.where("category", "==", category)
+								.where("subcategory", "==", subcategory)
+								.orderBy(order)
+								.startAfter(start)
+								.limit(count)
+								.get();
+		else
+			res = await this.itemsRef
 								.where("listing", "==", true)
 								.where("category", "==", category)
 								.orderBy(order)
@@ -190,7 +204,7 @@ export default class itemModel
 
 	/**
 	 * @param {string} category
-	 * @returns {Promise<[string]} array of subcategory names
+	 * @returns {Promise<string[]>} array of subcategory names
 	 */
 	 async getSubcategories(category) {
 		let snapshot = await this.categoryRef.get(category);
@@ -237,6 +251,7 @@ export default class itemModel
 	 * 	name: string,
 	 * 	maximumPrice: number, 
 	 * 	category: string,
+	 * 	subcategory: string,
 	 * 	step: number,
 	 * 	description: string,
 	 * 	postedTime: Date,
@@ -257,6 +272,7 @@ export default class itemModel
 			name: item.name,
 			maximumPrice: item.maximumPrice,
 			category: item.category,
+			subcategory: item.subcategory,
 			step: item.step,
 			description: item.description,
 			postedTime: item.postedTime,

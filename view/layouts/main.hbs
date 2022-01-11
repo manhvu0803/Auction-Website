@@ -75,6 +75,46 @@
             window.location.replace(`${window.location.protocol}//${window.location.host}` + `/search?query=${query}`)
         }
     </script>
+    <script>
+        function search(event)
+        {
+            let e = event || window.event;
+            e.preventDefault(); 
+            let query = document.getElementById("search-bar").value;
+            window.location.replace(`${window.location.protocol}//${window.location.host}` + `/search?query=${query}`)
+        }
+        var spans = document.getElementsByClassName("timer");
+        
+        for (let span of spans) {
+            span.expireTime = new Date(span.innerText);
+        }
+
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+            var now = Date.now();
+
+            for (let span of spans) {
+                var distance = span.expireTime - now;
+
+                if (!distance)
+                    distance = -1;
+
+                if (distance < 0) {
+                    span.innerHTML = "Expired";
+                }
+                else {
+                    // Time calculations for days, hours, minutes and seconds
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // Display the result in the element with id="demo"
+                    span.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+                }
+            }
+        }, 1000);
+    </script>
     {{{_sections.js}}}
 </body>
 </html>

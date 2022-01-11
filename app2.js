@@ -121,4 +121,46 @@ app.post("/item/create", multiHandler.single("img"), (req, res) => {
     res.send("OK");
 })
 
+app.get("/admin/users", (req, res) => {
+    res.redirect("/admin/users/1")
+})
+
+app.get("/admin/users/:page", (req, res) => {
+    let current = parseInt(req.params.page);
+    let data = [
+        {
+            username: "mock",
+            type: "bidder",
+            wantUpgrade: true,
+            upvoteRatio: 90
+        },
+        {
+            username: "cas",
+            type: "seller",
+            wantUpgrade: false,
+            upvoteRatio: 50
+        },
+        {
+            username: "coc",
+            type: "admin",
+            wantUpgrade: false,
+            upvoteRatio: 90.25
+        },
+        {
+            username: "try",
+            type: "bidder",
+            wantUpgrade: false,
+            upvoteRatio: 90
+        },
+    ]
+    
+    res.render("user_list", { 
+        users: data ,
+        pageData: {
+            prev: Math.max(1, current - 1),
+            next: current + 1
+        }
+    });
+})
+
 app.listen(3000, () => console.log("listening"));

@@ -9,6 +9,14 @@ export default function(app){
         let data=(await item.getAllItems()).slice(0,5);
         data.forEach(async(element) => {
             element.mainImage= await item.getMainImageUrl(element.id);
+            const highestBidder = await item.getBid(element.id,1);
+            if(highestBidder.length>0){
+                element.price = highestBidder[0].amount;
+            }
+            else{
+                element.price = element.startingPrice;
+            }
+            console.log(element);
         });
         res.render("home", { items: {
             almostFinish: data,

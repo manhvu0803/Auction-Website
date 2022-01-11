@@ -115,7 +115,7 @@ export default class itemModel
 	async getItemsByCategory(category, subcategory = null, start = 0, count = 5, order = "postedTime")
 	{
 		let res;
-		if (res.subcategory)
+		if (subcategory)
 			res = await this.itemsRef
 								.where("listing", "==", true)
 								.where("category", "==", category)

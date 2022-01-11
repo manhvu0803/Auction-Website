@@ -3,16 +3,46 @@ import {user,item} from "../model/model.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.render("categories", { categories: [
-        { name: "sub1", subcat: ["1", "2", "32"]},
-        { name: "sub2", subcat: ["1", "2", "3"]},
-        { name: "sub3", subcat: ["1", "2", "13"]},
-    ]})
+router.get("/", async (req, res) => {
+    const cats = await item.getAllCategories();
+    const names = cats.categories;
+
+    let data=[];
+    names.forEach(name=>{
+        data.push({
+            name:name,
+            subcat:cats[name]
+        })
+    })
+
+    res.render("categories", { categories: data})
 })
 
-router.get("/:category/:subcategory/:page", (req, res) => {
+router.get("/:category/:subcategory/:page", async (req, res) => {
     let current = parseInt(req.params.page);
+    let itemDatas=await item.getItemsByCategory(req.params.category,req.params.subcategory);
+    
+    itemDatas.forEach(async (itemData)=>{
+        itemData.mainImage= await item.getMainImageUrl(itemData.id);
+        const highestBidder = await item.getBid(itemData.id,1);
+        if(highestBidder.length>0){
+            console.log(1);
+            itemData.price = highestBidder[0].amount;
+        }
+        else{
+            itemData.price = itemData.startingPrice;
+        }
+    })
+    const cats = await item.getAllCategories();
+    const names = cats.categories;
+
+    let data=[];
+    names.forEach(name=>{
+        data.push({
+            name:name,
+            subcat:cats[name]
+        })
+    })
     res.render("categories", {
         pageData: {
             category: req.params.category,
@@ -21,41 +51,8 @@ router.get("/:category/:subcategory/:page", (req, res) => {
             next: current + 1,
             prev: Math.max(1, current - 1),
         },
-        categories: [
-            { name: "sub1", subcat: ["1", "2", "32"]},
-            { name: "sub2", subcat: ["1", "2", "3"]},
-            { name: "sub3", subcat: ["1", "2", "13"]},
-        ],
-        items: [ 
-            {
-                id: "212da22s2vdvc",
-                name: "ball",
-                expireTime: Date.now() + 1000000,
-                description: "asdasdnkaskldhasjkdhasjkhdasjk",
-                price: "20000"
-            },  
-            {
-                id: "212da2s2vdvc",
-                name: "baall",
-                expireTime: Date.now() + 1000000,
-                description: "1 2 3 4",
-                price: "200200"
-            },  
-            {
-                id: "212das2vdvc",
-                name: "balsl",
-                expireTime: Date.now() + 1000000,
-                description: "123 12312 23 12312 <br> 23423423 423 <br> asd",
-                price: "202000"
-            },
-            {
-                id: "cac",
-                name: "d",
-                expireTime: Date.now() + 1000000,
-                description: "123 12312 23 12312 <br> 23423423 423 <br> asd",
-                price: "202000"
-            },
-        ]
+        categories: data,
+        items: itemDatas
     })
 })
 

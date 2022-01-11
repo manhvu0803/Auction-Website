@@ -175,7 +175,7 @@
 		<div class="col col-lg-7 container" style="margin:0 0 0 0;">
 			<div class="row">
 				{{#each items}}
-				<div class="col">
+				<div class="col-3">
 					<a href="/item/{{this.id}}" style="text-decoration: none; color: black">
 						<figure class="card card-product">
 							<div class="img-wrap"><img src="{{this.mainImage}}"></div>
@@ -186,7 +186,7 @@
 							<div class="bottom-wrap">
 								<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
 								<div class="price-wrap h5">
-									<span class="price-new">{{this.price}}</span>
+									<span class="price-new"><i class="fa fa-usd"></i> {{this.price}} VNĐ</span>
 								</div> <!-- price-wrap.// -->
 							</div> <!-- bottom-wrap.// -->
 						</figure>

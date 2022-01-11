@@ -1,0 +1,144 @@
+<style>
+	.container { margin-top: 20px; }
+	.mb20 { margin-bottom: 20px; } 
+
+	hgroup { padding-left: 15px; border-bottom: 1px solid #ccc; }
+	hgroup h1 { font: 500 normal 1.625em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin-top: 0; line-height: 1.15; }
+	hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin: 0; padding-bottom: 10px; }
+
+	.search-result .thumbnail { border-radius: 0 !important; }
+	.search-result:first-child { margin-top: 0 !important; }
+	.search-result { margin-top: 20px; }
+	.search-result .col-md-2 { border-right: 1px dotted #ccc; min-height: 140px; }
+	.search-result ul { padding-left: 0 !important; list-style: none;  }
+	.search-result ul li { font: 400 normal .85em "Roboto",Arial,Verdana,sans-serif;  line-height: 30px; }
+	.search-result ul li i { padding-right: 5px; }
+	.search-result .col-md-7 { position: relative; }
+	.search-result h3 { font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; margin-top: 0 !important; margin-bottom: 10px !important; }
+	.search-result h3 > a, .search-result i { color: #248dc1 !important; }
+	.search-result p { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; } 
+	.search-result span.plus { position: absolute; right: 0; top: 126px; }
+	.search-result span.plus a { background-color: #248dc1; padding: 5px 5px 3px 5px; }
+	.search-result span.plus a:hover { background-color: #414141; }
+	.search-result span.plus a i { color: #fff !important; }
+	.search-result span.border { display: block; width: 97%; margin: 0 15px; border-bottom: 1px dotted #ccc; }
+
+	.badge {
+		background-color: #6c757d;
+	}
+</style>
+
+<script>
+	function getQueries(url)
+	{
+		split = url.split("?");
+		if (split.length > 1)
+			url = split[split.length - 1];
+		else 
+			url = "";
+
+		return url.split("&");
+	}
+
+	function toSort(mode) 
+	{
+		let queries = getQueries(window.location.href);
+		let url = window.location.pathname + "?";
+		let replaced = false;
+		
+		for (let i = 0; i < queries.length; i++) {
+			if (queries[i].split("=")[0] == "sort") {
+				queries[i] = `sort=${mode}`;
+				replaced = true;
+			}
+			url += queries[i];
+		}
+
+		if (!replaced)
+			url += `sort=${mode}`
+		window.location.replace(url);
+	}
+</script>
+
+<div class="container">
+	<div class="row">
+		<div class="col mb20">
+			<h1>Search Results</h1>
+			<h2 class="lead"><strong class="text-danger">{{items.length}}</strong> results were found for the search for <strong class="text-danger">{{query}}</strong></h2>
+		</div>
+		
+		<div class="col dropdown justify-content-center">
+			<button style="float: right" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+				Sort by
+			</button>
+			<ul class="dropdown-menu" style="min-width: 4em;" aria-labelledby="dropdownMenuButton1">
+				<li><a class="dropdown-item" onclick="toSort(`relevance`)">Relevance</a></li>
+				<li><a class="dropdown-item" onclick="toSort(`price`)">Price</a></li>
+				<li><a class="dropdown-item" onclick="toSort(`timeLeft`)">Time left</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+    <section class="col-xs-12 col-sm-6 col-md-12">
+		{{#each items}}
+		<article class="search-result row">
+			<div class="col-xs-12 col-sm-12 col-md-3">
+				<a href="#" title="main image" class="thumbnail"><img src="{{this.mainImage}}" alt="main image" /></a>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-2">
+				<ul class="meta-search">
+					<li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
+					<li><i class="fa fa-tags"></i> {{this.category}}</li>
+					<li>Holder: {{this.highestBidder}}</li>
+				</ul>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+				<h3>
+					<a href="#" title="">{{this.name}}</a> 
+					{{#if this.new}}
+					<span class="badge">New</span>
+					{{/if}}
+				</h3>
+				<p>{{this.discription}}</p>
+			</div>
+			<span class="clearfix borda"></span>
+		</article>
+		<hr>
+		{{/each}}
+	</section>
+</div>
+
+<script>
+	var spans = document.getElementsByClassName("timer");
+	
+	for (let span of spans) {
+		span.expireTime = new Date(parseInt(span.innerText));
+	}
+
+	// Update the count down every 1 second
+	var x = setInterval(function() {
+		var now = Date.now();
+
+		for (let span of spans) {
+			var distance = span.expireTime - now;
+
+			if (!distance)
+				distance = -1;
+
+			if (distance < 0) {
+				span.innerHTML = "Expired";
+			}
+			else {
+				// Time calculations for days, hours, minutes and seconds
+				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+				// Display the result in the element with id="demo"
+				span.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+			}
+		}
+	}, 1000);
+</script>

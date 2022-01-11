@@ -44,13 +44,47 @@ app.get("/", (req, res) => {
         },
     ]
 
-    res.locals.account = { username: "jason"} ;
+    res.locals.auth = true;
 
     res.render("home", { items: {
         almostFinish: data,
         popular: data,
         highestBidded: data,
     }});
+})
+
+app.get("/search", (req, res) => {
+    console.log(req.query);
+
+    let data = [
+        {
+            id: "212das2vdvc",
+            name: "ball",
+            expireTime: 1641793217298 + 1000000,
+            description: "asdasdnkaskldhasjkdhasjkhdasjk",
+            price: "20000"
+        },  
+        {
+            id: "212das2vdvc",
+            name: "baall",
+            description: "1 2 3 4",
+            price: "200200"
+        },  
+        {
+            id: "212das2vdvc",
+            name: "balsl",
+            description: "123 12312 23 12312 <br> 23423423 423 <br> asd",
+            price: "202000"
+        },
+        {
+            id: "212das2vdvc",
+            name: "b2alsl",
+            description: "123 12312 23 12312 <br> 23423423 423 <br> asd",
+            price: "202000"
+        },
+    ]
+
+    res.render("search_result", { itemCount: data.length, items: data });
 })
 
 app.get("/account/login", (req, res) => {

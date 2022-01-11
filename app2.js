@@ -95,4 +95,28 @@ app.get("/account/signup", (req, res) => {
 	res.render("vwAccount/signup");
 })
 
+app.get("/create", (req, res) => {
+    let data = {};
+    data.categories = [
+        {
+            name: "toys",
+            subcat: ["sport", "kid", "wood"]
+        },
+        {
+            name: "elec",
+            subcat: ["phone", "tablet", "smart"]
+        },
+        {
+            name: "ball",
+            subcat: ["vas", "kibased", "ded"]
+        }
+    ]
+    res.render("vwProduct/create", data);
+})
+
+app.post("/item/create", (req, res) => {
+    console.log(req.body);
+    res.send("OK");
+})
+
 app.listen(3000, () => console.log("listening"));

@@ -1,0 +1,157 @@
+<script src="https://cdn.tiny.cloud/1/2ew8jrp5iosrdb5kwjk4cay66wetcgfgihjdi35ae3p8d5r8/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+<script>
+	tinymce.init({
+		selector: '#mytextarea'
+	});
+</script>
+
+<style>
+	.file {
+		visibility: hidden;
+		position: absolute;
+	}
+	
+	.form-group {
+		margin-bottom: 1em;
+	}
+
+	label {
+		font-size: 1.25rem;
+		margin-bottom: 0.5em;
+	}
+</style>
+
+<script>
+	function changeSubcat()
+	{
+		let select = document.getElementById("categorySelect").value;
+		let subSelect = document.getElementById("subCatSelect");
+		subSelect.innerHTML = "";
+		for (let cat of categories[select]) {
+			let opt = document.createElement("option");
+			opt.value = cat;
+			opt.innerHTML = cat;
+			subSelect.appendChild(opt);
+		}
+	}
+
+	let categories = {
+		{{#each categories}}
+		{{this.name}}: [
+			{{#each this.subcat}}
+			"{{this}}",
+			{{/each}}
+		],
+		{{/each}}
+	}
+</script>
+
+<form style="margin: 2em 6em 2em 6em;" action="/item/create" method="post">
+	<div class="form-group">
+		<label for="exampleFormControlInput1">Name</label>
+		<input type="text" class="form-control" name="name" placeholder="Name">
+	</div>
+
+	<div class="form-group">
+		<label>Category</label>
+		<select class="form-control" name="category" id="categorySelect" onchange="changeSubcat()">
+		{{#each categories}}
+			<option>{{this.name}}</option>
+		{{/each}}
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label>Subcategory</label>
+		<select class="form-control" name="subcategory" id="subCatSelect">
+		<option>sport</option>
+		<option>wood</option>
+		</select>
+	</div>
+
+	<label>Main image</label>
+	<div>
+		<div>
+			<div id="msg"></div>
+			<div id="image-form">
+				<input type="file" name="img[]" class="file" accept="image/*">
+					<div class="input-group my-3">
+					<input type="text" class="form-control" disabled placeholder="Upload File" id="file">
+					<div class="input-group-append">
+						<button type="button" class="browse btn btn-primary">Browse...</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="ml-2">
+			<img src="" id="preview" class="img-thumbnail">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Description</label>
+		<textarea id="mytextarea" name="description" style="min-height: 30em;"></textarea>
+	</div>
+
+	<div class="form-group">
+		<label>Expire time</label>
+		<input type='datetime-local' class="form-control" name="expiretime">
+	</div>
+	
+	<div>
+		<label>Starting price</label>
+		<div class="input-group mb-3">
+			<input type="number" class="form-control" min="0" step="1000">
+			<div class="input-group-append">
+				<span class="input-group-text">VND</span>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<label>Step</label>
+		<div class="input-group mb-3">
+			<input type="number" class="form-control" min="0" step="1000">
+			<div class="input-group-append">
+				<span class="input-group-text">VND</span>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<label>Maximum price</label>
+		<div class="input-group mb-3">
+			<input type="number" class="form-control" min="0" step="1000">
+			<div class="input-group-append">
+				<span class="input-group-text">VND</span>
+			</div>
+		</div>
+	</div>
+
+	<div style="justify-content: center; display: flex; margin-top: 2em">
+		<button type="submit" class="btn btn-lg btn-outline-primary">Create item</button>
+	</div>
+</form>
+
+<script>changeSubcat()</script>
+
+<script>
+	$(document).on("click", ".browse", function() {
+		var file = $(this).parents().find(".file");
+		file.trigger("click");
+	});
+	
+	$('input[type="file"]').change(function(e) {
+		var fileName = e.target.files[0].name;
+		$("#file").val(fileName);
+
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			// get loaded data and render thumbnail.
+			document.getElementById("preview").src = e.target.result;
+		};
+		// read the image file as a data URL.
+		reader.readAsDataURL(this.files[0]);
+	});
+</script>

@@ -26,6 +26,11 @@
 	.badge {
 		background-color: #6c757d;
 	}
+
+	.thumbnail-image {
+		max-width: 10em;
+		max-height: 10em;
+	}
 </style>
 
 <script>
@@ -84,15 +89,19 @@
     <section class="col-xs-12 col-sm-6 col-md-12">
 		{{#each items}}
 		<article class="search-result row">
-			<div class="col-xs-12 col-sm-12 col-md-3">
-				<a href="#" title="main image" class="thumbnail"><img src="{{this.mainImage}}" alt="main image" /></a>
+			<div class="col-xs-12 col-sm-12 col-lg-2">
+				<a href="#" title="main image" class="thumbnail">
+					<img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
+				</a>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-2">
 				<ul class="meta-search">
 					<li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
 					<li><i class="fa fa-tags"></i> {{this.category}}</li>
 					<li><i class="fa fa-usd"></i>{{this.startingPrice}} VNĐ</li>
+					{{#if this.highestBidder}}
 					<li>Holder: {{this.highestBidder}}</li>
+					{{/if}}
 				</ul>
 			</div>
 			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">

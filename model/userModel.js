@@ -153,11 +153,36 @@ export default class userModel
 		});
 	}
 
-	/*
-	async checkPasswordByEmail(email, password)
+	/**
+	 * 
+	 * @param {string} email 
+	 * @param {string} password 
+	 * @param {string} returnAccount default false
+	 * @returns {boolean | user} Return true/false if returnAccount is false. Return user account data if returnAccount is true and password is correct
+	 */
+	async checkPasswordByEmail(email, password, returnAccount = false)
 	{
-		let userDoc = await this.usersRef.where("email", "==", email).get();
-		return bcrypt.compareSync(password, userDoc.password);
+		let snapshot = await this.usersRef.where("email", "==", email).get();
+		let doc = snapshot.docs[0].data();
+		let correct = bcrypt.compareSync(password, doc.password);
+		
+		if (!returnAccount)
+			return correct;
+		else if (!correct)
+			return null;
+
+		if (doc.password)
+			delete doc.password;
+		
+		return doc;
 	}
-	*/
+	
+	async getUserByEmail(email)
+	{
+		let snapshot = await this.usersRef.where("email", "==", email).get();
+		let data = snapshot.docs[0].data();
+		if (data.password)
+			delete data.password;
+		return data;
+	}
 }

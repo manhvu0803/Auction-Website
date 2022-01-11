@@ -27,9 +27,11 @@
                     <li><a href="/categories" class="nav-link px-2 text-white">Categories</a></li>
                 </ul>
 
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                    <input type="search" class="form-control form-control-dark" id='search-bar' placeholder="Search..." aria-label="Search">
-                </form>
+                <div class="dropdown">
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                        <input type="text" class="form-control form-control-dark" id='search-bar' placeholder="Search..." aria-label="Search">
+                    </form>
+                </div>
 
                 <div class="text-end">
                     {{#if account}}
@@ -59,8 +61,7 @@
     <script>
         var searchBar=document.getElementById("search-bar");
         searchBar.addEventListener("keyup", function(event) {
-            var data = '<%= items%>';
-            console.log(data);
+            console.log(event.target.value);
         });
     </script>
 </body>

@@ -26,8 +26,6 @@ export default function(app){
         
         const idList = await item.getItemByQuery(req.query.query);
 
-        console.log(req.query)
-
         let data = [];
         for(let i = 0; i < idList.length; i++){
             data.push(await item.getItem(idList[i]));

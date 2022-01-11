@@ -42,20 +42,21 @@
 
 	function toSort(mode) 
 	{
+		console.log(window.location.href);
 		let queries = getQueries(window.location.href);
 		let url = window.location.pathname + "?";
 		let replaced = false;
 		
 		for (let i = 0; i < queries.length; i++) {
 			if (queries[i].split("=")[0] == "sort") {
-				queries[i] = `sort=${mode}`;
+				queries[i] = `&sort=${mode}`;
 				replaced = true;
 			}
 			url += queries[i];
 		}
 
 		if (!replaced)
-			url += `sort=${mode}`
+			url += `&sort=${mode}`
 		window.location.replace(url);
 	}
 </script>

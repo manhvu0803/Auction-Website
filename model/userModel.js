@@ -185,4 +185,24 @@ export default class userModel
 			delete data.password;
 		return data;
 	}
+
+	async addItemToWatch(username, itemId) {
+		await this.usersRef
+				.doc(username)
+				.collection("watch")
+				.doc("itemId")
+				.set({ [itemId]: null }, { merge: true });
+		if (debug)
+			console.log(`Add item ${itemId} to user ${username}`);
+	}
+
+	async getWatchItems(username) {
+		let snapshot = await this.usersRef.doc(username).collection("watch").doc("itemId").get();
+		let doc = snapshot.data();
+		let res = []
+		for (let prop in doc)
+			res.push(prop);
+
+		return res;
+	}
 }

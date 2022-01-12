@@ -18,7 +18,6 @@ export default function(app){
             else{
                 data[i]['price'] = data[i].startingPrice;
             }
-            data[i]['countVote']=await item.getBidCount(data[i].id);
         }
 
         const almost= data.sort((a,b)=>{
@@ -26,7 +25,7 @@ export default function(app){
         }).slice(0,5);
 
         const votes= data.sort((a,b)=>{
-            return b.countVote-a.countVote;
+            return b.bidCount-a.bidCount;
         }).slice(0,5);
 
         const high= data.sort((a,b)=>{

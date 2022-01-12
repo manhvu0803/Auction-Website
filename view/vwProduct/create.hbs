@@ -64,7 +64,7 @@
 
 	<div class="form-group">
 		<label>Subcategory</label>
-		<select class="form-control" name="subcategory" id="subCatSelect required">
+		<select class="form-control" name="subcategory" id="subCatSelect" required>
 		<option>sport</option>
 		<option>wood</option>
 		</select>
@@ -134,7 +134,7 @@
 	</div>
 </form>
 
-{{!-- <script>changeSubcat()</script> --}}
+<script>changeSubcat()</script>
 
 <script>
 	$(document).on("click", ".browse", function() {
@@ -156,8 +156,4 @@
 		console.log(reader.readAsBinaryString(this.files[0]));
 	});
 
-	$('#createForm').on('submit', (e) => {
-		e.preventDefault();
-		$('#createForm').off('submit').submit();
-	})
 </script>

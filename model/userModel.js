@@ -60,8 +60,9 @@ export default class userModel
 		if (!data)
 			throw new Error("User not found");
 		
-		if (data.dob instanceof firestore.Timestamp) 
-			data.dob = data.dob.toDate();
+		for (let prop in data)
+		 	if (data[prop] instanceof firestore.Timestamp) 
+				data[prop] = data[prop].toDate();
 		delete data.password;
 		return data;
 	}
@@ -110,6 +111,23 @@ export default class userModel
 		if (data.password)
 			data.password = bcrypt.hashSync(data.password, saltRound);
 		this.usersRef.doc(username).update(data);
+	}
+
+	/**
+	 * Change account type of a user. Changing to seller will create `sellerExpireTime` field. `sellerExpireTime` will be 7 days from the upgrade moment
+	 * @param {string} username 
+	 * @param {("seller" | "admin" | "bidder")} type default seller
+	 */
+	async upgradeAccount(username, type = "seller")
+	{
+		let data = {};
+		data.type = type;
+		if (type == seller)
+			data.sellerExpireTime = new Date(Date.now() + 7 * 1000 * 60 * 60 * 24);
+		await this.usersRef.doc(username).set(data, { merge: true });
+
+		if (debug)
+			console.log(`Upgrade user ${username} to ${type}`);
 	}
 
 	/**

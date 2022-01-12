@@ -105,6 +105,13 @@ export default class userModel
 			console.log(`Update vote count for user ${username}`)
 	}
 
+	async updateInfo(username, data)
+	{
+		if (data.password)
+			data.password = bcrypt.hashSync(data.password, saltRound);
+		this.usersRef.doc(username).update(data);
+	}
+
 	/**
 	 * Add a user-to-user review. This won't check if the rater or the rated exists or not
 	 * @param {string} rater username of the rating user
@@ -193,7 +200,17 @@ export default class userModel
 				.doc("itemId")
 				.set({ [itemId]: null }, { merge: true });
 		if (debug)
-			console.log(`Add item ${itemId} to user ${username}`);
+			console.log(`Add item ${itemId} to user ${username}'s watch list`);
+	}
+
+	async deleteWatchItem(username, itemId) {
+		await this.usersRef
+				.doc(username)
+				.collection("watch")
+				.doc("itemId")
+				.set({ [itemId]: firestore.FieldValue.delete() });
+		if (debug)
+			console.log(`Delete item ${itemId} from user ${username}'s watch list`);
 	}
 
 	async getWatchItems(username) {

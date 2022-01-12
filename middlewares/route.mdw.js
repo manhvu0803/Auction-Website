@@ -72,6 +72,7 @@ export default function(app){
     })
     
     var multiHandler = multer({ dest: "uploads/" });
+    
     app.post("/item/create", multiHandler.single("img"), (req, res) => {
         console.log(req.body);
         res.send("OK");

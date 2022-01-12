@@ -47,7 +47,7 @@
 	}
 </script>
 
-<form style="margin: 2em 6em 2em 6em;" action="/item/create" method="post" enctype="multipart/form-data">
+<form style="margin: 2em 6em 2em 6em;" action="/item/create" method="post" enctype="multipart/form-data" id='createForm'>
 	<div class="form-group">
 		<label for="exampleFormControlInput1">Name</label>
 		<input type="text" class="form-control" name="name" placeholder="Name" required>
@@ -91,7 +91,7 @@
 
 	<div class="form-group">
 		<label>Description</label>
-		<textarea id="mytextarea" name="description" style="min-height: 30em;" required></textarea>
+		<textarea id="mytextarea" name="description" style="min-height: 30em;"></textarea>
 	</div>
 
 	<div class="form-group">
@@ -134,7 +134,7 @@
 	</div>
 </form>
 
-<script>changeSubcat()</script>
+{{!-- <script>changeSubcat()</script> --}}
 
 <script>
 	$(document).on("click", ".browse", function() {
@@ -154,4 +154,10 @@
 		// read the image file as a data URL.
 		reader.readAsDataURL(this.files[0]);
 	});
+
+	$('#createForm').on('submit', (e) => {
+		e.preventDefault();
+		alert("Submitted");
+		$('#createForm').off('submit').submit();
+	})
 </script>

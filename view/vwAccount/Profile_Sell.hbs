@@ -40,7 +40,7 @@
                             Information
                         </a>
                         <a id="MenunotAtive" href="/account/point?username={{this.info.username}}" class="list-group-item list-group-item-action">
-                            Self Point
+                            Reviews
                         </a>
                         <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Change password
@@ -62,7 +62,7 @@
                     <div class="card-body">
                         <div style="width: 100%; display: inline-flex;">
                             <h5 style="margin-right: 2%;">Remaining time as a seller:</h5>
-                            <p style="font-size: 17px; color: rgb(243, 74, 74)">10 more days</p>
+                            <p style="font-size: 17px; color: rgb(243, 74, 74)">{{this.expireSellerTime}}</p>
                         </div>
                         {{#if this.info.isSelf}}
                             <button type="button" onclick="ChangePwdButtonClick()" id="changepwdbtn"

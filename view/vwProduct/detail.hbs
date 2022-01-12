@@ -70,6 +70,8 @@
         let input = form.getElementsByTagName("input")[0];
         
         let price = parseInt(input.value);
+        if (!price)
+            price = 0;
         let minimumPrice = {{this.highestBidder.amount}} + {{this.itemData.step}};
         let maximumPrice = {{this.itemData.maximumPrice}};
         
@@ -83,7 +85,7 @@
             return;
         }
 
-        if (window.confirm(`Are you sure you want to bid ${input.value} VND?`))
+        if (window.confirm(`Are you sure you want to bid ${price} VND?`))
             form.submit();
     }
 </script>

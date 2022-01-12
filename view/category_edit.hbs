@@ -1,0 +1,102 @@
+<style>
+	.row {
+		align-items: center;
+		display: flex;
+	}
+</style>
+
+<!-- Modal -->
+{{#each categories}}
+<div class="modal fade" id="model-{{this.name}}" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Edit {{this.name}}</h5>
+			</div>
+			<div class="modal-body">
+				<form action="categories/edit/{{this.name}}" method="post" id="edit-{{this.name}}">
+					<input required type="text" class="form-control" placeholder="New name">
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="submit" form="edit-{{this.name}}" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+	{{#each this.subcat}}
+	<div class="modal fade" id="model-{{../this.name}}-{{this}}" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit {{this}} of {{../this.name}}</h5>
+				</div>
+				<div class="modal-body">
+					<form action="categories/edit/{{../this.name}}/{{this}}" method="post" id="edit-{{../this.name}}-{{this}}">
+						<input required type="text" class="form-control" placeholder="New name">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="submit" form="edit-{{../this.name}}-{{this}}" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/each}}
+{{/each}}
+
+<ul class="list-group container">
+	{{#each categories}}
+	<li class="list-group-item row">
+		<span class="col-lg-10"><strong style="font-size: larger;">{{this.name}}</strong></span>
+		<span class="button-group col-lg-2">
+			<span class="col-md-1">
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#model-{{this.name}}">
+					Edit
+				</button>
+			</span>
+			<span class="col-md-1"><button class="btn btn-danger" onclick="deleteCategory(`{{this.name}}`)" >Delete</button></span>
+		</span>
+	</li>
+	<ul class="list-group" style="margin-left: 2em;">
+		{{#each this.subcat}}
+		<li class="list-group-item form-row">
+			<span class="col-lg-10" style="display: inline-block">{{this}}</span>
+			<span class="button-group col-lg-2">
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#model-{{../this.name}}-{{this}}">
+					Edit
+				</button>
+				<button class="btn btn-danger float-left" onclick="deleteSubcategory(`{{../this.name}}`, `{{this}}`)">Delete</button>
+			</span>
+		</li>
+		{{/each}}
+		<form action="/categories/add/{{this.name}}" class="list-group-item form-row" style="display: flex;" method="post">
+			<input required name="subcategory" type="text" class="form-control" placeholder="New subcategory" style="max-width: 93%;">
+			<button class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+		</form>
+	</ul>
+	{{/each}}
+	<form action="/categories/add" class="list-group-item form-row" style="display: flex;" method="post">
+		<input required name="category" type="text" class="form-control" placeholder="New category" style="max-width: 93%; font-size: larger;">
+		<button class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
+	</form>
+</ul>
+
+<script>
+	function deleteCategory(category)
+	{
+		if (window.confirm(`Are you sure you want to delete ${category}?`) == true) {
+			location.replace(`${location.protocol}//${location.host}/categories/delete/${category}`);
+		}
+	}
+	
+	function deleteSubcategory(category, subcategory)
+	{
+		if (window.confirm(`Are you sure you want to delete ${subcategory} from ${category}?`) == true) {
+			location.replace(`${location.protocol}//${location.host}/categories/delete/${category}/${subcategory}`);
+		}
+	}
+</script>

@@ -25,10 +25,10 @@
         var biddingprice = +$('input[name=bid]').val();
 
         if(biddingprice < {{this.itemData.step}} + {{this.highestBidder.amount}}){
-            alert('Each bidding price must be greater than step price: {{this.itemData.step}}VNĐ!');
+            alert('Each bidding price must be greater than step price: {{this.itemData.step}}VND!');
             return;
         }else if(biddingprice > {{this.itemData.maximumPrice}}){
-            alert('You should buy this item with: {{this.itemData.maximumPrice}}VNĐ instead!');
+            alert('You should buy this item with: {{this.itemData.maximumPrice}}VND instead!');
             return;
         }
         else{
@@ -132,15 +132,15 @@
                     <h2 style="font-weight: bold; margin-bottom: 20px;">{{this.itemData.name}}</h2>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Purchase price:</span>
-                        <p style="font-weight: 700;">{{this.itemData.maximumPrice}} VNĐ</p>
+                        <p style="font-weight: 700;">{{this.itemData.maximumPrice}} VND</p>
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Current highest price:</span>
-                        <p>{{this.highestBidder.amount}} VNĐ</p>
+                        <p>{{this.highestBidder.amount}} VND</p>
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Step:</span>
-                        <p>{{this.itemData.step}} VNĐ</p>
+                        <p>{{this.itemData.step}} VND</p>
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Date Start:</span>

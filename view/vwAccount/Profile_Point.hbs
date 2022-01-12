@@ -35,19 +35,19 @@
                         Profile menu
                     </h4>
                     <div class="list-group list-group-flush">
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                        <a id="MenunotAtive" href="/account?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Information
                         </a>
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                        <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Change password
                         </a>
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                        <a id="MenunotAtive" href="/account/fav?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Favourite & Won products
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <a href="javascript:window.location.reload(true)" class="list-group-item list-group-item-action active" aria-current="true">
                             Self Point
                         </a>
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                        <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Selling
                         </a>
                     </div>

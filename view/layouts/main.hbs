@@ -23,6 +23,11 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
                     <li><a href="/categories" class="nav-link px-2 text-white">Categories</a></li>
+                    {{#if auth}}
+                        {{#if authUser.isSeller}}
+                            <li><a href="/create" class="nav-link px-2 text-white">Add new</a></li>
+                        {{/if}}
+                    {{/if}}
                 </ul>
 
                 <div class="dropdown" onsubmit="search(event);">

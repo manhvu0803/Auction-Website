@@ -16,10 +16,4 @@ export default function(app){
         }
         next();
     } )
-
-    // app.use(async (req, res, next) => {
-    //     res.locals.categories=await item.getAllCategories();
-    //     res.locals.items=await item.getAllItems();
-    //     next();
-    // })
 }

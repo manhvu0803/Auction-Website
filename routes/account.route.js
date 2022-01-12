@@ -20,6 +20,11 @@ router.post('/login', async (req, res) => {
             req.session.authUser = await user.getUser(req.body.username);
             req.session.authUser.username = req.body.username;
             req.session.authUser.minName=req.session.authUser.name.split(' ')[0];
+            if(req.session.authUser.type==='seller')
+                req.session.authUser.isSeller = true;
+            else{
+                req.session.authUser.isSeller = false;
+            }
             res.redirect('/');
         }
         else

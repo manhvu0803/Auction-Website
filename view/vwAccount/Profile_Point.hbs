@@ -1,0 +1,140 @@
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding-right: 0;
+            background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc) repeat fixed;
+            height: 100vh;
+            }
+        .box{
+            position: absolute;
+            padding-left: 40px; padding-right: 40px;
+            left: 15.5%;
+            width: 70%; height: 90%;
+            background: white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        }
+        .pointfield{
+            display: inline-flex;
+            width: 100%;
+        }
+        .pointfield span{
+            font-weight: 400;
+            margin-right: 10px;
+            font-size: 17px;
+        }
+        </style>
+    </head>
+
+    <body>
+    <div class="box">
+        <div class="row mt-5">
+            <div class="col-sm-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Profile menu
+                    </h4>
+                    <div class="list-group list-group-flush">
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Inforatmion
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Change password
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Favourite & Won products
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            Self Point
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Selling
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 mb-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Your Point
+                    </h4>
+                    <div class="card-body">
+                        <div class="pointpart">
+                            <h5 style="margin-bottom: 20px;">Positive and Negative point in this month</h5>
+                            <div class="pointfield">
+                                <span>Positive point:</span>
+                                <p style="color: rgb(84, 206, 84); font-weight: 500;">5 (+10%)</p>
+                            </div>
+                            <div class="pointfield">
+                                <span>Negative point:</span>
+                                <p style="color: rgb(247, 73, 67); font-weight: 500;">3 (-15%)</p>
+                            </div>
+                            <div class="pointfield">
+                                <span>Current percentage of point:</span>
+                                <p style="font-style: 17px; font-weight: 500;">95%</p>
+                            </div>
+                        </div>
+                        <div class="reviewpart" style="margin-top: 5%;">
+                            <h5 style="margin-bottom: 20px;">People rated and comment</h5>
+                            <div class="card" style="height: 250px;">
+                                <div class="card-body" style="height: 100%; overflow: auto;">
+                                    <div class="row" style="align-items: center;">
+                                        <div class="col-md-3 mt-2">
+                                            <a href="#" style="text-decoration: none; font-weight: 500;">
+                                                Username
+                                            </a>
+                                        </div>
+                                        <div class="col-md-8 mt-2">
+                                            <div style="display: inline-flex; width: 100%;">
+                                                <p style="font-weight: 500; margin-right: 3%;">point:</p>
+                                                <p>+1</p>
+                                            </div>
+                                            <div style="display: inline-flex; width: 100%;">
+                                                <p style="font-weight: 500; margin-right: 3%;">comment:</p>
+                                                <p>very friendly seller and very good product</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="align-items: center;">
+                                        <div class="col-md-3 mt-2">
+                                            <a href="#" style="text-decoration: none; font-weight: 500;">
+                                                SonGoku
+                                            </a>
+                                        </div>
+                                        <div class="col-md-8 mt-2">
+                                            <div style="display: inline-flex; width: 100%;">
+                                                <p style="font-weight: 500; margin-right: 3%;">point:</p>
+                                                <p>+1</p>
+                                            </div>
+                                            <div style="display: inline-flex; width: 100%;">
+                                                <p style="font-weight: 500; margin-right: 3%;">comment:</p>
+                                                <p>hope you will sell more good stub like this LOL!!!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="align-items: center;">
+                                        <div class="col-md-3 mt-2">
+                                            <a href="#" style="text-decoration: none; font-weight: 500;">
+                                                user1
+                                            </a>
+                                        </div>
+                                        <div class="col-md-8 mt-2">
+                                            <div style="display: inline-flex; width: 100%;">
+                                                <p style="font-weight: 500; margin-right: 3%;">point:</p>
+                                                <p>+1</p>
+                                            </div>
+                                            <div style="display: inline-flex; width: 100%;">
+                                                <p style="font-weight: 500; margin-right: 3%;">comment:</p>
+                                                <p>No comment</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

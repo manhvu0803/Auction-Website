@@ -1,0 +1,82 @@
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding-right: 0;
+            background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc) repeat fixed;
+            height: 100vh;
+            }
+        .box{
+            position: absolute;
+            padding-left: 40px; padding-right: 40px;
+            left: 15.5%;
+            width: 70%; height: 90%;
+            background: white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        }
+        #MenunotAtive:hover{
+            background: rgb(231, 231, 231);
+        }
+        #changepwdbtn{
+            border-radius: 10px; border: none; 
+            background: #384aeb; color: white;
+            font-weight: 500;
+            width: 25%; height: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="row mt-5">
+            <div class="col-sm-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Profile menu
+                    </h4>
+                    <div class="list-group list-group-flush">
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Inforatmion
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Change password
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Favourite & Won products
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Self Point
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            Selling
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 mb-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Manage your products
+                    </h4>
+                    <div class="card-body">
+                        <div style="width: 100%; display: inline-flex;">
+                            <h5 style="margin-right: 2%;">Remaining time as a seller:</h5>
+                            <p style="font-size: 17px; color: rgb(243, 74, 74)">10 more days</p>
+                        </div>
+                        <button type="button" onclick="ChangePwdButtonClick()" id="changepwdbtn"
+                                style="margin-bottom: 20px;"
+                        >
+                            Add product
+                        </button>
+                        <form method="post">
+                            <div class="productfield">
+                                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

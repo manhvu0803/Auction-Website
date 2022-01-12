@@ -1,0 +1,195 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding-right: 0;
+            background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc) repeat fixed;
+            height: 100vh;
+            }
+        .box{
+            position: absolute;
+            padding-left: 40px; padding-right: 40px;
+            left: 15.5%;
+            width: 70%; height: 90%;
+            background: white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        }
+        #MenunotAtive:hover{
+            background: rgb(231, 231, 231);
+        }
+        form #input_field{
+            align-items: center;
+        }
+        #input_field input{
+            height: 40px;
+            padding-left: 10px; padding-right: 10px;
+            font-size: 17px;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid silver;
+            pointer-events: none;
+        }
+        #input_field input:focus{
+            border-color: lightskyblue;
+            border-width: 2px;
+            border-bottom-width: 3px;
+        }
+        #editbtn{
+            border-radius: 10px; border: none; 
+            background: #384aeb; color: white;
+            font-weight: 500; margin-right: 5%;
+            width: 15%; height: 40px;
+            cursor: pointer;
+        }
+        #savebtn{
+            border-radius: 10px; border: none; 
+            background: #43f57e; color: white;
+            font-weight: 500; margin-right: 5%;
+            width: 15%; height: 40px;
+            cursor: pointer; pointer-events: none;
+        }
+        #canclebtn{
+            border-radius: 10px; border: none; 
+            background: #b2b2b463; color: black;
+            font-weight: 500;
+            width: 15%; height: 40px;
+            cursor: pointer; pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="row mt-5">
+            <div class="col-sm-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Profile menu
+                    </h4>
+                    <div class="list-group list-group-flush">
+                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                            Inforatmion
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Change password
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Favourite & Won products
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Self Point
+                        </a>
+                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                            Selling
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 mb-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Account and Personal Information
+                    </h4>
+                    <div class="card-body">
+                        <form method="post">
+                            <div id="input_field" class="row mb-4 mt-2">
+                                <label class="col-sm-3" for="txtUsername">Username</label>
+                                <input class="col-sm-5" type="text" id="txtUsername" name="username" required/>
+                            </div>
+                            <div id="input_field" class="row mb-4">
+                                <label class="col-sm-3" for="txtUsername">Email</label>
+                                <input class="col-sm-5" type="text" id="txtEmail" name="email" required/>
+                            </div>
+                            <div id="input_field" class="row mb-4">
+                                <label class="col-sm-3" for="txtUsername">Fullname</label>
+                                <input class="col-sm-5" type="text" id="txFullname" name="fullname" required/>
+                            </div>
+                            <div id="input_field" class="row mb-4">
+                                <label class="col-sm-3" for="txtUsername">Date of birth</label>
+                                <input class="col-sm-5" type="text" id="txtDOB" name="dob" required/>
+                            </div>
+                            <div id="btn_field">
+                                <button type="button" onclick="EditButtonClick()" id="editbtn">
+                                    Edit
+                                </button>
+                                <button type="submit" onclick="SaveButtonClick()" id="savebtn">
+                                    Save
+                                </button>
+                                <button type="button" onclick="CancleButtonClick()" id="canclebtn">
+                                    Cancle
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        $('#txtDOB').datetimepicker({
+                timepicker: false,
+                format: 'd/m/Y',
+                mask: true
+        });
+    </script>
+    <script id="Button click">
+        function EditButtonClick(){
+            let editbtn = document.getElementById("editbtn");
+            let savebtn = document.getElementById("savebtn");
+            let canclebtn = document.getElementById("canclebtn");
+            let username = document.getElementById("txtUsername");
+            let email = document.getElementById("txtEmail");
+            let fullname = document.getElementById("txFullname");
+            let dob = document.getElementById("txtDOB");
+
+            editbtn.style.pointerEvents="none";
+            savebtn.style.pointerEvents="all";
+            canclebtn.style.pointerEvents="all";
+            username.style.pointerEvents="all";
+            email.style.pointerEvents="all";
+            fullname.style.pointerEvents="all";
+            dob.style.pointerEvents="all";
+
+        }
+        function SaveButtonClick(){
+            let editbtn = document.getElementById("editbtn");
+            let savebtn = document.getElementById("savebtn");
+            let canclebtn = document.getElementById("canclebtn");
+            let username = document.getElementById("txtUsername");
+            let email = document.getElementById("txtEmail");
+            let fullname = document.getElementById("txFullname");
+            let dob = document.getElementById("txtDOB");
+
+            let error = null;
+            if (error == null){
+                editbtn.style.pointerEvents="all";
+                savebtn.style.pointerEvents="none";
+                canclebtn.style.pointerEvents="none";
+                username.style.pointerEvents="none";
+                email.style.pointerEvents="none";
+                fullname.style.pointerEvents="none";
+                dob.style.pointerEvents="none";
+            }
+        }
+        function CancleButtonClick(){
+            let editbtn = document.getElementById("editbtn");
+            let savebtn = document.getElementById("savebtn");
+            let canclebtn = document.getElementById("canclebtn");
+            let username = document.getElementById("txtUsername");
+            let email = document.getElementById("txtEmail");
+            let fullname = document.getElementById("txFullname");
+            let dob = document.getElementById("txtDOB");
+
+            editbtn.style.pointerEvents="all";
+            savebtn.style.pointerEvents="none";
+            canclebtn.style.pointerEvents="none";
+            username.style.pointerEvents="none";
+            email.style.pointerEvents="none";
+            fullname.style.pointerEvents="none";
+            dob.style.pointerEvents="none";
+        }
+    </script>
+</body>

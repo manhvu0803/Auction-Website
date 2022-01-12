@@ -145,12 +145,11 @@ export default class itemModel
 	 * 
 	 * @param {string} category 
 	 * @param {string} subcategory default null
-	 * @param {number} start default 0
 	 * @param {number} count default 5
 	 * @param {("postedTime")} order default "postedTime"
 	 * @returns {Promise<[item]>} array of items
 	 */
-	async getItemsByCategory(category, subcategory = null, start = 0, count = 5, order = "postedTime")
+	async getItemsByCategory(category, subcategory = null, count = 5, order = "postedTime")
 	{
 		let res = this.itemsRef
 						.where("listing", "==", true)
@@ -160,13 +159,11 @@ export default class itemModel
 			res = await res
 						.where("subcategory", "==", subcategory)
 						.orderBy(order)
-						.startAfter(start)
 						.limit(count)
 						.get();
 		else
 			res = await res
 						.orderBy(order)
-						.startAfter(start)
 						.limit(count)
 						.get();
 
@@ -181,16 +178,15 @@ export default class itemModel
 	 * @param {number} count default 5
 	 * @returns {Promise<item[]>} 
 	 */
-	async getItemsByOrder(order, direction = "desc", start = 0, count = 5)
+	async getItemsByOrder(order, direction = "desc", count = 5)
 	{
-		let res = this.itemsRef
+		let snapshot = await this.itemsRef
 						.where("listing", "==", true)
 						.orderBy(order, direction)
-						.startAfter(start)
 						.limit(count)
 						.get();
 
-		return res.docs.map(doc => parseItemDoc(doc));
+		return snapshot.docs.map(doc => parseItemDoc(doc));
 	}
 
 	async getItemByQuery(query)

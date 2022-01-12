@@ -155,8 +155,10 @@
                         <p style="color: rgb(240, 22, 22); font-weight: 700" class='timer'>{{this.itemData.expireTime}}</p>
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
-                        <span>Seller:</span>
-                        <p>{{this.itemData.seller}}</p>
+                            <span>Seller:</span>
+                            <a href="/account/{{this.itemData.seller}}" style="text-decoration: none;">
+                                <p>{{this.itemData.seller}}</p>
+                            </a>
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Price holder:</span>
@@ -199,7 +201,15 @@
                         {{#each pastBids}}
                             <tr>
                                 <td class='bid-time' >{{this.time}}</td>
-                                <td>{{this.user}}</td>
+                                <td>
+                                    {{#if ../this.isSeller}}
+                                    <a href="/account/{{this.user}}" style="text-decoration: none;">
+                                        {{this.user}}
+                                    </a>
+                                    {{else}}
+                                    {{this.user}}
+                                    {{/if}}
+                                </td>
                                 <td>{{this.amount}}</td>
                             </tr>
                         {{/each}}

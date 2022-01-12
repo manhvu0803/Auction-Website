@@ -461,6 +461,13 @@ export default class itemModel
 		return res.sort((a, b) => b.time > a.time ? 1 : -1);
 	}
 
+	async getBidCount(itemId){
+		let snapshot = await this.itemsRef
+									.doc(itemId)
+									.collection("bids")
+									.get();
+		return snapshot.size;
+	}
 	/**
 	 * Finish an item auction. The highest bidder would be written to database and return
 	 * @param {string} itemId 

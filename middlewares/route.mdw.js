@@ -3,7 +3,6 @@ import auctionRoute from '../routes/auction.route.js';
 import categoriesRoute from '../routes/categories.route.js';
 import itemRoute from '../routes/item.route.js';
 import { item } from "../model/model.js"
-import fs from 'fs';
 
 import multer from "multer"
 
@@ -19,19 +18,24 @@ export default function(app){
             else{
                 data[i]['price'] = data[i].startingPrice;
             }
+            data[i]['countVote']=await item.getBidCount(data[i].id);
         }
 
         const almost= data.sort((a,b)=>{
-            return a.expireTime-b.expireTime;
-        }).slice(0,4);
+            return b.expireTime-a.expireTime;
+        }).slice(0,5);
+
+        const votes= data.sort((a,b)=>{
+            return b.countVote-a.countVote;
+        }).slice(0,5);
 
         const high= data.sort((a,b)=>{
             return b.price-a.price;
-        }).slice(0,4);
+        }).slice(0,5);
 
         res.render("home", { items: {
             almostFinish: almost,
-            popular: high,
+            popular: votes,
             highestBidded: high,
         }});
     });

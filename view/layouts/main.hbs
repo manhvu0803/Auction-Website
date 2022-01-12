@@ -25,11 +25,6 @@
                         <i class="fa fa-list-alt"></i>
                         Categories
                     </a></li>
-                    {{#if auth}}
-                        {{#if authUser.isSeller}}
-                            <li><a href="/create" class="nav-link px-2 text-white">Add new</a></li>
-                        {{/if}}
-                    {{/if}}
                 </ul>
 
                 <div class="dropdown" onsubmit="search(event);">

@@ -1,42 +1,13 @@
-{{#section 'js'}}
-    <script>
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        function toTimeZone(date, zone, type='en-US'){
-            return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString(type, {timeZone: zone}));
-        }
-        var start = toTimeZone(document.getElementById('start').innerHTML, timezone).toString();
-        var expire = toTimeZone(document.getElementById('expire').innerHTML, timezone).toString();
+<script src="https://cdn.tiny.cloud/1/2ew8jrp5iosrdb5kwjk4cay66wetcgfgihjdi35ae3p8d5r8/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
-        start = start.substring(0, start.length - 25);
-        expire = expire.substring(0, expire.length - 25);
-
-        document.getElementById('start').innerHTML = start;
-        document.getElementById('expire').innerHTML = expire;
-
-        var bidTimes = document.getElementsByClassName('bid-time');
-        for(let time of bidTimes){
-            time.innerHTML = toTimeZone(time.innerHTML, timezone,'en-GB').toString();
-            time.innerHTML = time.innerHTML.substring(0, time.innerHTML.length - 25);
-        }
-    </script>
-    <script>
-        $('#bidForm').on('submit', function (e) {
-		e.preventDefault();
-        var biddingprice = +$('input[name=bid]').val();
-
-        if(biddingprice < {{this.itemData.step}} + {{this.highestBidder.amount}}){
-            alert('Each bidding price must be greater than step price: {{this.itemData.step}}VND!');
-            return;
-        }else if(biddingprice > {{this.itemData.maximumPrice}}){
-            alert('You should buy this item with: {{this.itemData.maximumPrice}}VND instead!');
-            return;
-        }
-        else{
-            $('#bidForm').off('submit').submit();
-        }
-        })
-    </script>
-{{/section}}
+<script>
+    function initEditor(id)
+    {
+        tinymce.init({
+            selector: `#${id}`
+        });
+    }
+</script>
 
 <script>
     function doubleCheck(evt)
@@ -147,6 +118,10 @@
                 margin-right: 5px;
                 font-size: 17px;
             }
+
+            .DescriptionInf {
+                margin-top: 3em;
+            }
         </style>
     </head>
  
@@ -228,6 +203,8 @@
                 </div>
             </div>
         </div>
+
+
         <div class="mid_container">
             <h4>Description:</h4>
             <div class="DescriptionInf" style="display: inline-flex;">
@@ -236,23 +213,40 @@
             </div>
             <div class="DescriptionInf" >
                 <span>Detail:</span>
-                <p>{{{this.itemData.description}}}</p>
+                <div id="item-detail">{{{this.itemData.description}}}</div>
             </div>
+
+            <form action="/item/edit/{{this.itemData.id}}" id="edit-form" hidden="true" method="post">
+                <textarea id="mytextarea" name="description" style="min-height: 30em;"></textarea>
+                <div style="display: flex; justify-content: center">
+                    <button type="submit" class="btn btn-block btn-lg btn-primary float-center">Submit</button>
+                </div>
+            </form>
+
+            <br>
+            <div id="editButtonDiv" style="display: flex; justify-content: center">
+                <button class="btn btn-lg btn-primary" onclick="switchEditMode()">Edit</button>
+            </div>
+            <br>
+
             {{#if pastBids}}
-            <div class="DescriptionInf">
-                <span>Bidders list:</span>
+            <div class="DescriptionInf" style="display: flex;flex-direction: column;flex-wrap: wrap;align-content: center;">
+                <h3>Bidders list:</h3><br>
                 <table class="table table-bordered" style="width: 50%; border: 2px">
                     <thead>
-                        <tr>
+                        <tr style="text-align: center;">
                             <th scope="col">Time</th>
                             <th scope="col">Bidder</th>
-                            <th scope="col">Bidding price</th>
+                            <th scope="col">Bid</th>
+                            {{#if ../this.authUser.isOwner}}
+                            <th scope="col">Options</th>
+                            {{/if}}
                         </tr>
                     </thead>
                     <tbody>
                         {{#each pastBids}}
                             <tr>
-                                <td class='bid-time' >{{this.time}}</td>
+                                <td class='bid-time'>{{this.time}}</td>
                                 <td>
                                     {{#if ../this.authUser.isOwner}}
                                     <a href="/account?username={{this.user}}" style="text-decoration: none;">
@@ -263,6 +257,9 @@
                                     {{/if}}
                                 </td>
                                 <td>{{this.amount}}</td>
+                                {{#if ../this.authUser.isOwner}}
+                                <td><a href="item/kick?username={{this.user}}"><button class="btn btn-danger">Kick</button></a></td>
+                                {{/if}}
                             </tr>
                         {{/each}}
                     </tbody>
@@ -270,11 +267,21 @@
             </div>
             {{/if}}
         </div>
-            
+        
         <br>
         <br>
         <br>
         <br>
         <br>
     </div>
+
 </body>
+
+<script>
+    function switchEditMode()
+    {
+        initEditor("mytextarea");
+        document.getElementById("edit-form").hidden = false;
+        document.getElementById("editButtonDiv").hidden = true;
+    }
+</script>

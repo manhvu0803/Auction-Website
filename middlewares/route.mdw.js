@@ -83,7 +83,7 @@ export default function(app){
 
     app.get("/create", async (req, res) => {
         if(req.session.auth){
-            if(req.session.isSeller)
+            if(req.session.authUser.isSeller)
             {
                 let data = {};
                 data.categories = [];

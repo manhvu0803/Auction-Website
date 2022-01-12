@@ -173,6 +173,26 @@ export default class itemModel
 		return res.docs.map(doc => parseItemDoc(doc));
 	}
 
+	/**
+	 * 
+	 * @param {("expireTime" | "currentPrice" | "bidCount")} order 
+	 * @param {("asc" | "desc")} direction default "desc"
+	 * @param {number} start default 0
+	 * @param {number} count default 5
+	 * @returns {Promise<item[]>} 
+	 */
+	async getItemsByOrder(order, direction = "desc", start = 0, count = 5)
+	{
+		let res = this.itemsRef
+						.where("listing", "==", true)
+						.orderBy(order, direction)
+						.startAfter(start)
+						.limit(count)
+						.get();
+
+		return res.docs.map(doc => parseItemDoc(doc));
+	}
+
 	async getItemByQuery(query)
 	{
 		let searchRes = this.index.search(query);
@@ -358,7 +378,9 @@ export default class itemModel
 			autoExtend: item.autoExtend,
 			seller: item.seller,
 			listing: true,
-			startingPrice: item.startingPrice
+			startingPrice: item.startingPrice,
+			currentPrice: item.startingPrice,
+			bidCount: 0
 		}
 
 		let doc = await this.itemsRef.add(itemData);
@@ -397,10 +419,18 @@ export default class itemModel
 	 */
 	async bid(itemId, username, amount)
 	{
-		await this.itemsRef.doc(itemId).collection("bids").doc(username).set({
+		let updateBid = this.itemsRef.doc(itemId).collection("bids").doc(username).set({
 			time: new Date(),
 			amount: amount
 		});
+
+		let updateItem = this.itemsRef.doc(itemId).update({
+			bidCount: firestore.FieldValue.increment(1),
+			currentPrice: amount
+		})
+
+		await updateBid;
+		await updateItem;
 
 		if (debug)
 			console.log(`User ${username} bid ${amount} for item ${itemId}`);

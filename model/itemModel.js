@@ -202,6 +202,12 @@ export default class itemModel
 		return res;
 	}
 
+	async getItembySeller(username)
+	{
+		let snapshot = await this.itemsRef.where("seller", "==", username).get();
+		return snapshot.docs.map(doc => parseItemDoc(doc));
+	}
+
 	/**
 	 * Get the main image of an item
 	 * @param {string} id 
@@ -484,5 +490,34 @@ export default class itemModel
 			await update;
 
 		return bids[0].user;
+	}
+
+	async banBidder(itemId, username)
+	{
+		let updateBan = this.itemsRef.doc(itemId).set({ 
+			bannedUser : firestore.FieldValue.arrayUnion(username) 
+		}, { merge: true });
+
+		await this.itemsRef.doc(itemId).collection("bids").doc(username).delete();
+
+		let bid = await this.getBid(itemId, 1);
+		
+		await this.itemsRef.doc(itemId).update({
+			bidCount: firestore.FieldValue.increment(-1),
+			currentPrice: bid[0].amount
+		})
+
+		await updateBan
+
+		console.log(`Banned user ${username} from item ${itemId}`)
+	}
+	
+	async unbanBidder(itemId, username)
+	{
+		await this.itemsRef.doc(itemId).set({ 
+			bannedUser : firestore.FieldValue.arrayRemove(username) 
+		}, { merge: true });
+
+		console.log(`Unbanned user ${username} from item ${itemId}`)
 	}
 }

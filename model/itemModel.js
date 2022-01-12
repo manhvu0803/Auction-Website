@@ -397,7 +397,7 @@ export default class itemModel
 			this.addMainImage(doc.id, item.mainImage);
 
 		if (item.images && item.images.length)
-			this.addExtraImages(id, item.images);
+			this.addExtraImages(doc.id, item.images);
 
 		if (debug)
 			console.log(`Added item ${itemData.name} to database with id ${doc.id}`);

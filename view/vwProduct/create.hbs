@@ -75,9 +75,9 @@
 		<div>
 			<div id="msg"></div>
 			<div id="image-form">
-				<input type="file" name="mainImage" class="file" accept="image/*">
+				<input type="file" name="images" class="file" accept="image/*" multiple>
 					<div class="input-group my-3">
-					<input type="text" class="form-control" disabled placeholder="Upload File" id="file" required>
+					<input type="text" class="form-control" disabled placeholder="Upload File" id="file">
 					<div class="input-group-append">
 						<button type="button" class="browse btn btn-primary">Browse...</button>
 					</div>
@@ -135,7 +135,6 @@
 </form>
 
 <script>changeSubcat()</script>
-
 <script>
 	$(document).on("click", ".browse", function() {
 		var file = $(this).parents().find(".file");
@@ -156,4 +155,12 @@
 		console.log(reader.readAsBinaryString(this.files[0]));
 	});
 
+	$(function(){
+		$("input[type='submit']").click(function(){
+			var $fileUpload = $("input[type='file']");
+			if (parseInt($fileUpload.get(0).files.length)>10&&parseInt($fileUpload.get(0).files.length)<3){
+				alert("You must upload a number files from 3 to 10");
+			}
+		});
+	})
 </script>

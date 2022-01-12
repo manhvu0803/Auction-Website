@@ -109,18 +109,22 @@ export default function(app){
     const storage = multer.memoryStorage()
     var multiHandler = multer({ dest: "uploads/" ,storage: storage})
     
-    app.post("/create/item", multiHandler.single("mainImage"), async (req, res) => {
+    app.post("/create/item", multiHandler.array("images",10), async (req, res) => {
         let data=req.body;
         data.startingPrice=+data.startingPrice;
         data.step=+data.step;
         data.maximumPrice=+data.maximumPrice;
         data.postedTime=new Date();
         data.expireTime=new Date(data.expireTime);
-        data.mainImage=req.file.buffer;
+        data.mainImage=req.files[0].buffer;
+        data.images=[];
+        for(let i=1;i<req.files.length;i++){
+            data.images.push(req.files[i].buffer);
+        }
         data.autoExtend=false;
         data.seller=req.session.authUser.username;
         await item.addItem(data);
-        res.send("OK");
+        res.redirect("/");
     })
     app.use((req,res,next)=>{
         res.render('vwError/404');

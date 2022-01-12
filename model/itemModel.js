@@ -1,6 +1,5 @@
 import * as firestore from "firebase-admin/firestore";
 import lunr from "lunr-mutable-indexes";
-import { getDatabase } from "firebase-admin/database";
 
 const fileDuration = 10000000000;
 const debug = true;
@@ -40,6 +39,62 @@ function parseItemDoc(doc)
 	return data;
 }
 
+function parseIndex(item)
+{
+	let res = {};
+	if (item.id)
+		res.id = item.id;
+	if (item.name)
+		res.name = item.name;
+	if (item.description)
+		res.description = item.description;
+	if (item.seller)
+		res.seller = item.seller;
+	if (item.category)
+		res.category = item.category;
+	if (item.subcategory)
+		res.subcategory = item.subcategory;
+	return res;
+}
+
+export class lunrIndex
+{
+	constructor()
+	{
+		this.index = lunr(function() {
+			this.field("name");
+			this.field("description");
+			this.field("seller");
+			this.field("category");
+			this.field("subcategory");
+		})
+	}
+
+	add(itemId, item)
+	{
+		item = parseIndex(item);
+		item.id = itemId;
+		this.index.add(item)
+	}
+
+	remove(itemId)
+	{
+		this.index.remove({ id: itemId })
+	}
+
+	update(itemId, item)
+	{
+		item = parseIndex(item);
+		itemData.id = itemId;
+		this.index.update(itemData)
+	}
+
+	search(query)
+	{
+		return this.index.search(query);
+	}
+}
+
 export default class itemModel
 {
 	constructor(database, bucket, buildIndex = true)
@@ -48,38 +103,21 @@ export default class itemModel
 		this.categoryRef = database.collection("categories");
 		this.bucket = bucket;
 
-		this.index = lunr(function() {
-			this.field("name");
-			this.field("description");
-			this.field("seller");
-			this.field("category");
-			this.field("subcategory");
-		})
+		this.index = new lunrIndex();
 
 		if (buildIndex)
-			 this.createIndex();
+			 this.buildIndex();
 	}
 
-	async createIndex()
+	async buildIndex()
 	{
 		let items = await this.getAllItems();
-		
-		for (let item of items) 
-			this.updateIndex(item)
-		
-		console.log("Full-text search index has been built");
-	}
 
-	updateIndex(item, itemId = null)
-	{
-		this.index.add({
-			id: (itemId) ? itemId : item.id,
-			name: item.name,
-			description: item.description,
-			seller: item.seller,
-			category: item.category,
-			subcategory: item.subcategory
-		})
+		for (let item of items)
+			if (item.listing)
+				this.index.add(item.id, item);
+		
+		console.log("Built full-text index")
 	}
 
 	async getAllItems()
@@ -114,31 +152,29 @@ export default class itemModel
 	 */
 	async getItemsByCategory(category, subcategory = null, start = 0, count = 5, order = "postedTime")
 	{
-		let res;
+		let res = this.itemsRef
+						.where("listing", "==", true)
+						.where("category", "==", category);
+		
 		if (subcategory)
-			res = await this.itemsRef
-								.where("listing", "==", true)
-								.where("category", "==", category)
-								.where("subcategory", "==", subcategory)
-								.orderBy(order)
-								.startAfter(start)
-								.limit(count)
-								.get();
+			res = await res
+						.where("subcategory", "==", subcategory)
+						.orderBy(order)
+						.startAfter(start)
+						.limit(count)
+						.get();
 		else
-			res = await this.itemsRef
-								.where("listing", "==", true)
-								.where("category", "==", category)
-								.orderBy(order)
-								.startAfter(start)
-								.limit(count)
-								.get();
+			res = await res
+						.orderBy(order)
+						.startAfter(start)
+						.limit(count)
+						.get();
 
 		return res.docs.map(doc => parseItemDoc(doc));
 	}
 
 	async getItemByQuery(query)
 	{
-		//console.log(this.index);
 		let searchRes = this.index.search(query);
 		let res = [];
 		for (var val of searchRes) 
@@ -206,7 +242,7 @@ export default class itemModel
 	 * @param {string} category
 	 * @returns {Promise<string[]>} array of subcategory names
 	 */
-	 async getSubcategories(category) {
+	async getSubcategories(category) {
 		let snapshot = await this.categoryRef.get(category);
 		let res = []
 		for (let subcat in snapshot.data()) 
@@ -238,7 +274,7 @@ export default class itemModel
 			let data = {};
 			for (let subcat of subcategories)
 				data[subcat] = null;
-			await catRef.set(data);	
+			await catRef.set(data, { merge: true });
 			console.log(`Added ${subcategories.length} subcategories for category "${category}"`);
 		}
 		else {
@@ -271,7 +307,7 @@ export default class itemModel
 	/**
 	 * 
 	 * @param {string} id 
-	 * @param {[bianry]} images array of image (binary)
+	 * @param {binary[]} images array of image (binary)
 	 */
 	async addExtraImages(id, images)
 	{
@@ -327,7 +363,7 @@ export default class itemModel
 
 		let doc = await this.itemsRef.add(itemData);
 
-		this.updateIndex(itemData);
+		this.index.add(doc.id, itemData);
 
 		if (item.mainImage)
 			this.addMainImage(doc.id, item.mainImage);
@@ -345,7 +381,7 @@ export default class itemModel
 	{
 		let update = this.itemsRef.doc(itemId).update(data);
 
-		this.updateIndex(data, itemId);
+		this.index.update(itemId, data);
 
 		await update;
 		
@@ -399,7 +435,7 @@ export default class itemModel
 	 * Finish an item auction. The highest bidder would be written to database and return
 	 * @param {string} itemId 
 	 * @param {boolean} waitForUpdate if true, wait until the database is fully updated before return. Default false
-	 * @returns {string} username of the highest bidder
+	 * @returns {string} username of the highest bidder (the winner)
 	 */
 	async finalizeBid(itemId, waitForUpdate = false)
 	{
@@ -411,6 +447,9 @@ export default class itemModel
 			listing: false,
 			buyer: bids[0].user 
 		})
+
+		this.index.remove(itemId);
+
 		if (waitForUpdate)
 			await update;
 

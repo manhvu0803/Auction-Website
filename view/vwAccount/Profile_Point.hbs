@@ -10,7 +10,7 @@
             position: absolute;
             padding-left: 40px; padding-right: 40px;
             left: 15.5%;
-            width: 70%; height: 90%;
+            width: 70%; height: 100vh;
             background: white;
             box-shadow: 0 0 8px rgba(0,0,0,0.2);
         }
@@ -60,18 +60,14 @@
                     </h4>
                     <div class="card-body">
                         <div class="pointpart">
-                            <h5 style="margin-bottom: 20px;">Positive and Negative point in this month</h5>
+                            <h5 style="margin-bottom: 20px;">Positive and Negative point</h5>
                             <div class="pointfield">
                                 <span>Positive point:</span>
-                                <p style="color: rgb(84, 206, 84); font-weight: 500;">5 (+10%)</p>
+                                <p style="color: rgb(84, 206, 84); font-weight: 500;">{{info.upvoteCount}}</p>
                             </div>
                             <div class="pointfield">
                                 <span>Negative point:</span>
-                                <p style="color: rgb(247, 73, 67); font-weight: 500;">3 (-15%)</p>
-                            </div>
-                            <div class="pointfield">
-                                <span>Current percentage of point:</span>
-                                <p style="font-style: 17px; font-weight: 500;">95%</p>
+                                <p style="color: rgb(247, 73, 67); font-weight: 500;">{{info.downvoteCount}}</p>
                             </div>
                         </div>
                         <div class="reviewpart" style="margin-top: 5%;">

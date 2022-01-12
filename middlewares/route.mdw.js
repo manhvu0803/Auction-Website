@@ -3,6 +3,8 @@ import auctionRoute from '../routes/auction.route.js';
 import categoriesRoute from '../routes/categories.route.js';
 import itemRoute from '../routes/item.route.js';
 import { item } from "../model/model.js"
+import fs from 'fs';
+
 import multer from "multer"
 
 export default function(app){
@@ -73,8 +75,15 @@ export default function(app){
     
     var multiHandler = multer({ dest: "uploads/" });
     
-    app.post("/item/create", multiHandler.single("img"), (req, res) => {
-        console.log(req.body);
+    app.post("/create/item", multiHandler.single("mainImage"), (req, res) => {
+        let data=req.body;
+        data.startingPrice=+data.startingPrice;
+        data.step=+data.step;
+        data.maximumPrice=+data.maximumPrice;
+        data.postedTime=new Date();
+        data.expireTime=new Date(data.expireTime);
+        let fileData = fs.readFileSync('\\'+req.file.path);
+        console.log(fileData);
         res.send("OK");
     })
     app.use((req,res,next)=>{

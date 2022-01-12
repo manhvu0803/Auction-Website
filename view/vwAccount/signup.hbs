@@ -10,6 +10,7 @@
         .signup_box{
             position: relative;
             top: 40%; left: 50%;
+            margin-bottom: 10em;
             transform: translate(-50%, -50%);
             width: 800px;
             background: white;
@@ -117,13 +118,18 @@
             font-weight: bolder;
             text-decoration: underline;
         }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 
 <body>
-    <div class="signup_box">
-        <h1 data-text="REGISTRATION" style="position: relative; padding: 15px 0 0 0;
-                                        margin-bottom: 15px; margin-left: 53px;">
+    <div class="signup_box" style="min-height: 28em">
+        <h1 data-text="REGISTRATION" style="position: relative; padding: 15px 0 0 0; margin-bottom: 15px; margin-left: 53px;">
             REGISTRATION
         </h1>
         <form id="formRegister" method="post">
@@ -152,12 +158,6 @@
                     <div class="input_field">
                         <label for="txtConfirm">Confirm Password</label>
                         <input type="password" id="txtConfirm" required/>
-                        <span class="eye_icon_confirm" onclick="mySetHideConfirmPassword()">
-                            <i id="showconfirm" class="fa fa-eye" aria-hidden="true"
-                                style="color: lightskyblue; display: none;"></i>
-                            <i id="hideconfirm" class="fa fa-eye-slash" aria-hidden="true"
-                                style="color: lightgray;"></i>
-                        </span>
                     </div>
                 </div>
                 <div class="input_row">
@@ -171,15 +171,13 @@
                     </div>
                 </div>
             </div>
-            <div class="input_row">
-                <div class="submit_path">
-                    <div class="btnbg"></div>
-                    <button type="submit" class="btn center">
-                        <i class="fa fa-check" aria-hidden="true"></i>
-                        Create account
+            <div style="margin-top: 2em; margin-bottom: 2em">
+                <div class="center">
+                    <button type="submit" class="btn btn-primary center">
+                        <i class="fa fa-check" aria-hidden="true"></i><span> Create account</span>
                     </button>
                 </div>
-                <div class="signin_link">
+                <div class="signin_link" style="margin-top: 1em;">
                     Already have an account?
                     <a href="/login">Sign-in</a>
                 </div>

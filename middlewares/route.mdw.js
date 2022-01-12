@@ -72,18 +72,20 @@ export default function(app){
         })
         res.render("vwProduct/create", data);
     })
+    const storage = multer.memoryStorage()
+    var multiHandler = multer({ dest: "uploads/" ,storage: storage})
     
-    var multiHandler = multer({ dest: "uploads/" });
-    
-    app.post("/create/item", multiHandler.single("mainImage"), (req, res) => {
+    app.post("/create/item", multiHandler.single("mainImage"), async (req, res) => {
         let data=req.body;
         data.startingPrice=+data.startingPrice;
         data.step=+data.step;
         data.maximumPrice=+data.maximumPrice;
         data.postedTime=new Date();
         data.expireTime=new Date(data.expireTime);
-        let fileData = fs.readFileSync('\\'+req.file.path);
-        console.log(fileData);
+        data.mainImage=req.file.buffer;
+        data.autoExtend=false;
+        data.seller=req.session.authUser.username;
+        await item.addItem(data);
         res.send("OK");
     })
     app.use((req,res,next)=>{

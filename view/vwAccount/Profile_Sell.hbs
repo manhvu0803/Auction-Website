@@ -64,14 +64,14 @@
                             <h5 style="margin-right: 2%;">Remaining time as a seller:</h5>
                             <p style="font-size: 17px; color: rgb(243, 74, 74)">10 more days</p>
                         </div>
-                        <button type="button" onclick="ChangePwdButtonClick()" id="changepwdbtn"
-                                style="margin-bottom: 20px;"
-                        >
-                           <a href="/create" style="color:white">Add product</a>
-                        </button>
+                        {{#if this.info.isSelf}}
+                            <button type="button" onclick="ChangePwdButtonClick()" id="changepwdbtn"
+                                    style="margin-bottom: 20px;">
+                                <a href="/create" style="color:white">Add product</a>
+                            </button>
+                        {{/if}}
                         <form method="post">
                             <div class="productfield">
-                                AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
                             </div>
                         </form>
                     </div>

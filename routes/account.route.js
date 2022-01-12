@@ -6,7 +6,8 @@ const account='';
 
 router.get('/', async (req,res)=>{
     if (req.query.username!==undefined){
-        let info = await user.getUser(req.query.username);
+        try{
+            let info = await user.getUser(req.query.username);
         info.username=req.query.username;
         if(info.type==='seller'){
             info.isSeller=true;
@@ -29,37 +30,44 @@ router.get('/', async (req,res)=>{
         info.downvoteCount=+info.totalVote-+info.upvoteCount;
 
         res.render('vwAccount/Profile_Infor',{info: info});
+        }
+        catch{
+            res.render('vwError/404');
+        }
     }
     else{
-        res.render('vwError/404');
+        
     }
 })
 
 router.get('/change-pwd',async(req,res)=>{
     if (req.query.username!==undefined){
-        let info = await user.getUser(req.query.username);
-        info.username=req.query.username;
-        if(req.session.auth){
-            if(req.session.authUser.username===req.query.username){
-                info.isSelf=true;
-                if(info.type==='seller'){
-                    info.isSeller=true;
+        try{
+            let info = await user.getUser(req.query.username);
+            info.username=req.query.username;
+            if(req.session.auth){
+                if(req.session.authUser.username===req.query.username){
+                    info.isSelf=true;
+                    if(info.type==='seller'){
+                        info.isSeller=true;
+                    }
+                    else{
+                        info.isSeller=false;
+                    }
+                    info.downvoteCount=+info.totalVote-+info.upvoteCount;
+                    res.render('vwAccount/Profile_ChangePassword',{info: info});
+                }else{
+                    info.isSelf=false;
+                    res.render('vwError/404');
                 }
-                else{
-                    info.isSeller=false;
-                }
-                info.downvoteCount=+info.totalVote-+info.upvoteCount;
-                res.render('vwAccount/Profile_ChangePassword',{info: info});
-            }else{
+            }
+            else{
                 info.isSelf=false;
                 res.render('vwError/404');
             }
-        }
-        else{
-            info.isSelf=false;
+        }catch{
             res.render('vwError/404');
         }
-
     }
     else{
         res.render('vwError/404');
@@ -68,6 +76,7 @@ router.get('/change-pwd',async(req,res)=>{
 
 router.get('/fav',async(req,res)=>{
     if (req.query.username!==undefined){
+        try{
         let info = await user.getUser(req.query.username);
         info.username=req.query.username;
         if(req.session.auth){
@@ -90,7 +99,9 @@ router.get('/fav',async(req,res)=>{
             info.isSelf=false;
             res.render('vwError/404');
         }
-
+        }catch{
+            res.render('vwError/404');
+        }
     }
     else{
         res.render('vwError/404');
@@ -99,6 +110,7 @@ router.get('/fav',async(req,res)=>{
 
 router.get('/point',async(req,res)=>{
     if (req.query.username!==undefined){
+        try{
         let info = await user.getUser(req.query.username);
         info.username=req.query.username;
         if(req.session.auth){
@@ -121,7 +133,9 @@ router.get('/point',async(req,res)=>{
             info.isSelf=false;
             res.render('vwError/404');
         }
-
+        }catch{
+            res.render('vwError/404');
+        }
     }
     else{
         res.render('vwError/404');
@@ -130,29 +144,32 @@ router.get('/point',async(req,res)=>{
 
 router.get('/sell',async(req,res)=>{
     if (req.query.username!==undefined){
-        let info = await user.getUser(req.query.username);
-        info.username=req.query.username;
-        if(req.session.auth){
-            if(req.session.authUser.username===req.query.username){
-                info.isSelf=true;
-                if(info.type==='seller'){
-                    info.isSeller=true;
+        try{
+            let info = await user.getUser(req.query.username);
+            info.username=req.query.username;
+            if(req.session.auth){
+                if(req.session.authUser.username===req.query.username){
+                    info.isSelf=true;
+                    if(info.type==='seller'){
+                        info.isSeller=true;
+                    }
+                    else{
+                        info.isSeller=false;
+                    }
+                    info.downvoteCount=+info.totalVote-+info.upvoteCount;
+                    res.render('vwAccount/Profile_Sell',{info: info});
+                }else{
+                    info.isSelf=false;
+                    res.render('vwError/404');
                 }
-                else{
-                    info.isSeller=false;
-                }
-                info.downvoteCount=+info.totalVote-+info.upvoteCount;
-                res.render('vwAccount/Profile_Sell',{info: info});
-            }else{
+            }
+            else{
                 info.isSelf=false;
                 res.render('vwError/404');
             }
-        }
-        else{
-            info.isSelf=false;
+        }catch{
             res.render('vwError/404');
         }
-
     }
     else{
         res.render('vwError/404');

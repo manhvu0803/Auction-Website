@@ -64,9 +64,11 @@
                         <a id="MenunotAtive" href="/account/point?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Self Point
                         </a>
-                        <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">
-                            Selling
-                        </a>
+                        {{if this.info.isSeller}}
+                            <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                                Selling
+                            </a>
+                        {{/if}}
                     </div>
                 </div>
             </div>

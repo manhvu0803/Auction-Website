@@ -26,7 +26,6 @@ router.get("/:category/:subcategory/:page", async (req, res) => {
         itemDatas[i].mainImage= await item.getMainImageUrl(itemDatas[i].id);
         const highestBidder = await item.getBid(itemDatas[i].id,1);
         if(highestBidder.length>0){
-            console.log(1);
             itemDatas[i].price = highestBidder[0].amount;
         }
         else{

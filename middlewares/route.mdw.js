@@ -9,21 +9,34 @@ import multer from "multer"
 
 export default function(app){
     app.get('/', async (req,res)=>{
-        let data=(await item.getAllItems()).slice(0,5);
+        let data=(await item.getAllItems());
         for(let i=0;i<data.length;i++){
             data[i]['mainImage']= await item.getMainImageUrl(data[i].id);
             const highestBidder = await item.getBid(data[i].id,1);
             if(highestBidder.length>0){
-                data[i]['price'] = highestBidder[0].amount;
+                data[i]['price'] = +highestBidder[0].amount;
             }
             else{
                 data[i]['price'] = data[i].startingPrice;
             }
         }
+
+        console.log(data);
+
+        const almost= data.sort((a,b)=>{
+            return a.expireTime-b.expireTime;
+        }).slice(0,4);
+
+        console.log(data);
+
+        const high= data.sort((a,b)=>{
+            return b.price-a.price;
+        }).slice(0,4);
+
         res.render("home", { items: {
-            almostFinish: data,
-            popular: data,
-            highestBidded: data,
+            almostFinish: almost,
+            popular: high,
+            highestBidded: high,
         }});
     });
     
@@ -42,6 +55,16 @@ export default function(app){
         let data = [];
         for(let i = 0; i < idList.length; i++){
             data.push(await item.getItem(idList[i]));
+            data[i]['mainImage']= await item.getMainImageUrl(data[i].id);
+            const highestBidder = await item.getBid(data[i].id,1);
+            if(highestBidder.length>0){
+                data[i].price = highestBidder[0].amount;
+                data[i].highestBidder= highestBidder[0].user;
+            }
+            else{
+                data[i].price = data[i].startingPrice;
+                data[i].highestBidder= "No bids yet";
+            }
         }
 
         if(req.query.sort!==undefined){

@@ -90,7 +90,7 @@
 		{{#each items}}
 		<article class="search-result row">
 			<div class="col-xs-12 col-sm-12 col-lg-2">
-				<a href="#" title="main image" class="thumbnail">
+				<a href="/item/{{this.id}}" title="main image" class="thumbnail">
 					<img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
 				</a>
 			</div>
@@ -98,7 +98,7 @@
 				<ul class="meta-search">
 					<li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
 					<li><i class="fa fa-tags"></i> {{this.category}}</li>
-					<li>{{this.currentPrice}} VNĐ</li>
+					<li>{{this.price}} VNĐ</li>
 					{{#if this.highestBidder}}
 					<li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
 					{{/if}}

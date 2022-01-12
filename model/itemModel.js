@@ -122,7 +122,7 @@ export default class itemModel
 
 	async getAllItems()
 	{
-		let snapshot = await this.itemsRef.get();
+		let snapshot = await this.itemsRef.where("listing", "==", true).get();
 		let res = [];
 		snapshot.forEach((doc) => {
 			res.push(parseItemDoc(doc));

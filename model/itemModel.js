@@ -202,6 +202,12 @@ export default class itemModel
 		return res;
 	}
 
+	async getItembySeller(username)
+	{
+		let snapshot = await this.itemsRef.where("seller", "==", username).get();
+		return snapshot.docs.map(doc => parseItemDoc(doc));
+	}
+
 	/**
 	 * Get the main image of an item
 	 * @param {string} id 

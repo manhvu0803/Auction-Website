@@ -45,14 +45,14 @@
                             <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
                                 Change password
                             </a>
-                            <a id="MenunotAtive" href="/account/fav?username={{this.info.username}}" class="list-group-item list-group-item-action">
-                                Favourite & Won products
+                        {{/if}}
+                        <a id="MenunotAtive" href="/account/fav?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                            Favourite & Won products
+                        </a>
+                        {{#if this.info.isSeller}}
+                            <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                                Selling
                             </a>
-                            {{#if this.info.isSeller}}
-                                <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">
-                                    Selling
-                                </a>
-                            {{/if}}
                         {{/if}}
                     </div>
                 </div>
@@ -72,6 +72,10 @@
                             <div class="pointfield">
                                 <span>Negative point:</span>
                                 <p style="color: rgb(247, 73, 67); font-weight: 500;">{{info.downvoteCount}}</p>
+                            </div>
+                            <div class="pointfield">
+                                <span>Overall:</span>
+                                <p style="color: rgb(247, 73, 67); font-weight: 500;">{{info.percentVote}}%</p>
                             </div>
                         </div>
                         <div class="reviewpart" style="margin-top: 5%;">

@@ -3,6 +3,7 @@ import auctionRoute from '../routes/auction.route.js';
 import categoriesRoute from '../routes/categories.route.js';
 import itemRoute from '../routes/item.route.js';
 import { item } from "../model/model.js"
+import multer from "multer"
 
 export default function(app){
     app.get('/', async (req,res)=>{
@@ -17,7 +18,6 @@ export default function(app){
                 data[i]['price'] = data[i].startingPrice;
             }
         }
-        console.log(data);
         res.render("home", { items: {
             almostFinish: data,
             popular: data,
@@ -53,11 +53,29 @@ export default function(app){
                     return b.time-a.time});
             }
         }
-        console.log(data);
 
         res.render("search_result", { itemCount: data.length, items: data });
     })
 
+    app.get("/create", async (req, res) => {
+        let data = {};
+        data.categories = [];
+        const cats = await item.getAllCategories();
+        const names = cats.categories;
+        names.forEach(name=>{
+            data.categories.push({
+                name:name,
+                subcat:cats[name]
+            })
+        })
+        res.render("vwProduct/create", data);
+    })
+    
+    var multiHandler = multer({ dest: "uploads/" });
+    app.post("/item/create", multiHandler.single("img"), (req, res) => {
+        console.log(req.body);
+        res.send("OK");
+    })
     app.use((req,res,next)=>{
         res.render('vwError/404');
     });

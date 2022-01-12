@@ -79,18 +79,30 @@ export default function(app){
     })
 
     app.get("/create", async (req, res) => {
-        let data = {};
-        data.categories = [];
-        const cats = await item.getAllCategories();
-        const names = cats.categories;
-        names.forEach(name=>{
-            data.categories.push({
-                name:name,
-                subcat:cats[name]
-            })
-        })
-        res.render("vwProduct/create", data);
+        if(req.session.auth){
+            if(req.session.isSeller)
+            {
+                let data = {};
+                data.categories = [];
+                const cats = await item.getAllCategories();
+                const names = cats.categories;
+                names.forEach(name=>{
+                    data.categories.push({
+                        name:name,
+                        subcat:cats[name]
+                    })
+                })
+                res.render("vwProduct/create", data);
+            }else{
+                res.redirect("/");
+            }
+        }
+        else{
+            res.redirect("/");
+        }
+        
     })
+
     const storage = multer.memoryStorage()
     var multiHandler = multer({ dest: "uploads/" ,storage: storage})
     

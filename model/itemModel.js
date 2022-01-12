@@ -227,6 +227,48 @@ export default class itemModel
 	}
 
 	/**
+	 * Add `subcategories` to `category`. If `category` doesn't exists, create that category. Omit `subcategories` to create `category` only
+	 * @param {string} category category to add or add to
+	 * @param {string[]} subcategories default null. Subcategories to add
+	 */
+	async addCategory(category, subcategories = null)
+	{
+		let catRef = this.categoryRef.doc(category);
+		if (subcategories) {
+			let data = {};
+			for (let subcat of subcategories)
+				data[subcat] = null;
+			await catRef.set(data);	
+			console.log(`Added ${subcategories.length} subcategories for category "${category}"`);
+		}
+		else {
+			await catRef.set();
+			console.log(`Added category "${category}"`)
+		}
+	}
+	
+	/**
+	 * Deleted `subcategories` to `category`. If `subcategories` is null, delete `category`
+	 * @param {string} category category to delete from or be deleted
+	 * @param {string[]} subcategories default null. Subcategories to be deleted
+	 */
+	async deleteCategory(category, subcategories = null)
+	{
+		let catRef = this.categoryRef.doc(category);
+		if (subcategory) {
+			let data = {};
+			for (let subcat of subcategories)
+				data[subcat] = firestore.FieldValue.delete();
+			await catRef.update(data);	
+			console.log(`Deleted ${subcategories.length} subcategories from category "${category}"`);
+		}
+		else {
+			await catRef.delete();
+			console.log(`Deleted category "${category}"`)
+		}
+	}
+
+	/**
 	 * 
 	 * @param {string} id 
 	 * @param {[bianry]} images array of image (binary)

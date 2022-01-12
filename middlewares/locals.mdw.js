@@ -8,10 +8,10 @@ export default function(app){
             req.session.auth=false;
         }
         else{
-            res.locals.auth=req.session.auth;
-            res.locals.authUser=req.session.authUser;
+                res.locals.auth=req.session.auth;
+                res.locals.authUser=req.session.authUser;
             if(req.session.auth){
-            res.locals.authUser.downvoteCount=+req.session.authUser.totalVote-+req.session.authUser.upvoteCount;
+                res.locals.authUser.downvoteCount=+req.session.authUser.totalVote-+req.session.authUser.upvoteCount;
             }
         }
         next();

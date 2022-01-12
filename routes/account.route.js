@@ -4,6 +4,36 @@ import {user} from "../model/model.js";
 const router = express.Router();
 const account='';
 
+router.get('/', async (req,res)=>{
+    if (req.query.username!==undefined){
+        let info = await user.getUser(req.query.username);
+        if(info.type==='seller'){
+            info.isSeller=true;
+        }
+        else{
+            info.isSeller=false;
+        }
+
+        if(req.session.auth){
+            if(req.session.authUser.username===req.query.username){
+                info.isSelf=true;
+            }else{
+                info.isSelf=false;
+            }
+        }
+        else{
+            info.isSelf=false;
+        }
+
+        info.downvoteCount=+info.totalVote-+info.upvoteCount;
+
+        res.render('vwAccount/profile',{info: info});
+    }
+    else{
+        res.render('vwError/404');
+    }
+})
+
 router.get('/login', (req, res) => {
     if(req.session.auth){
         res.redirect('/account/info');

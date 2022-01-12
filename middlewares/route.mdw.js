@@ -21,13 +21,9 @@ export default function(app){
             }
         }
 
-        console.log(data);
-
         const almost= data.sort((a,b)=>{
             return a.expireTime-b.expireTime;
         }).slice(0,4);
-
-        console.log(data);
 
         const high= data.sort((a,b)=>{
             return b.price-a.price;

@@ -47,7 +47,7 @@
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li><a class="dropdown-item" href="/account/info">Account</a></li>
                                 <li><a class="dropdown-item" href="/account/logout">Log out</a></li>
-                                {{#if isSeller}}
+                                {{#if authUser.isSeller}}
                                     <li><a class="dropdown-item" href="/create">New auction</a></li>
                                 {{else}}
                                     <li><a class="dropdown-item" href="/account/upgrade">Upgrade to seller</a></li>

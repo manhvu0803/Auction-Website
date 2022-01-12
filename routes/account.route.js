@@ -7,6 +7,7 @@ const account='';
 router.get('/', async (req,res)=>{
     if (req.query.username!==undefined){
         let info = await user.getUser(req.query.username);
+        info.username=req.query.username;
         if(info.type==='seller'){
             info.isSeller=true;
         }
@@ -28,6 +29,68 @@ router.get('/', async (req,res)=>{
         info.downvoteCount=+info.totalVote-+info.upvoteCount;
 
         res.render('vwAccount/Profile_Infor',{info: info});
+    }
+    else{
+        res.render('vwError/404');
+    }
+})
+
+router.get('/change-pwd',async(req,res)=>{
+    if (req.query.username!==undefined){
+        let info = await user.getUser(req.query.username);
+        info.username=req.query.username;
+        if(req.session.auth){
+            if(req.session.authUser.username===req.query.username){
+                info.isSelf=true;
+                if(info.type==='seller'){
+                    info.isSeller=true;
+                }
+                else{
+                    info.isSeller=false;
+                }
+                info.downvoteCount=+info.totalVote-+info.upvoteCount;
+                res.render('vwAccount/Profile_ChangePassword',{info: info});
+            }else{
+                info.isSelf=false;
+                res.render('vwError/404');
+            }
+        }
+        else{
+            info.isSelf=false;
+            res.render('vwError/404');
+        }
+
+    }
+    else{
+        res.render('vwError/404');
+    }
+})
+
+router.get('/fav',async(req,res)=>{
+    if (req.query.username!==undefined){
+        let info = await user.getUser(req.query.username);
+        info.username=req.query.username;
+        if(req.session.auth){
+            if(req.session.authUser.username===req.query.username){
+                info.isSelf=true;
+                if(info.type==='seller'){
+                    info.isSeller=true;
+                }
+                else{
+                    info.isSeller=false;
+                }
+                info.downvoteCount=+info.totalVote-+info.upvoteCount;
+                res.render('vwAccount/FavorAndWon',{info: info});
+            }else{
+                info.isSelf=false;
+                res.render('vwError/404');
+            }
+        }
+        else{
+            info.isSelf=false;
+            res.render('vwError/404');
+        }
+
     }
     else{
         res.render('vwError/404');

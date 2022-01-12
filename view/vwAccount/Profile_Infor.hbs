@@ -69,21 +69,23 @@
                         Profile menu
                     </h4>
                     <div class="list-group list-group-flush">
-                        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <a href="javascript:window.location.reload(true)" class="list-group-item list-group-item-action active" aria-current="true">
                             Information
                         </a>
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
-                            Change password
-                        </a>
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
-                            Favourite & Won products
-                        </a>
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
-                            Self Point
-                        </a>
-                        <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
-                            Selling
-                        </a>
+                        {{#if this.info.isSelf}}
+                            <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                                Change password
+                            </a>
+                            <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                                Favourite & Won products
+                            </a>
+                            <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                                Self Point
+                            </a>
+                            <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
+                                Selling
+                            </a>
+                        {{/if}}
                     </div>
                 </div>
             </div>
@@ -106,6 +108,7 @@
                                 <label class="col-sm-3" for="txtDOB">Date of birth</label>
                                 <input class="col-sm-5" type="text" id="txtDOB" name="dob" value="{{this.info.dob}}" required/>
                             </div>
+                            {{#if this.info.isSelf}}
                             <div id="btn_field">
                                 <button type="button" onclick="EditButtonClick()" id="editbtn">
                                     Edit
@@ -114,9 +117,10 @@
                                     Save
                                 </button>
                                 <button type="button" onclick="CancleButtonClick()" id="canclebtn">
-                                    Cancle
+                                    Cancel
                                 </button>
                             </div>
+                            {{/if}}
                         </form>
                     </div>
                 </div>

@@ -53,6 +53,14 @@
 	</style>
 </head>
 
+<script>
+	function log(desc)
+	{
+		console.log(desc);
+	}
+</script>
+
+
 <br>
 <div class="groupTitle">
 	<h1>Almost finish</h1>
@@ -66,7 +74,7 @@
 					<div class="img-wrap"><img src="{{this.mainImage}}"></div>
 					<figcaption class="info-wrap">
 						<h4 class="title">{{this.name}}</h4>
-						<p class="desc">{{{this.description}}}</p>
+						<div class="desc">{{{this.description}}}</div>
 					</figcaption>
 					<div class="bottom-wrap">
 						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
@@ -97,12 +105,12 @@
 					<div class="img-wrap"><img src="{{this.mainImage}}"></div>
 					<figcaption class="info-wrap">
 						<h4 class="title">{{this.name}}</h4>
-						<p class="desc">{{{this.description}}}</p>
+						<div class="desc">{{{this.description}}}</div>
 					</figcaption>
 					<div class="bottom-wrap">
 						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
 						<div class="price-wrap h5">
-							<span class="price-new">{{this.price}}</span>
+							<span class="price-new">{{this.price}} VND</span>
 						</div> <!-- price-wrap.// -->
 						<div>Votes: {{this.bidCount}}</div>
 					</div> <!-- bottom-wrap.// -->
@@ -128,12 +136,12 @@
 					<div class="img-wrap"><img src="{{this.mainImage}}"></div>
 					<figcaption class="info-wrap">
 						<h4 class="title">{{this.name}}</h4>
-						<p class="desc">{{{this.description}}}</p>
+						<div class="desc">{{{this.description}}}</div>
 					</figcaption>
 					<div class="bottom-wrap">
 						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
 						<div class="price-wrap h5">
-							<span class="price-new">{{this.price}}</span>
+							<span class="price-new">{{this.price}} VND</span>
 						</div> <!-- price-wrap.// -->
 						<div>Votes: {{this.bidCount}}</div>
 					</div> <!-- bottom-wrap.// -->

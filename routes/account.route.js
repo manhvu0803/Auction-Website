@@ -27,7 +27,7 @@ router.get('/', async (req,res)=>{
 
         info.downvoteCount=+info.totalVote-+info.upvoteCount;
 
-        res.render('vwAccount/profile',{info: info});
+        res.render('vwAccount/Profile_Infor',{info: info});
     }
     else{
         res.render('vwError/404');
@@ -99,14 +99,5 @@ router.post('/signup', async (req, res) => {
     await user.newUser(req.body.username, req.body.password,  req.body.name, req.body.dob ,req.body.email, "bidder");
     res.redirect('/account/login');
 });
-
-router.get('/info', async (req, res) => {
-    if(req.session.auth){
-        res.render('vwAccount/profile');
-    }
-    else{
-        res.redirect('/account/login');
-    }
-})
 
 export default router;

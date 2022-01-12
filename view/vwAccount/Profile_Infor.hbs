@@ -70,7 +70,7 @@
                     </h4>
                     <div class="list-group list-group-flush">
                         <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                            Inforatmion
+                            Information
                         </a>
                         <a id="MenunotAtive" href="#" class="list-group-item list-group-item-action">
                             Change password
@@ -95,20 +95,16 @@
                     <div class="card-body">
                         <form method="post">
                             <div id="input_field" class="row mb-4 mt-2">
-                                <label class="col-sm-3" for="txtUsername">Username</label>
-                                <input class="col-sm-5" type="text" id="txtUsername" name="username" required/>
+                                <label class="col-sm-3" for="txtName">Fullname</label>
+                                <input class="col-sm-5" type="text" id="txtName" name="name" value="{{this.info.name}}" required/>
                             </div>
                             <div id="input_field" class="row mb-4">
-                                <label class="col-sm-3" for="txtUsername">Email</label>
-                                <input class="col-sm-5" type="text" id="txtEmail" name="email" required/>
+                                <label class="col-sm-3" for="txtEmail">Email</label>
+                                <input class="col-sm-5" type="text" id="txtEmail" name="email" value="{{this.info.email}}" required/>
                             </div>
                             <div id="input_field" class="row mb-4">
-                                <label class="col-sm-3" for="txtUsername">Fullname</label>
-                                <input class="col-sm-5" type="text" id="txFullname" name="fullname" required/>
-                            </div>
-                            <div id="input_field" class="row mb-4">
-                                <label class="col-sm-3" for="txtUsername">Date of birth</label>
-                                <input class="col-sm-5" type="text" id="txtDOB" name="dob" required/>
+                                <label class="col-sm-3" for="txtDOB">Date of birth</label>
+                                <input class="col-sm-5" type="text" id="txtDOB" name="dob" value="{{this.info.dob}}" required/>
                             </div>
                             <div id="btn_field">
                                 <button type="button" onclick="EditButtonClick()" id="editbtn">
@@ -140,15 +136,13 @@
             let editbtn = document.getElementById("editbtn");
             let savebtn = document.getElementById("savebtn");
             let canclebtn = document.getElementById("canclebtn");
-            let username = document.getElementById("txtUsername");
+            let username = document.getElementById("txName");
             let email = document.getElementById("txtEmail");
-            let fullname = document.getElementById("txFullname");
             let dob = document.getElementById("txtDOB");
 
             editbtn.style.pointerEvents="none";
             savebtn.style.pointerEvents="all";
             canclebtn.style.pointerEvents="all";
-            username.style.pointerEvents="all";
             email.style.pointerEvents="all";
             fullname.style.pointerEvents="all";
             dob.style.pointerEvents="all";
@@ -158,7 +152,6 @@
             let editbtn = document.getElementById("editbtn");
             let savebtn = document.getElementById("savebtn");
             let canclebtn = document.getElementById("canclebtn");
-            let username = document.getElementById("txtUsername");
             let email = document.getElementById("txtEmail");
             let fullname = document.getElementById("txFullname");
             let dob = document.getElementById("txtDOB");
@@ -168,7 +161,6 @@
                 editbtn.style.pointerEvents="all";
                 savebtn.style.pointerEvents="none";
                 canclebtn.style.pointerEvents="none";
-                username.style.pointerEvents="none";
                 email.style.pointerEvents="none";
                 fullname.style.pointerEvents="none";
                 dob.style.pointerEvents="none";
@@ -178,7 +170,6 @@
             let editbtn = document.getElementById("editbtn");
             let savebtn = document.getElementById("savebtn");
             let canclebtn = document.getElementById("canclebtn");
-            let username = document.getElementById("txtUsername");
             let email = document.getElementById("txtEmail");
             let fullname = document.getElementById("txFullname");
             let dob = document.getElementById("txtDOB");
@@ -186,7 +177,6 @@
             editbtn.style.pointerEvents="all";
             savebtn.style.pointerEvents="none";
             canclebtn.style.pointerEvents="none";
-            username.style.pointerEvents="none";
             email.style.pointerEvents="none";
             fullname.style.pointerEvents="none";
             dob.style.pointerEvents="none";

@@ -77,28 +77,28 @@ router.get('/change-pwd',async(req,res)=>{
 router.get('/fav',async(req,res)=>{
     if (req.query.username!==undefined){
         try{
-        let info = await user.getUser(req.query.username);
-        info.username=req.query.username;
-        if(req.session.auth){
-            if(req.session.authUser.username===req.query.username){
-                info.isSelf=true;
-                if(info.type==='seller'){
-                    info.isSeller=true;
+            let info = await user.getUser(req.query.username);
+            info.username=req.query.username;
+            if(req.session.auth){
+                if(req.session.authUser.username===req.query.username){
+                    info.isSelf=true;
+                    if(info.type==='seller'){
+                        info.isSeller=true;
+                    }
+                    else{
+                        info.isSeller=false;
+                    }
+                    info.downvoteCount=+info.totalVote-+info.upvoteCount;
+                    res.render('vwAccount/Profile_FavourAndWon',{info: info});
+                }else{
+                    info.isSelf=false;
+                    res.render('vwError/404');
                 }
-                else{
-                    info.isSeller=false;
-                }
-                info.downvoteCount=+info.totalVote-+info.upvoteCount;
-                res.render('vwAccount/Profile_FavourAndWon',{info: info});
-            }else{
+            }
+            else{
                 info.isSelf=false;
                 res.render('vwError/404');
             }
-        }
-        else{
-            info.isSelf=false;
-            res.render('vwError/404');
-        }
         }catch{
             res.render('vwError/404');
         }

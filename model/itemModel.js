@@ -189,6 +189,12 @@ export default class itemModel
 		return snapshot.docs.map(doc => parseItemDoc(doc));
 	}
 
+	async getItemsByBuyer(username, count = 5)
+	{
+		let snapshot = await this.itemsRef.where("buyer", "==", username);
+		return snapshot.docs.map(doc => parseItemDoc(doc));
+	}
+
 	async getItemByQuery(query)
 	{
 		let searchRes = this.index.search(query);

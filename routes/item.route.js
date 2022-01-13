@@ -71,8 +71,7 @@ router.post('/:id', async (req, res) => {
         }
         let seller = await user.getUser(bidItem.seller);
         let lastBidder = null
-        
-        
+
         if(bidItem.expireTime<new Date()){
             try{
                 lastBidder = await user.getUser(item.finalizeBid(proID,true));

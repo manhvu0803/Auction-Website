@@ -91,7 +91,7 @@ router.post('/:id', async (req, res) => {
         }
         else{
             try{
-                lastBidder = await user.getUser(item.getBid(proID,1)[0]);
+                lastBidder = await item.finalizeBid(proID);
             }
             catch{
                 lastBidder = null;

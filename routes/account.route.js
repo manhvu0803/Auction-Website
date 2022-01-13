@@ -215,7 +215,7 @@ router.get('/sell',async(req,res)=>{
                 res.render('vwError/404');
                 return;
             }
-            let items= await item.getItembySeller(req.query.username);
+            let items= await item.getItemBySeller(req.query.username);
 
             for(let i=0;i<items.length;i++){
                 items[i]['mainImage']= await item.getMainImageUrl(items[i].id);

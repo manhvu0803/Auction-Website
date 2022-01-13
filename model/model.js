@@ -6,7 +6,14 @@ import fs from "fs";
 import userModel from "./userModel.js";
 import itemModel from "./itemModel.js"
 
-const serviceAccount =  JSON.parse(fs.readFileSync("model/serviceAccountKey.json"));
+const serviceAccount;
+try {
+	serviceAccount = JSON.parse(fs.readFileSync("model/serviceAccountKey.json"));
+}
+catch (e) {
+	console.error(e);
+	serviceAccount = process.env.SERVICE_ACCOUNT;
+}
 
 const app = firebase.initializeApp({
 	credential: firebase.cert(serviceAccount),

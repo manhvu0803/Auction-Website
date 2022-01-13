@@ -8,29 +8,28 @@ import multer from "multer"
 
 export default function(app){
     app.get('/', async (req,res)=>{
-        let data=(await item.getAllItems());
-        for(let i=0;i<data.length;i++){
-            data[i]['mainImage']= await item.getMainImageUrl(data[i].id);
-            const highestBidder = await item.getBid(data[i].id,1);
-            if(highestBidder.length>0){
-                data[i]['price'] = +highestBidder[0].amount;
-            }
-            else{
-                data[i]['price'] = data[i].startingPrice;
-            }
+
+        let almost= await item.getItemsByOrder("expireTime",'asc',4);
+
+        almost.sort((a,b)=>{
+            return b.expireTime-a.expireTime;
+        })
+
+        for(let i=0;i<almost.length;i++){
+            almost[i]['mainImage']= await item.getMainImageUrl(almost[i].id);
         }
 
-        const almost= data.sort((a,b)=>{
-            return b.expireTime-a.expireTime;
-        }).slice(0,5);
+        let votes= await item.getItemsByOrder("bidCount",'desc',4);
 
-        const votes= data.sort((a,b)=>{
-            return b.bidCount-a.bidCount;
-        }).slice(0,5);
+        for(let i=0;i<votes.length;i++){
+            votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
+        }
 
-        const high= data.sort((a,b)=>{
-            return b.price-a.price;
-        }).slice(0,5);
+        let high= await item.getItemsByOrder("currentPrice",'desc',4)
+
+        for(let i=0;i<high.length;i++){
+            high[i]['mainImage']= await item.getMainImageUrl(high[i].id);
+        }
 
         res.render("home", { items: {
             almostFinish: almost,

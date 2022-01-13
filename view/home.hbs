@@ -79,7 +79,7 @@
 					<div class="bottom-wrap">
 						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
 						<div class="price-wrap h5">
-							<span class="price-new"> {{this.price}} VND</span>
+							<span class="price-new"> {{this.currentPrice}} VND</span>
 						</div> <!-- price-wrap.// -->
 						<div>Votes: {{this.bidCount}}</div>
 					</div> <!-- bottom-wrap.// -->
@@ -98,7 +98,7 @@
 </div>
 <div class="container">
 	<div class="row">
-		{{#each items.almostFinish}}
+		{{#each items.popular}}
 		<div class="col">
 			<a href="/item/{{this.id}}" style="text-decoration: none; color: black">
 				<figure class="card card-product">
@@ -110,7 +110,7 @@
 					<div class="bottom-wrap">
 						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
 						<div class="price-wrap h5">
-							<span class="price-new">{{this.price}} VND</span>
+							<span class="price-new">{{this.currentPrice}} VND</span>
 						</div> <!-- price-wrap.// -->
 						<div>Votes: {{this.bidCount}}</div>
 					</div> <!-- bottom-wrap.// -->
@@ -129,7 +129,7 @@
 </div>
 <div class="container">
 	<div class="row">
-		{{#each items.almostFinish}}
+		{{#each items.highestBidded}}
 		<div class="col">
 			<a href="/item/{{this.id}}" style="text-decoration: none; color: black">
 				<figure class="card card-product">
@@ -141,7 +141,7 @@
 					<div class="bottom-wrap">
 						<div class="">Time left: <span class="timer">{{this.expireTime}}</span></div>
 						<div class="price-wrap h5">
-							<span class="price-new">{{this.price}} VND</span>
+							<span class="price-new">{{this.currentPrice}} VND</span>
 						</div> <!-- price-wrap.// -->
 						<div>Votes: {{this.bidCount}}</div>
 					</div> <!-- bottom-wrap.// -->

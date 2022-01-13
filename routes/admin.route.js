@@ -51,4 +51,49 @@ router.get('/managecategory', async (req, res) => {
     }
 })
 
+router.post('/categories/edit/:categories', async (req, res) => {
+    if(req.session.auth){
+        if(req.session.authUser.isAdmin)
+        {
+            const oldCat = req.params.categories;
+            const subcat = await item.getSubcategories(oldCat);
+            await item.deleteCategory(oldCat);
+            await item.addCategory(req.body.category,subcat);
+
+            const items=await item.getAllItems();
+            for(let i=0;i<items.length;i++){
+                await item.update(items[i].id,{category:req.body.category});
+            }
+
+            res.redirect('/admin/managecategory')
+        }
+        else
+            res.render('vwError/404')
+    }
+    else{
+        res.render('vwError/404')
+    }
+})
+
+router.post('/categories/edit/:categories/:subcategories', async (req, res) => {
+    if(req.session.auth){
+        if(req.session.authUser.isAdmin)
+        {
+            const cat=req.params.categories
+            const oldSubCat = req.params.subcategories;
+            await item.deleteCategory(cat,oldSubCat);
+            await item.addCategory(cat,req.body.subcategory);
+            const items=await item.getAllItems();
+            for(let i=0;i<items.length;i++){
+                await item.update(items[i].id,{category:req.body.subcategory});
+            }
+            res.redirect('/admin/managecategory')
+        }
+        else
+            res.render('vwError/404')
+    }
+    else{
+        res.render('vwError/404')
+    }
+})
 export default router;

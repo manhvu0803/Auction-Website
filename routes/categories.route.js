@@ -43,7 +43,6 @@ router.get('/delete/:category', async (req, res) => {
     }
 });
 router.get('/delete/:category/:subcategory', async (req, res) => {
-    console.log(req.body.category);
     if(req.session.auth){
         if(req.session.authUser.isAdmin)
         {
@@ -59,10 +58,10 @@ router.get('/delete/:category/:subcategory', async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-    console.log(req.body.category);
     if(req.session.auth){
         if(req.session.authUser.isAdmin)
         {
+            console.log(req.body);
             await item.addCategory(req.body.category)
             res.redirect('/admin/managecategory')
         }
@@ -77,7 +76,7 @@ router.post('/add/:category/', async (req, res) => {
     if(req.session.auth){
         if(req.session.authUser.isAdmin)
         {
-            await item.addCategory(req.params.category,req.body.subcategory);
+            await item.addCategory(req.params.category,[req.body.subcategory]);
             res.redirect('/admin/managecategory')
         }
         else

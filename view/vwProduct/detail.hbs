@@ -184,7 +184,7 @@
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                             <span>Seller:</span>
-                            <a href="/account?username={{this.itemData.seller}}" style="text-decoration: none;">
+                            <a href="account/{{this.authUser.username}}/review/{{this.itemData.seller}}" style="text-decoration: none;">
                                 <p>{{this.itemData.seller}}</p>
                             </a>
                     </div>
@@ -261,7 +261,7 @@
                                 <td class='bid-time'>{{this.time}}</td>
                                 <td>
                                     {{#if ../this.authUser.isOwner}}
-                                    <a href="/account?username={{this.user}}" style="text-decoration: none;">
+                                    <a href="account/{{../this.authUser.username}}/review/{{this.user}}" style="text-decoration: none;">
                                         <p class="name">{{this.user}}</p>
                                     </a>
                                     {{else}}

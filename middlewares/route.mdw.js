@@ -1,6 +1,7 @@
 import accountRoute from '../routes/account.route.js';
 import categoriesRoute from '../routes/categories.route.js';
 import itemRoute from '../routes/item.route.js';
+import adminRoute from '../routes/admin.route.js';
 import { item } from "../model/model.js"
 
 import multer from "multer"
@@ -42,6 +43,8 @@ export default function(app){
     app.use('/categories',categoriesRoute);
 
     app.use('/item',itemRoute);
+
+    app.use('/admin',adminRoute);
 
     app.get("/search", async (req, res) => {
         

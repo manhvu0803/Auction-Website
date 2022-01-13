@@ -23,7 +23,8 @@
   },
   "type": "module",
   "scripts": {
-    "test": "node index.js"
+    "test": "node app2.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

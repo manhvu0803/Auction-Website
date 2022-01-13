@@ -181,7 +181,8 @@ router.get('/point',async(req,res)=>{
             }
             else
                 info.percentVote=Math.round((+info.upvoteCount/+info.totalVote)*100);
-            res.render('vwAccount/Profile_Point',{info: info});
+            const reviews = await user.getReview(req.query.username);
+            res.render('vwAccount/Profile_Point',{info: info, reviews: reviews});
         }catch{
             res.render('vwError/404');
         }
@@ -385,7 +386,8 @@ router.post('/:reviewer/review/:reviewed', async(req,res)=>{
     const reviewer = req.params.reviewer;
     const reviewed = req.params.reviewed;
     console.log(req.body);
-    res.redirect('/:reviewer/review/:reviewed');
+    await user.addReview(reviewer,reviewed,req.body.vote=="up",req.body.review);
+    res.redirect('/');
 
 })
 

@@ -214,11 +214,11 @@
 {{else}}
 <div style="margin-right: 7em;">
 	<ul class="pagination justify-content-end">
-		{{#if start}}
+		{{#if pageData.start}}
 		{{else}}
 			<li class="page-item"><a class="page-link" href="/categories/{{pageData.category}}/{{pageData.subcategory}}/{{pageData.prev}}">Previous</a></li>
 		{{/if}}
-		{{#if end}}
+		{{#if pageData.end}}
 			
 		{{else}}
 			<li class="page-item"><a class="page-link" href="/categories/{{pageData.category}}/{{pageData.subcategory}}/{{pageData.next}}">Next</a></li>

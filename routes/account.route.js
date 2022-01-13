@@ -1,5 +1,5 @@
 import express from "express";
-import {user} from "../model/model.js";
+import {user,item} from "../model/model.js";
 
 const router = express.Router();
 
@@ -132,9 +132,18 @@ router.get('/fav',async(req,res)=>{
             else{
                 info.isSeller=false;
             }
+            const ids = await user.getWatchItems(req.query.username);
+            let watchItems=[]
+
+            for(let i=0;i<ids.length;i++){
+                watchItems.push(await item.getItem(ids[i]));
+                watchItems[i]['mainImage']= await item.getMainImageUrl(ids[i]);
+            }
+
             info.downvoteCount=+info.totalVote-+info.upvoteCount;
-            res.render('vwAccount/Profile_FavourAndWon',{info: info});
-        }catch{
+            res.render('vwAccount/Profile_Favourite',{info: info, watchItems: watchItems});
+        }catch(err){
+            console.log(err);
             res.render('vwError/404');
         }
     }
@@ -165,8 +174,11 @@ router.get('/point',async(req,res)=>{
                 info.isSeller=false;
             }
             info.downvoteCount=+info.totalVote-+info.upvoteCount;
-            if(info.totalCount===0)
-                info.percentVote=0;
+
+            if(info.totalVote==0)
+            {
+                info.percentVote=100;
+            }
             else
                 info.percentVote=Math.round((+info.upvoteCount/+info.totalVote)*100);
             res.render('vwAccount/Profile_Point',{info: info});

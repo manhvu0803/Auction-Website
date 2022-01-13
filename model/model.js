@@ -6,7 +6,7 @@ import fs from "fs";
 import userModel from "./userModel.js";
 import itemModel from "./itemModel.js"
 
-const serviceAccount;
+let serviceAccount;
 try {
 	serviceAccount = JSON.parse(fs.readFileSync("model/serviceAccountKey.json"));
 }

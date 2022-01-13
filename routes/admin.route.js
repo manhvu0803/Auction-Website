@@ -1,8 +1,9 @@
 import express from "express";
 import {user,item} from "../model/model.js";
-
+import mailing from "../mail/mail.js";
 
 const router = express.Router();
+const mail=new mailing();
 
 router.get('/', async (req, res) => {
     if(req.session.auth){
@@ -25,6 +26,56 @@ router.get('/manageuser', async (req, res) => {
                 users[i].upvoteRatio=users[i].totalVote==0?100:Math.floor(+users[i].upvoteCount/+users[i].totalVote)*100
             }
             res.render('vwAdmin/user_list',{users:users})
+        }
+        else
+            res.render('vwError/404')
+    }
+    else{
+        res.render('vwError/404')
+    }
+})
+
+router.get('/upgrade/:username', async (req, res) => {
+    if(req.session.auth){
+        if(req.session.authUser.isAdmin)
+        {   
+            let username=req.params.username
+            user.upgradeInfo(username,{type:'seller',wantUpgrade:false})
+            res.redirect('/admin/manageuser')
+        }
+        else
+            res.render('vwError/404')
+    }
+    else{
+        res.render('vwError/404')
+    }
+})
+
+router.get('/resetpassword/:username', async (req, res) => {
+    if(req.session.auth){
+        if(req.session.authUser.isAdmin)
+        {   
+            let username=req.params.username
+            const account = await user.getUser(username);
+            mail.sendMail(account.email, "Reset Password", "Your account has beed reseted to aaaaaaaa https://auctioner-hcmus.herokuapp.com/");
+            user.updateInfo(username,{password:'aaaaaaaa'})
+            res.redirect('/admin/manageuser')
+        }
+        else
+            res.render('vwError/404')
+    }
+    else{
+        res.render('vwError/404')
+    }
+})
+
+router.get('/delete/:username', async(req,res)=>{
+    if(req.session.auth){
+        if(req.session.authUser.isAdmin)
+        {
+            const username=req.params.username
+            // await user.deleteUser(username)
+            res.redirect('/admin/manageuser')
         }
         else
             res.render('vwError/404')

@@ -4,7 +4,6 @@ const email ='thoitienteam@gmail.com'
 
 export default class mailing{
 
-
     constructor(){
         this.transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',

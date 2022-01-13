@@ -2,7 +2,6 @@ import express from "express";
 import moment from "moment";
 import { item, user } from "../model/model.js"
 import mailing from "../mail/mail.js";
-import e from "express";
 
 const router = express.Router();
 const mail=new mailing();

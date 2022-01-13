@@ -1,5 +1,4 @@
 import accountRoute from '../routes/account.route.js';
-import auctionRoute from '../routes/auction.route.js';
 import categoriesRoute from '../routes/categories.route.js';
 import itemRoute from '../routes/item.route.js';
 import { item } from "../model/model.js"
@@ -39,9 +38,7 @@ export default function(app){
     });
     
     app.use('/account',accountRoute);
-    
-    app.use('/auction',auctionRoute);
-    
+        
     app.use('/categories',categoriesRoute);
 
     app.use('/item',itemRoute);

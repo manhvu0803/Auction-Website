@@ -192,14 +192,20 @@
                         <span>Price holder:</span>
                         <p>{{this.highestBidder.user}}</p>
                     </div>
-                    <div class="biddingPart">
-                        <span>Your bid:</span>
-                        <form id="bidForm" method="post">
-                            <input name="bid" type="number" required style="border-radius: 10px; width: 30%; text-align: center; margin-right: 10px;"
-                            min="{{this.highestBidder.amount}}">
-                            <button type="submit" onclick="doubleCheck(event)">Bid</button>
-                        </form>
-                    </div>
+                    {{#if authUser.isOwner}}
+                    {{else}}
+                        {{#if this.itemData.listing}}
+                            <div class="biddingPart">
+                                <span>Your bid:</span>
+                                <form id="bidForm" method="post">
+                                    <input name="bid" type="number" required style="border-radius: 10px; width: 30%; text-align: center; margin-right: 10px;"
+                                    min="{{this.highestBidder.amount}}">
+                                    <button type="submit" onclick="doubleCheck(event)">Bid</button>
+                                </form>
+                            </div>
+                        {{/if}}
+                    {{/if}}
+
                 </div>
             </div>
         </div>

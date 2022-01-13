@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
 router.get("/:category/:subcategory/:page", async (req, res) => {
     let current = parseInt(req.params.page);
     let itemDatas=await item.getItemsByCategory(req.params.category,req.params.subcategory);
-    
+    const end = itemDatas.length<5;
     for(let i=0;i<itemDatas.length;i++){
         itemDatas[i].mainImage= await item.getMainImageUrl(itemDatas[i].id);
     }
@@ -48,10 +48,11 @@ router.get("/:category/:subcategory/:page", async (req, res) => {
             current: current,
             next: current + 1,
             prev: Math.max(1, current - 1),
+            start: current<2,
+            end: end
         },
         categories: data,
         items: itemDatas,
-        home: itemDatas.length>0
     })
 })
 

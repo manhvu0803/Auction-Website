@@ -1,8 +1,10 @@
 import express from "express";
 import moment from "moment";
-import { item } from "../model/model.js"
+import { item, user } from "../model/model.js"
+import mailing from "../mail/mail.js";
 
 const router = express.Router();
+const mail=new mailing();
 
 router.post('/edit/:id',async(req,res)=>{
     const proID = req.params.id;
@@ -61,20 +63,34 @@ router.post('/:id', async (req, res) => {
     }
     else{
         const proID = req.params.id;
-        await item.bid(proID,req.session.authUser.username,+req.body.bid);
+        const bidItem = await item.getItem(proID);
+        if(bidItem.maximumPrice==req.body.bid){
+            mail.sendMail(req.session.authUser.email, "Bought success", "<h1>You bid <br>"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website</h1> with amount: <h2>"+req.body.bid+"</h2>");
+            await item.update(proID, {listing: false});
+            await item.bid(proID,req.session.authUser.username,+req.body.bid);
+            res.redirect('/');
+        }
+        else{
+            mail.sendMail(req.session.authUser.email, "Bid success", "<h1>You bid <br>"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website</h1> with amount: <h2>"+req.body.bid+"</h2>");
+            await user.addItemToWatch(req.session.authUser.username,proID);
+            await item.bid(proID,req.session.authUser.username,+req.body.bid);
+        }
         res.redirect('/item/'+req.params.id)
     }
-    
 })
 
 router.get('/:id/kick', async (req, res) => {
     if (req.query.username!==undefined){
+        const kickedUser = await user.getUser(req.query.username);
         await item.banBidder(req.params.id,req.query.username);
+        mail.sendMail(kickedUser.email, "Kicked", "You have been banned from"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website!</h1>");
         res.redirect('/item/'+req.params.id);
     }
     else{
         res.render('vwError/404');
     }
 })
+
+
 
 export default router;

@@ -27,7 +27,7 @@ export default class mailing{
             from: email,
             to: to,
             subject: subject,
-            text:text
+            html:text
         }
 
         this.transporter.sendMail(mailOptions, function(error, info){

@@ -77,6 +77,7 @@ export default class userModel
 				 if (data[prop] instanceof firestore.Timestamp) 
 					data[prop] = data[prop].toDate();
 			delete data.password;
+			data.username = doc.id;
 			return data;
 		})
 	}

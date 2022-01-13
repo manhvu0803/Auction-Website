@@ -83,43 +83,44 @@
                 </div>
             </div>
             <div class="col-sm-9 mb-3">
-                <div class="card">
+                <div class="card" style="height: 570px">
                     <h4 class="card-header">
                         Your watch list
                     </h4>
-                </div>
-                
-                <div class="container">
-                    {{#each watchItems}}
-                    <article class="search-result row">
-                        <div class="col-xs-12 col-sm-12 col-lg-2">
-                            <a href="/item/{{this.id}}" title="main image" class="thumbnail">
-                                <img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
-                            </a>
+                    <div class="card-body" style="height: 72%">
+                        <div class="container" style="overflow: auto; height: 75%">
+                            {{#each watchItems}}
+                                <article class="search-result row">
+                                    <div class="col-xs-12 col-sm-12 col-lg-3">
+                                        <a href="/item/{{this.id}}" title="main image" class="thumbnail">
+                                            <img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-3">
+                                        <ul class="meta-search">
+                                            <li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
+                                            <li><i class="fa fa-tags"></i> {{this.category}}</li>
+                                            <li>{{this.currentPrice}} VND</li>
+                                            {{#if this.highestBidder}}
+                                                <li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
+                                            {{/if}}
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 excerpet">
+                                        <h3>
+                                            <a href="/item/{{this.id}}" title="">{{this.name}}</a>
+                                            {{#if this.new}}
+                                                <span class="badge">New</span>
+                                            {{/if}}
+                                        </h3>
+                                        <div style="max-height: 7.5em; overflow: hidden; text-overflow: ellipsis;">{{{this.description}}}</div>
+                                    </div>
+                                    <span class="clearfix borda"></span>
+                                </article>
+                                <hr>
+                            {{/each}}
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-3">
-                            <ul class="meta-search">
-                                <li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
-                                <li><i class="fa fa-tags"></i> {{this.category}}</li>
-                                <li>{{this.currentPrice}} VND</li>
-                                {{#if this.highestBidder}}
-                                <li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
-                                {{/if}}
-                            </ul>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                            <h3>
-                                <a href="/item/{{this.id}}" title="">{{this.name}}</a> 
-                                {{#if this.new}}
-                                <span class="badge">New</span>
-                                {{/if}}
-                            </h3>
-                            <div style="max-height: 7.5em; overflow: hidden; text-overflow: ellipsis;">{{{this.description}}}</div>
-                        </div>
-                        <span class="clearfix borda"></span>
-                    </article>
-                    <hr>
-                    {{/each}}
+                    </div>
                 </div>
             </div>
         </div>

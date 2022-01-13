@@ -69,6 +69,7 @@ router.post('/:id', async (req, res) => {
             await item.update(proID, {listing: false});
             await item.bid(proID,req.session.authUser.username,+req.body.bid);
             res.redirect('/');
+            return;
         }
         else{
             mail.sendMail(req.session.authUser.email, "Bid success", "<h1>You bid <br>"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website</h1> with amount: <h2>"+req.body.bid+"</h2>");
@@ -84,7 +85,7 @@ router.get('/:id/kick', async (req, res) => {
         if (req.query.username!==undefined){
             const kickedUser = await user.getUser(req.query.username);
             await item.banBidder(req.params.id,req.query.username);
-            mail.sendMail(kickedUser.email, "Kicked", "You have been banned from"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website!</h1>");
+            mail.sendMail(kickedUser.email, "Banned", "You have been banned from"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website!</h1>");
             res.redirect('/item/'+req.params.id);
         }
         else{

@@ -505,13 +505,15 @@ export default class itemModel
 		if (bids.length < 1)
 			throw Error(`No bid found for item ${itemId}`);
 
-		if (waitForUpdate)
-			await this.update(itemId, { 
-				listing: false,
-				buyer: bids[0].user
-			})
+		let update = this.update(itemId, { 
+			listing: false,
+			buyer: bids[0].user 
+		})
 
 		this.index.remove(itemId);
+
+		if (waitForUpdate)
+			await update;
 
 		return bids[0].user;
 	}

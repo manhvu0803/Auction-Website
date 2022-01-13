@@ -180,6 +180,11 @@
 		</div>
 
 		<div class="col col-lg-7 container" style="margin:0 0 0 0;">
+			{{#if this.home}}
+				<div class="row">
+					<h1>Popular</h1>
+				</div>
+			{{/if}}
 			<div class="row">
 				{{#each items}}
 				<div class="col-3">
@@ -204,14 +209,16 @@
 		</div>
 	</div>
 </div>
+{{#if home}}
 
+{{else}}
 <div style="margin-right: 7em;">
 	<ul class="pagination justify-content-end">
 		<li class="page-item"><a class="page-link" href="/categories/{{pageData.category}}/{{pageData.subcategory}}/{{pageData.prev}}">Previous</a></li>
 		<li class="page-item"><a class="page-link" href="/categories/{{pageData.category}}/{{pageData.subcategory}}/{{pageData.next}}">Next</a></li>
 	</ul>
 </div>
-
+{{/if}}
 <script>
 (function () {
 	'use strict'

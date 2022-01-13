@@ -7,17 +7,10 @@ router.get("/", async (req, res) => {
     const cats = await item.getAllCategories();
     const names = cats.categories;
 
-    let itemDatas=await item.getAllItems();
+    let votes= await item.getItemsByOrder("bidCount",'desc',4);
 
-    for(let i=0;i<itemDatas.length;i++){
-        itemDatas[i].mainImage= await item.getMainImageUrl(itemDatas[i].id);
-        const highestBidder = await item.getBid(itemDatas[i].id,1);
-        if(highestBidder.length>0){
-            itemDatas[i].price = highestBidder[0].amount;
-        }
-        else{
-            itemDatas[i].price = itemDatas[i].startingPrice;
-        }
+    for(let i=0;i<votes.length;i++){
+        votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
     }
 
     let data=[];
@@ -28,7 +21,7 @@ router.get("/", async (req, res) => {
         })
     })
 
-    res.render("categories", { categories: data})
+    res.render("categories", { categories: data, items: votes, home:true})
 })
 
 router.get("/:category/:subcategory/:page", async (req, res) => {
@@ -37,13 +30,6 @@ router.get("/:category/:subcategory/:page", async (req, res) => {
     
     for(let i=0;i<itemDatas.length;i++){
         itemDatas[i].mainImage= await item.getMainImageUrl(itemDatas[i].id);
-        const highestBidder = await item.getBid(itemDatas[i].id,1);
-        if(highestBidder.length>0){
-            itemDatas[i].price = highestBidder[0].amount;
-        }
-        else{
-            itemDatas[i].price = itemDatas[i].startingPrice;
-        }
     }
     const cats = await item.getAllCategories();
     const names = cats.categories;
@@ -64,7 +50,8 @@ router.get("/:category/:subcategory/:page", async (req, res) => {
             prev: Math.max(1, current - 1),
         },
         categories: data,
-        items: itemDatas
+        items: itemDatas,
+        home: itemDatas.length>0
     })
 })
 

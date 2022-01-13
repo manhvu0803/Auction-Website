@@ -9,7 +9,7 @@ import multer from "multer"
 export default function(app){
     app.get('/', async (req,res)=>{
 
-        let almost= await item.getItemsByOrder("expireTime",'asc',4);
+        let almost= await item.getItemsByOrder("expireTime",'asc');
 
         almost.sort((a,b)=>{
             return b.expireTime-a.expireTime;
@@ -19,13 +19,13 @@ export default function(app){
             almost[i]['mainImage']= await item.getMainImageUrl(almost[i].id);
         }
 
-        let votes= await item.getItemsByOrder("bidCount",'desc',4);
+        let votes= await item.getItemsByOrder("bidCount",'desc');
 
         for(let i=0;i<votes.length;i++){
             votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
         }
 
-        let high= await item.getItemsByOrder("currentPrice",'desc',4)
+        let high= await item.getItemsByOrder("currentPrice",'desc')
 
         for(let i=0;i<high.length;i++){
             high[i]['mainImage']= await item.getMainImageUrl(high[i].id);

@@ -343,7 +343,7 @@ export default class itemModel
 	async deleteCategory(category, subcategories = null)
 	{
 		let catRef = this.categoryRef.doc(category);
-		if (subcategory) {
+		if (subcategories) {
 			let data = {};
 			for (let subcat of subcategories)
 				data[subcat] = firestore.FieldValue.delete();

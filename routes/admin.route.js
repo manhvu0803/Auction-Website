@@ -54,7 +54,7 @@ router.get('/upgrade/:username', async (req, res) => {
 router.get('/resetpassword/:username', async (req, res) => {
     if(req.session.auth){
         if(req.session.authUser.isAdmin)
-        {   
+        {
             let username=req.params.username
             const account = await user.getUser(username);
             mail.sendMail(account.email, "Reset Password", "Your account has beed reseted to aaaaaaaa https://auctioner-hcmus.herokuapp.com/");
@@ -75,6 +75,8 @@ router.get('/delete/:username', async(req,res)=>{
         {
             const username=req.params.username
             // await user.deleteUser(username)
+            const account = await user.getUser(username);
+            mail.sendMail(account.email, "Delete Account", "Your account"+username+"has beed deleted https://auctioner-hcmus.herokuapp.com/");
             res.redirect('/admin/manageuser')
         }
         else

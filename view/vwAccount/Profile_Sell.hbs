@@ -69,46 +69,46 @@
                     </h4>
                     <div class="card-body">
                         <div style="width: 100%; display: inline-flex;">
-                            <h5 style="margin-right: 2%;">Remaining time as a seller:</h5>
+                            {{!-- <h5 style="margin-right: 2%;">Remaining time as a seller:</h5> --}}
                             <p style="font-size: 17px; color: rgb(243, 74, 74)">{{this.expireSellerTime}}</p>
                         </div>
-                        {{#if this.info.isSelf}}
                             <div class="container">
-                            {{#each item}}
-                            <article class="search-result row">
-                                <div class="col-xs-12 col-sm-12 col-lg-2">
-                                    <a href="/item/{{this.id}}" title="main image" class="thumbnail">
-                                        <img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
-                                    </a>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-2">
-                                    <ul class="meta-search">
-                                        <li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
-                                        <li><i class="fa fa-tags"></i> {{this.category}}</li>
-                                        <li>{{this.price}} VND</li>
-                                        {{#if this.highestBidder}}
-                                        <li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
-                                        {{/if}}
-                                    </ul>
-                                </div>
-                                <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-                                    <h3>
-                                        <a href="/item/{{this.id}}" title="">{{this.name}}</a> 
-                                        {{#if this.new}}
-                                        <span class="badge">New</span>
-                                        {{/if}}
-                                    </h3>
-                                    <div style="max-height: 7.5em; overflow: hidden; text-overflow: ellipsis;">{{{this.description}}}</div>
-                                </div>
-                                <span class="clearfix borda"></span>
-                            </article>
-                            <hr>
-                            {{/each}}
+                        {{#each item}}
+                        <article class="search-result row">
+                            <div class="col-xs-12 col-sm-12 col-lg-2">
+                                <a href="/item/{{this.id}}" title="main image" class="thumbnail">
+                                    <img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
+                                </a>
                             </div>
-                            <button type="button" onclick="ChangePwdButtonClick()" id="changepwdbtn"
-                                    style="margin-bottom: 20px;">
-                                <a href="/create" style="color:white">Add product</a>
-                            </button>
+                            <div class="col-xs-12 col-sm-12 col-md-3">
+                                <ul class="meta-search">
+                                    <li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
+                                    <li><i class="fa fa-tags"></i> {{this.category}}</li>
+                                    <li>{{this.currentPrice}} VND</li>
+                                    {{#if this.highestBidder}}
+                                    <li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
+                                    {{/if}}
+                                </ul>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                                <h3>
+                                    <a href="/item/{{this.id}}" title="">{{this.name}}</a> 
+                                    {{#if this.new}}
+                                    <span class="badge">New</span>
+                                    {{/if}}
+                                </h3>
+                                <div style="max-height: 7.5em; overflow: hidden; text-overflow: ellipsis;">{{{this.description}}}</div>
+                            </div>
+                            <span class="clearfix borda"></span>
+                        </article>
+                        <hr>
+                        {{/each}}
+                        </div>
+                        {{#if this.info.isSelf}}
+                        <button type="button" onclick="ChangePwdButtonClick()" id="changepwdbtn"
+                                style="margin-bottom: 20px;">
+                            <a href="/create" style="color:white">Add product</a>
+                        </button>
                         {{/if}}
                         <form method="post">
                             <div class="productfield">

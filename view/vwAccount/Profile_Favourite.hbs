@@ -63,9 +63,11 @@
                         <a id="MenunotAtive" href="/account/point?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Reviews
                         </a>
+                        {{#if this.info.isSelf}}
                         <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Change password
                         </a>
+                        {{/if}}
                         <a href="javascript:window.location.reload(true)" class="list-group-item list-group-item-action active" aria-current="true">
                             Watch list
                         </a>
@@ -95,11 +97,11 @@
                                 <img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
                             </a>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-2">
+                        <div class="col-xs-12 col-sm-12 col-md-3">
                             <ul class="meta-search">
                                 <li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
                                 <li><i class="fa fa-tags"></i> {{this.category}}</li>
-                                <li>{{this.price}} VND</li>
+                                <li>{{this.currentPrice}} VND</li>
                                 {{#if this.highestBidder}}
                                 <li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
                                 {{/if}}

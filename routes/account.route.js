@@ -137,7 +137,7 @@ router.get('/fav',async(req,res)=>{
 
             for(let i=0;i<ids.length;i++){
                 watchItems.push(await item.getItem(ids[i]));
-                // watchItems[i]['mainImage']= await item.getMainImageUrl(ids[i]);
+                watchItems[i]['mainImage']= await item.getMainImageUrl(ids[i]);
             }
 
             info.downvoteCount=+info.totalVote-+info.upvoteCount;
@@ -215,7 +215,12 @@ router.get('/sell',async(req,res)=>{
                 return;
             }
             let items= await item.getItembySeller(req.query.username);
+
+            for(let i=0;i<items.length;i++){
+                items[i]['mainImage']= await item.getMainImageUrl(items[i].id);
+            }
             res.render('vwAccount/Profile_Sell',{info: info,item:items});
+
         }catch(err){
             console.log(err);
             res.render('vwError/404');
@@ -247,9 +252,22 @@ router.get('/bought', async(req,res)=>{
             else{
                 info.isSeller=false;
             }
-            info.downvoteCount=+info.totalVote-+info.upvoteCount;
-            res.render('vwAccount/Profile_Bought',{info: info});
-        }catch{
+
+            let items = await item.getAllItems(req.query.username);
+
+            items=items.filter(item=>{
+                if(item.buyer){
+                    return item.buyer===req.query.username
+                }
+            });
+
+            for(let i=0;i<items.length;i++){
+                items[i]['mainImage']= await item.getMainImageUrl(items[i].id);
+            }
+
+            res.render('vwAccount/Profile_Bought',{info: info, boughtItems: items});
+        }catch(err){
+            console.log(err);
             res.render('vwError/404');
         }
     }

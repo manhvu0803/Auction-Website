@@ -122,6 +122,16 @@ export default class itemModel
 
 	async getAllItems()
 	{
+		let snapshot = await this.itemsRef.get();
+		let res = [];
+		snapshot.forEach((doc) => {
+			res.push(parseItemDoc(doc));
+		});
+		return res;
+	}
+
+	async getAllValidItems()
+	{
 		let snapshot = await this.itemsRef.where("listing", "==", true).get();
 		let res = [];
 		snapshot.forEach((doc) => {
@@ -206,7 +216,7 @@ export default class itemModel
 
 	async getItembySeller(username)
 	{
-		let snapshot = await this.itemsRef.where("seller", "==", username).get();
+		let snapshot = await this.itemsRef.where("seller", "==", username).where("listing","==",true).get();
 		return snapshot.docs.map(doc => parseItemDoc(doc));
 	}
 

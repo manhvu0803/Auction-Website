@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     let votes= await item.getItemsByOrder("bidCount",'desc',4);
 
     for(let i=0;i<votes.length;i++){
-        // votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
+        votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
     }
 
     let data=[];

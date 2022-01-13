@@ -23,7 +23,7 @@ routeMdw(app);
 let port = process.env.PORT || 3000;
 
 // setInterval(async () => {
-//     let cart = await item.getAllItems();
+//     let cart = await item.getAllValidItems();
 //     cart.forEach(async (auctionItem) => {
 //         if( auctionItem.expireTime < Date.now())
 //         {

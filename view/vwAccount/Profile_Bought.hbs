@@ -58,9 +58,11 @@
                         <a id="MenunotAtive" href="/account/point?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Reviews
                         </a>
+                        {{#if this.info.isSelf}}
                         <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Change password
                         </a>
+                        {{/if}}
                         <a id="MenunotAtive" href="/account/fav?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Watch list
                         </a>

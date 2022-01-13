@@ -55,7 +55,7 @@
                                 {{#if authUser.isAdmin}}
                                 <li><a class="dropdown-item" href="/admin/manageuser">Manage users</a></li>
                                 <li><a class="dropdown-item" href="/admin/managecategory">Manage categories</a></li>
-                                {{else}}
+                                {{/if}}
                             </ul>
                         </div>
                     </div>
@@ -67,8 +67,9 @@
             </div>
         </div>
     </header>
-
-    {{{body}}}
+    <div>
+        {{{body}}}
+    </div>
     
     <footer class="bg-secondary" style="margin-top: 10em;">  
         <br>

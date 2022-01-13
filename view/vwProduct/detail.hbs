@@ -190,7 +190,7 @@
                     </div>
                     <div class="generalInf" style="display: inline-flex;">
                         <span>Price holder:</span>
-                        <p>{{this.highestBidder.user}}</p>
+                        <p class="name">{{this.highestBidder.user}}</p>
                     </div>
                     {{#if authUser.isOwner}}
                     {{else}}
@@ -258,10 +258,10 @@
                                 <td>
                                     {{#if ../this.authUser.isOwner}}
                                     <a href="/account?username={{this.user}}" style="text-decoration: none;">
-                                        {{this.user}}
+                                        <p class="name">{{this.user}}</p>
                                     </a>
                                     {{else}}
-                                    {{this.user}}
+                                        {{this.user}}
                                     {{/if}}
                                 </td>
                                 <td>{{this.amount}}</td>
@@ -298,3 +298,34 @@
         document.getElementById("editButtonDiv").hidden = true;
     }
 </script>
+
+
+{{#if authUser.isOwner}}
+{{else}}
+{{#if authUser.isAdmin}}
+{{else}}
+<script>
+    $(document).ready(()=>{
+        String.prototype.replaceAt = function(index, replacement) {
+        if (index >= this.length) {
+            return this.valueOf();
+        }
+
+        return this.substring(0, index) + replacement + this.substring(index + 1);
+        }
+        var censoredNames = document.getElementsByClassName("name")
+        for(let name of censoredNames)
+        {
+            let nameValue = name.innerHTML
+            for(let i = 0; i < nameValue.length; i++)
+            {
+                if(i%2){
+                    nameValue = nameValue.replaceAt(i, "*")
+                }
+            }
+            name.innerHTML = nameValue
+        }
+    })
+</script>
+{{/if}}
+{{/if}}

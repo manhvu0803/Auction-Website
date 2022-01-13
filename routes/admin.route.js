@@ -31,7 +31,18 @@ router.get('/manageuser', async (req, res) => {
 router.get('/managecategory', async (req, res) => {
     if(req.session.auth){
         if(req.session.authUser.isAdmin)
-            res.render('vwAdmin/category_edit')
+        {
+            const cats = await item.getAllCategories();
+            const names = cats.categories;
+            let data=[];
+            names.forEach(name=>{
+                data.push({
+                    name:name,
+                    subcat:cats[name]
+                })
+            })
+            res.render('vwAdmin/category_edit',{categories:data})
+        }
         else
             res.render('vwError/404')
     }

@@ -1,6 +1,6 @@
 import express from "express";
 import morgan from "morgan";
-import {item} from "./model/model.js";
+import {user,item} from "./model/model.js";
 import mailing from "./mail/mail.js";
 import viewMdw from "./middlewares/view.mdw.js";
 import sessionMdw from "./middlewares/session.mdw.js";
@@ -23,17 +23,23 @@ routeMdw(app);
 
 const port = 3000;
 
-// Delete item
 // setInterval(async () => {
 //     let cart = await item.getAllItems();
 //     cart.forEach(async (auctionItem) => {
 //         if( auctionItem.expireTime < Date.now())
 //         {
-//             console.log(auctionItem);
-//             await item.deleteItem(auctionItem.id);
+//             let seller = await user.getUser(auctionItem.seller);
+//             try{
+//                 let lastBidPerson = await user.getUser(item.finalizeBid(auctionItem.id,true));
+//                 mail.sendMail(seller.email, "Auction finish", "<h1>Your item has been sold to: <br>"+lastBidPerson.username+"<br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
+//                 mail.sendMail(lastBidPerson.email, "Bought success", "<h1>You bid <br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
+//             }
+//             catch{
+//                 mail.sendMail(seller.email, "Auction finish", "<h1>No one bought your item: <br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
+//             }
 //         }
 //     })
-// } , 5000);
+// } , 10000);
 
 app.listen(port,function(){
     console.log('Website running at localhost:'+port);

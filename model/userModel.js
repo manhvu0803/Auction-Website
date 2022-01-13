@@ -67,6 +67,20 @@ export default class userModel
 		return data;
 	}
 
+	async getAllUser()
+	{
+		let snapshot = await this.usersRef.get();
+
+		return snapshot.docs.map(doc => {
+			let data = doc.data();
+			for (let prop in data)
+				 if (data[prop] instanceof firestore.Timestamp) 
+					data[prop] = data[prop].toDate();
+			delete data.password;
+			return data;
+		})
+	}
+
 	async getEmail(username)
 	{
 		let userDoc = await this.usersRef.doc(username).get();

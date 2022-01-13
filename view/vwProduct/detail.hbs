@@ -260,7 +260,12 @@
                                 </td>
                                 <td>{{this.amount}}</td>
                                 {{#if ../this.authUser.isOwner}}
-                                <td><a href="{{../this.itemData.id}}/kick?username={{this.user}}"><button class="btn btn-danger">Kick</button></a></td>
+                                <td>
+                                    <a href="item/{{../this.itemData/id}}/kick?username={{this.user}}"><button class="btn btn-danger">Kick</button></a>
+                                    {{#if this.isWinner}}
+                                    <a href="account/{{../this.authUser.username}}/review/{{this.user}}"><button class="btn btn-success">Review</button></a>
+                                    {{/if}}
+                                </td>
                                 {{/if}}
                             </tr>
                         {{/each}}

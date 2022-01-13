@@ -21,7 +21,6 @@ router.get('/manageuser', async (req, res) => {
         if(req.session.authUser.isAdmin)
         {   
             let users= await user.getAllUser()
-            console.log(user)
             for(let i=0;i<users.length;i++){
                 users[i].upvoteRatio=users[i].totalVote==0?100:Math.floor(+users[i].upvoteCount/+users[i].totalVote)*100
             }

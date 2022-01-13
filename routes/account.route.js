@@ -353,11 +353,16 @@ router.get('/is-available', async (req, res) => {
     }
 })
 
+router.get('/upgrade', async (req,res)=>{
+    if(req.session.auth){
+        await user.updateInfo(req.session.authUser.username,{wantUpgrade: true});
+    }
+    res.redirect('/')
+})
+
 router.post('/signup', async (req, res) => {
     await user.newUser(req.body.username, req.body.password,  req.body.name, req.body.dob ,req.body.email, "bidder");
     res.redirect('/account/login');
 });
-
-router.get('/')
 
 export default router;

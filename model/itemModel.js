@@ -230,7 +230,7 @@ export default class itemModel
 
 	async getItembySeller(username)
 	{
-		let snapshot = await this.itemsRef.where("seller", "==", username).where("listing","==",true).get();
+		let snapshot = await this.itemsRef.where("seller", "==", username).get();
 		return snapshot.docs.map(doc => parseItemDoc(doc));
 	}
 

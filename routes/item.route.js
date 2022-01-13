@@ -10,7 +10,7 @@ router.post('/edit/:id',async(req,res)=>{
         let product = await item.getItem(proID);
         const date = moment().format('MM/DD/YYYY');
         product.description = product.description.concat(`<br><br><b>${date}</b><br>${req.body.description}`);
-        await item.update(proID, product);
+        await item.update(proID, {description:product.description});
         res.redirect('/item/'+proID)
     }catch(err){
         console.log(err);

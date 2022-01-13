@@ -159,23 +159,37 @@ export default class itemModel
 	 * @param {("postedTime")} order default "postedTime"
 	 * @returns {Promise<[item]>} array of items
 	 */
-	async getItemsByCategory(category, subcategory = null, count = 5, order = "postedTime")
+	async getItemsByCategory(category, subcategory = null,  start=null, count = 5,order = "postedTime")
 	{
 		let res = this.itemsRef
 						.where("listing", "==", true)
 						.where("category", "==", category);
-		
-		if (subcategory)
-			res = await res
-						.where("subcategory", "==", subcategory)
-						.orderBy(order)
-						.limit(count)
-						.get();
+		if(start)
+			if (subcategory)
+				res = await res
+							.where("subcategory", "==", subcategory)
+							.orderBy(order)
+							.limit(count)
+							.startAt(start)
+							.get();
+			else
+				res = await res
+							.orderBy(order)
+							.limit(count)
+							.startAt(start)
+							.get();
 		else
-			res = await res
-						.orderBy(order)
-						.limit(count)
-						.get();
+			if (subcategory)
+				res = await res
+							.where("subcategory", "==", subcategory)
+							.orderBy(order)
+							.limit(count)
+							.get();
+			else
+				res = await res
+							.orderBy(order)
+							.limit(count)
+							.get();
 
 		return res.docs.map(doc => parseItemDoc(doc));
 	}

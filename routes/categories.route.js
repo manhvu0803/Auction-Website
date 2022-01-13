@@ -29,13 +29,37 @@ router.get("/", async (req, res) => {
 
 
 router.get('/delete/:category', async (req, res) => {
-    console.log(3+req.body)
+    if(req.session.auth){
+        if(req.session.authUser.isAdmin)
+        {
+            await item.deleteCategory(req.params.category)
+            res.redirect('/admin/managecategory')
+        }
+        else
+            res.render('vwError/404')
+    }
+    else{
+        res.render('vwError/404')
+    }
 });
 router.get('/delete/:category/:subcategory', async (req, res) => {
-    console.log(4+req.body)
+    console.log(req.body.category);
+    if(req.session.auth){
+        if(req.session.authUser.isAdmin)
+        {
+            await item.deleteCategory(req.params.category,req.params.subcategory)
+            res.redirect('/admin/managecategory')
+        }
+        else
+            res.render('vwError/404')
+    }
+    else{
+        res.render('vwError/404')
+    }
 });
 
 router.post('/add', async (req, res) => {
+    console.log(req.body.category);
     if(req.session.auth){
         if(req.session.authUser.isAdmin)
         {

@@ -297,6 +297,11 @@ router.post('/login', async (req, res) => {
             else{
                 req.session.authUser.isSeller = false;
             }
+            if(req.session.authUser.type==='admin')
+                req.session.authUser.isAdmin = true;
+            else{
+                req.session.authUser.isAdmin = false;
+            }
             res.redirect('/');
         }
         else
@@ -319,7 +324,7 @@ router.get('/logout', (req, res) => {
 
 router.get('/signup', (req, res) => {
     if(req.session.auth){
-        res.redirect('/account/info');
+        res.redirect('/');
     }
     else{
         res.render('vwAccount/signup');

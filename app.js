@@ -20,8 +20,7 @@ localsMdw(app);
 viewMdw(app);
 routeMdw(app);
 
-
-const port = 3000;
+let port = process.env.PORT || 3000;
 
 // setInterval(async () => {
 //     let cart = await item.getAllItems();
@@ -42,6 +41,6 @@ const port = 3000;
 // } , 10000);
 
 app.listen(port,function(){
-    console.log('Website running at localhost:'+port);
+    console.log('Website running at : ' + port);
 })
 

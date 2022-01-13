@@ -2,7 +2,6 @@ import express from "express";
 import {user} from "../model/model.js";
 
 const router = express.Router();
-const account='';
 
 router.get('/', async (req,res)=>{
     if (req.query.username!==undefined){
@@ -36,8 +35,30 @@ router.get('/', async (req,res)=>{
         }
     }
     else{
-        
+        res.render('vwError/404');
     }
+})
+
+router.post('/edit', async (req,res)=>{
+    console.log(req.body);
+    const username=req.session.authUser.username
+    try{
+    await user.updateInfo(username,{
+        name: req.body.name,
+        dob: req.body.dob,
+    });
+        req.session.authUser = await user.getUser(username);
+        req.session.authUser.username = username;
+        req.session.authUser.minName=req.session.authUser.name.split(' ')[0];
+        if(req.session.authUser.type==='seller')
+            req.session.authUser.isSeller = true;
+        else{
+            req.session.authUser.isSeller = false;
+        }
+    }catch(err){
+        console.log(err);
+    }
+    res.redirect('/account?username='+username);
 })
 
 router.get('/change-pwd',async(req,res)=>{
@@ -68,6 +89,22 @@ router.get('/change-pwd',async(req,res)=>{
         }catch{
             res.render('vwError/404');
         }
+    }
+    else{
+        res.render('vwError/404');
+    }
+})
+
+router.post('/change-pwd',async(req,res)=>{
+    if (req.query.username!==undefined){
+        const username=req.session.authUser.username
+        if(user.checkPassword(username,req.body.password)){
+            await user.updateInfo(username,{
+                password: req.body.newPassword,
+            });
+            res.redirect('/account?username='+username);
+        }
+        else res.redirect('/change-pwd?username='+username,{alertMessage: 'Wrong password'});
     }
     else{
         res.render('vwError/404');

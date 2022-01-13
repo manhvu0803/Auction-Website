@@ -5,7 +5,7 @@
 </style>
 
 <div style="display: flex; justify-content: center">
-	<form style="margin: 2em 6em 2em 6em; width: 60%" method="post" enctype="multipart/form-data" id='createForm'>
+	<form style="margin: 2em 6em 2em 6em; width: 60%" method="post" id='createForm'>
 		<h4 style="margin-bottom: 2em;">Review for <a href="/account?username=`{{this.reviewedUser}}`">{{this.reviewedUser}}</a></h4>
 		
 		<div class="form-group" style="margin-bottom: 2em;">
@@ -16,13 +16,13 @@
 		<div style="margin-bottom: 2em;">
 			<h5>Vote</h5>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="vote" id="flexRadioDefault1" value="up" checked>
+				<input class="form-check-input" type="radio" name="vote1" id="flexRadioDefault1" value="up" checked>
 				<label class="form-check-label" for="flexRadioDefault1">
 					Upvote
 				</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="vote" id="flexRadioDefault2" value="down">
+				<input class="form-check-input" type="radio" name="vote2" id="flexRadioDefault2" value="down">
 				<label class="form-check-label" for="flexRadioDefault2">
 					Downvote
 				</label>

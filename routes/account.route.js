@@ -385,7 +385,7 @@ router.post('/:reviewer/review/:reviewed', async(req,res)=>{
     const reviewer = req.params.reviewer;
     const reviewed = req.params.reviewed;
     console.log(req.body);
-    res.redirect('/:reviewer/review/:reviewed');
+    res.redirect('/account/:reviewer/review/:reviewed');
 
 })
 

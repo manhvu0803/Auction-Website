@@ -1,7 +1,22 @@
 import express from "express";
+import moment from "moment";
 import { item } from "../model/model.js"
 
 const router = express.Router();
+
+router.post('/edit/:id',async(req,res)=>{
+    const proID = req.params.id;
+    try{
+        let product = await item.getItem(proID);
+        const date = moment().format('MM/DD/YYYY');
+        product.description = product.description.concat(`<br><br><b>${date}</b><br>${req.body.description}`);
+        await item.update(proID, product);
+        res.redirect('/item/'+proID)
+    }catch(err){
+        console.log(err);
+        res.render('vwError/500');
+    }
+})
 
 router.get('/:id', async (req, res) => {
     const proID = req.params.id;
@@ -54,6 +69,7 @@ router.post('/:id', async (req, res) => {
 router.get('/:id/kick', async (req, res) => {
     if (req.query.username!==undefined){
         await item.banBidder(req.params.id,req.query.username);
+        res.redirect('/item/'+req.params.id);
     }
     else{
         res.render('vwError/404');

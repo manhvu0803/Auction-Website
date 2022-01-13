@@ -12,7 +12,7 @@ try {
 }
 catch (e) {
 	console.error(e);
-	serviceAccount = process.env.SERVICE_ACCOUNT;
+	serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
 }
 
 const app = firebase.initializeApp({

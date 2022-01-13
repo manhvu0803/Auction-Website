@@ -323,7 +323,6 @@ export default class itemModel
 	{
 		let catRef = this.categoryRef.doc(category);
 		if (subcategories) {
-			console.log(subcategories);
 			let data = {};
 			for (let subcat of subcategories)
 				data[subcat] = null;

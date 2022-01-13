@@ -323,6 +323,7 @@ export default class itemModel
 	{
 		let catRef = this.categoryRef.doc(category);
 		if (subcategories) {
+			console.log(subcategories);
 			let data = {};
 			for (let subcat of subcategories)
 				data[subcat] = null;
@@ -330,7 +331,7 @@ export default class itemModel
 			console.log(`Added ${subcategories.length} subcategories for category "${category}"`);
 		}
 		else {
-			await catRef.set();
+			await catRef.set({});
 			console.log(`Added category "${category}"`)
 		}
 	}

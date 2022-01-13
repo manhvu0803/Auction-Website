@@ -1,12 +1,13 @@
 import express from "express";
 import morgan from "morgan";
-import {item} from "./model/model.js";
+import {user,item} from "./model/model.js";
 import mailing from "./mail/mail.js";
 import viewMdw from "./middlewares/view.mdw.js";
 import sessionMdw from "./middlewares/session.mdw.js";
 import localsMdw from "./middlewares/locals.mdw.js";
 import routeMdw from "./middlewares/route.mdw.js";
 import asyncError from "express-async-errors";
+import { use } from "express/lib/router";
 
 const mail = new mailing();
 
@@ -23,17 +24,23 @@ routeMdw(app);
 
 const port = 3000;
 
-// Delete item
-// setInterval(async () => {
-//     let cart = await item.getAllItems();
-//     cart.forEach(async (auctionItem) => {
-//         if( auctionItem.expireTime < Date.now())
-//         {
-//             console.log(auctionItem);
-//             await item.deleteItem(auctionItem.id);
-//         }
-//     })
-// } , 5000);
+setInterval(async () => {
+    let cart = await item.getAllItems();
+    cart.forEach(async (auctionItem) => {
+        if( auctionItem.expireTime < Date.now())
+        {
+            let seller = await user.getUser(auctionItem.seller);
+            try{
+                let lastBidPerson = await use.getUser(item.finalizeBid(auctionItem.id,true));
+                mail.sendMail(seller.email, "Auction finish", "<h1>Your item has been sold to: <br>"+lastBidPerson.username+"<br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
+                mail.sendMail(lastBidPerson.email, "Bought success", "<h1>You bid <br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
+            }
+            catch{
+                mail.sendMail(seller.email, "Auction finish", "<h1>No one bought your item: <br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
+            }
+        }
+    })
+} , 10000);
 
 app.listen(port,function(){
     console.log('Website running at localhost:'+port);

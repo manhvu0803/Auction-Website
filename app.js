@@ -29,12 +29,13 @@ setInterval(async () => {
         {
             let seller = await user.getUser(auctionItem.seller);
             try{
-                let lastBidPerson = await user.getUser(item.finalizeBid(auctionItem.id,true));
-                mail.sendMail(seller.email, "Auction finish", "<h1>Your item has been sold to: <br>"+lastBidPerson.username+'<br>https://auctioner-hcmus.herokuapp.com/item/'+auctionItem.id+"/h1>");
-                mail.sendMail(lastBidPerson.email, "Bought success", "<h1>You bid <br>https://auctioner-hcmus.herokuapp.com/item/"+auctionItem.id+"/h1>");
+                let lastName = await item.finalizeBid(auctionItem.id,true)
+                let lastBidPerson = await user.getUser(lastName);
+                mail.sendMail(seller.email, "Auction finish", "<h1>Your item has been sold to: <br>"+lastBidPerson.username+'<br>https://auctioner-hcmus.herokuapp.com/item/'+auctionItem.id+"</h1>");
+                mail.sendMail(lastBidPerson.email, "Bought success", "<h1>You bid <br>https://auctioner-hcmus.herokuapp.com/item/"+auctionItem.id+"</h1>");
             }
             catch{
-                mail.sendMail(seller.email, "Auction finish", '<h1>No one bought your item: <br>https://auctioner-hcmus.herokuapp.com/item/'+auctionItem.id+"/h1>");
+                mail.sendMail(seller.email, "Auction finish", '<h1>No one bought your item: <br>https://auctioner-hcmus.herokuapp.com/item/'+auctionItem.id+"</h1>");
             }
         }
     })

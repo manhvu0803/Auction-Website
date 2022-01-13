@@ -195,6 +195,9 @@
                     {{#if authUser.isOwner}}
                     {{else}}
                         {{#if this.itemData.listing}}
+                            {{#if this.authUser.isOwner}}
+                            <div></div>
+                            {{else}}
                             <div class="biddingPart">
                                 <span>Your bid:</span>
                                 <form id="bidForm" method="post">
@@ -203,6 +206,7 @@
                                     <button type="submit" onclick="doubleCheck(event)">Bid</button>
                                 </form>
                             </div>
+                            {{/if}}
                         {{/if}}
                     {{/if}}
 

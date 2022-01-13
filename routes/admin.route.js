@@ -74,9 +74,9 @@ router.get('/delete/:username', async(req,res)=>{
         if(req.session.authUser.isAdmin)
         {
             const username=req.params.username
-            // await user.deleteUser(username)
             const account = await user.getUser(username);
             mail.sendMail(account.email, "Delete Account", "Your account"+username+"has beed deleted https://auctioner-hcmus.herokuapp.com/");
+            await user.deleteUser(username)
             res.redirect('/admin/manageuser')
         }
         else

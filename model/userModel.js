@@ -255,4 +255,10 @@ export default class userModel
 
 		return res;
 	}
+
+	async deleteUser(username){
+		await this.usersRef.doc(username).delete();
+		if (debug)
+			console.log(`Delete user ${username}`);
+	}
 }

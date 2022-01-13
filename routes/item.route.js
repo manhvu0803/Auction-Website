@@ -80,14 +80,18 @@ router.post('/:id', async (req, res) => {
 })
 
 router.get('/:id/kick', async (req, res) => {
-    if (req.query.username!==undefined){
-        const kickedUser = await user.getUser(req.query.username);
-        await item.banBidder(req.params.id,req.query.username);
-        mail.sendMail(kickedUser.email, "Kicked", "You have been banned from"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website!</h1>");
-        res.redirect('/item/'+req.params.id);
-    }
-    else{
-        res.render('vwError/404');
+    try{
+        if (req.query.username!==undefined){
+            const kickedUser = await user.getUser(req.query.username);
+            await item.banBidder(req.params.id,req.query.username);
+            mail.sendMail(kickedUser.email, "Kicked", "You have been banned from"+req.protocol + '://' + req.get('host') + req.originalUrl+"</br> on our website!</h1>");
+            res.redirect('/item/'+req.params.id);
+        }
+        else{
+            res.render('vwError/404');
+        }
+    }catch{
+        res.render('vwError/500');
     }
 })
 

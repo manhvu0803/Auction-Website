@@ -84,7 +84,7 @@ export class lunrIndex
 
 	update(itemId, item)
 	{
-		item = parseIndex(item);
+		let itemData = parseIndex(item);
 		itemData.id = itemId;
 		this.index.update(itemData)
 	}
@@ -494,6 +494,11 @@ export default class itemModel
 		return bids[0].user;
 	}
 
+	/**
+	 * Add a user to item's ban list. Delete their bid from database
+	 * @param {string} itemId 
+	 * @param {string} username 
+	 */
 	async banBidder(itemId, username)
 	{
 		let updateBan = this.itemsRef.doc(itemId).set({ 

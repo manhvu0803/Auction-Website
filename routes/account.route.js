@@ -332,13 +332,24 @@ router.get('/signup', (req, res) => {
 });
 
 router.get('/is-available', async (req, res) => {
-    const name  = req.query.user;
-    try{
-        const username = await user.getUser(name);
-        res.json(false);
-    }
-    catch{
-        return res.json(true)
+    if(req.query.user){
+        const name  = req.query.user;
+        try{
+            const username = await user.getUser(name);
+            return res.json(false);
+        }
+        catch{
+            return res.json(true)
+        }
+    }else{
+        const email  = req.query.email;
+        try{
+            let dump=await user.getUserByEmail(email);
+            return res.json(false);
+        }
+        catch{
+            return res.json(true)
+        }
     }
 })
 
@@ -346,5 +357,7 @@ router.post('/signup', async (req, res) => {
     await user.newUser(req.body.username, req.body.password,  req.body.name, req.body.dob ,req.body.email, "bidder");
     res.redirect('/account/login');
 });
+
+router.get('/')
 
 export default router;

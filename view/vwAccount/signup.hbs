@@ -141,7 +141,7 @@
                     </div>
                     <div class="input_field">
                         <label for="txtEmail">Email</label>
-                        <input type="text" id="txtEmail" name="email" required/>
+                        <input type="email" id="txtEmail" name="email" required/>
                     </div>
                 </div>
                 <div class="input_row">
@@ -194,7 +194,10 @@
             
             e.preventDefault();
 
+            console.log('hi');
+
             const username = $('#txtUsername').val();
+            const email = $('#txtEmail').val();
             const password = $('#txtPassword').val();
             const confirmpassword = $("#txtConfirm").val();
             if (password.length < 8) {
@@ -209,10 +212,18 @@
             $.getJSON('/account/is-available?user='+username,(data)=>{
                 console.log(data);
                 if(data==false){
-                    aleart('Username is already taken!');
+                    alert('Username is already taken!');
+                    return;
+                }
+            })
+            $.getJSON('/account/is-available?email='+email,(data)=>{
+                console.log(data);
+                if(data==false){
+                    alert('Email is already taken!');
+                    return;
                 }
                 else{
-                $('#formRegister').off('submit').submit();
+                    $('#formRegister').off('submit').submit();
                 }
             })
         });

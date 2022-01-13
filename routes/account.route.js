@@ -365,4 +365,28 @@ router.post('/signup', async (req, res) => {
     res.redirect('/account/login');
 });
 
+router.get('/:reviewer/review/:reviewed', async(req,res)=>{
+    if(req.session.auth){
+        if(req.session.authUser.username===req.params.reviewer){
+            const reviewer = req.params.reviewer;
+            const reviewed = req.params.reviewed;
+            console.log(req.body);
+            res.render('vwAccount/review',{reviewerUser:reviewer,reviewedUser:reviewed});
+        }else{
+            console.log(err);
+            res.render('vwError/404');
+        }
+    }
+    else{
+        res.render('vwError/404');
+    }
+})
+router.post('/:reviewer/review/:reviewed', async(req,res)=>{
+    const reviewer = req.params.reviewer;
+    const reviewed = req.params.reviewed;
+    console.log(req.body);
+    res.redirect('/:reviewer/review/:reviewed');
+
+})
+
 export default router;

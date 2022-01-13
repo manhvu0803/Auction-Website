@@ -23,11 +23,12 @@ router.get('/:id', async (req, res) => {
     try{
         const itemData = await item.getItem(proID);
         if(req.session.auth){
+            if(itemData.bannedUser!==undefined)
             if(itemData.bannedUser.includes(req.session.authUser.username)){
                 res.render('vwError/404');
                 return;
             }
-            else req.session.authUser.isOwner = itemData.seller == req.session.authUser.username;
+            req.session.authUser.isOwner = itemData.seller == req.session.authUser.username;
         }
         const mainImage = await item.getMainImageUrl(proID);
         const images = await item.getExtraImageUrls(proID);

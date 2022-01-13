@@ -258,7 +258,7 @@
                                 </td>
                                 <td>{{this.amount}}</td>
                                 {{#if ../this.authUser.isOwner}}
-                                <td><a href="item/kick?username={{this.user}}"><button class="btn btn-danger">Kick</button></a></td>
+                                <td><a href="item/{{../this.itemData/id}}/kick?username={{this.user}}"><button class="btn btn-danger">Kick</button></a></td>
                                 {{/if}}
                             </tr>
                         {{/each}}

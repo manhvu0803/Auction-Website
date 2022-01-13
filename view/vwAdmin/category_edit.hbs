@@ -50,10 +50,10 @@
 
 <ul class="list-group container">
 	{{#each categories}}
-	<li class="list-group-item row">
-		<span class="col-lg-10"><strong style="font-size: larger;">{{this.name}}</strong></span>
+	<li class="list-group-item form-row">
+		<span class="col-lg-10" style="display: inline-block"><strong style="font-size: larger;">{{this.name}}</strong></span>
 		<span class="button-group col-lg-2">
-			<span class="col-md-1">
+			<span class="col-md-1" style="margin-left: 0.5%">
 				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#model-{{this.name}}">
 					Edit
 				</button>
@@ -74,13 +74,15 @@
 		</li>
 		{{/each}}
 		<form action="/categories/add/{{this.name}}" class="list-group-item form-row" style="display: flex;" method="post">
-			<input required name="subcategory" type="text" class="form-control" placeholder="New subcategory" style="max-width: 93%;">
+			<input required name="subcategory" type="text" class="form-control" placeholder="New subcategory"
+                   style="max-width: 87.3%; margin-right: 1%">
 			<button class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
 		</form>
 	</ul>
 	{{/each}}
 	<form action="/categories/add" class="list-group-item form-row" style="display: flex;" method="post">
-		<input required name="category" type="text" class="form-control" placeholder="New category" style="max-width: 93%; font-size: larger;">
+		<input required name="category" type="text" class="form-control" placeholder="New category"
+               style="max-width: 87.6%; font-size: larger; margin-right: 1%">
 		<button class="btn btn-primary">Add <i class="fa fa-plus"></i></button>
 	</form>
 </ul>

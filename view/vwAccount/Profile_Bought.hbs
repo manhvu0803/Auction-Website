@@ -61,8 +61,11 @@
                         <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
                             Change password
                         </a>
+                        <a id="MenunotAtive" href="/account/fav?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                            Watch list
+                        </a>
                         <a href="javascript:window.location.reload(true)" class="list-group-item list-group-item-action active" aria-current="true">
-                            Favourite & Won products
+                            Won item
                         </a>
                         {{#if this.info.isSeller}}
                             <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">
@@ -75,9 +78,38 @@
             <div class="col-sm-9 mb-3">
                 <div class="card">
                     <h4 class="card-header">
-                        Your favourite and won producrs
+                        Your watch list
                     </h4>
-                    
+                    {{#each boughtItems}}
+                    <article class="search-result row">
+                        <div class="col-xs-12 col-sm-12 col-lg-2">
+                            <a href="/item/{{this.id}}" title="main image" class="thumbnail">
+                                <img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <ul class="meta-search">
+                                <li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
+                                <li><i class="fa fa-tags"></i> {{this.category}}</li>
+                                <li>{{this.price}} VND</li>
+                                {{#if this.highestBidder}}
+                                <li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                            <h3>
+                                <a href="/item/{{this.id}}" title="">{{this.name}}</a> 
+                                {{#if this.new}}
+                                <span class="badge">New</span>
+                                {{/if}}
+                            </h3>
+                            <div style="max-height: 7.5em; overflow: hidden; text-overflow: ellipsis;">{{{this.description}}}</div>
+                        </div>
+                        <span class="clearfix borda"></span>
+                    </article>
+                    <hr>
+                    {{/each}}
                 </div>
             </div>
         </div>

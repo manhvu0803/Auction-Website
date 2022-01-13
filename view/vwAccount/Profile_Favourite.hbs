@@ -1,0 +1,117 @@
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding-right: 0;
+            background: linear-gradient(135deg, #71b7e6, #69a6ce,#b98acc) repeat fixed;
+            height: 100vh;
+        }
+        .box{
+            position: absolute;
+            padding-left: 40px; padding-right: 40px;
+            left: 15.5%;
+            width: 70%; height: 90%;
+            background: white;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        }
+        #MenunotAtive:hover{
+            background: rgb(231, 231, 231);
+        }
+        form #input_field{
+            align-items: center;
+        }
+        #input_field input{
+            height: 40px;
+            padding-left: 10px; padding-right: 10px;
+            font-size: 17px;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid silver;
+        }
+        #input_field input:focus{
+            border-color: lightskyblue;
+            border-width: 2px;
+            border-bottom-width: 3px;
+        }
+        #changepwdbtn{
+            border-radius: 10px; border: none; 
+            background: #384aeb; color: white;
+            font-weight: 500;
+            width: 25%; height: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="box">
+        <div class="row mt-5">
+            <div class="col-sm-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Profile menu
+                    </h4>
+                <div class="list-group list-group-flush">
+                    <a id="MenunotAtive" href="/account?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                            Information
+                        </a>
+                        <a id="MenunotAtive" href="/account/point?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                            Reviews
+                        </a>
+                        <a id="MenunotAtive" href="/account/change-pwd?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                            Change password
+                        </a>
+                        <a href="javascript:window.location.reload(true)" class="list-group-item list-group-item-action active" aria-current="true">
+                            Watch list
+                        </a>
+                        <a id="MenunotAtive" href="/account/bought?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                            Won item
+                        </a>
+                        {{#if this.info.isSeller}}
+                            <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                                Selling
+                            </a>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 mb-3">
+                <div class="card">
+                    <h4 class="card-header">
+                        Your watch list
+                    </h4>
+                    {{#each watchItems}}
+                    <article class="search-result row">
+                        <div class="col-xs-12 col-sm-12 col-lg-2">
+                            <a href="/item/{{this.id}}" title="main image" class="thumbnail">
+                                <img class="thumbnail-image" src="{{this.mainImage}}" alt="main image" />
+                            </a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-2">
+                            <ul class="meta-search">
+                                <li><i class="fa fa-clock-o"></i> <span class="timer">{{this.expireTime}}</span></li>
+                                <li><i class="fa fa-tags"></i> {{this.category}}</li>
+                                <li>{{this.price}} VND</li>
+                                {{#if this.highestBidder}}
+                                <li><i class="fa fa-user-tag"></i>Holder: {{this.highestBidder}}</li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                            <h3>
+                                <a href="/item/{{this.id}}" title="">{{this.name}}</a> 
+                                {{#if this.new}}
+                                <span class="badge">New</span>
+                                {{/if}}
+                            </h3>
+                            <div style="max-height: 7.5em; overflow: hidden; text-overflow: ellipsis;">{{{this.description}}}</div>
+                        </div>
+                        <span class="clearfix borda"></span>
+                    </article>
+                    <hr>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

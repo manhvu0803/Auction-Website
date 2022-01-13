@@ -47,7 +47,10 @@
                             </a>
                         {{/if}}
                         <a id="MenunotAtive" href="/account/fav?username={{this.info.username}}" class="list-group-item list-group-item-action">
-                            Favourite & Won products
+                            Watch list
+                        </a>
+                        <a id="MenunotAtive" href="/account/bought?username={{this.info.username}}" class="list-group-item list-group-item-action">
+                            Won items
                         </a>
                         {{#if this.info.isSeller}}
                             <a id="MenunotAtive" href="/account/sell?username={{this.info.username}}" class="list-group-item list-group-item-action">

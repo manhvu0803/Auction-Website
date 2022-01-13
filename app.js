@@ -7,7 +7,6 @@ import sessionMdw from "./middlewares/session.mdw.js";
 import localsMdw from "./middlewares/locals.mdw.js";
 import routeMdw from "./middlewares/route.mdw.js";
 import asyncError from "express-async-errors";
-import { use } from "express/lib/router";
 
 const mail = new mailing();
 
@@ -31,7 +30,7 @@ setInterval(async () => {
         {
             let seller = await user.getUser(auctionItem.seller);
             try{
-                let lastBidPerson = await use.getUser(item.finalizeBid(auctionItem.id,true));
+                let lastBidPerson = await user.getUser(item.finalizeBid(auctionItem.id,true));
                 mail.sendMail(seller.email, "Auction finish", "<h1>Your item has been sold to: <br>"+lastBidPerson.username+"<br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
                 mail.sendMail(lastBidPerson.email, "Bought success", "<h1>You bid <br>"+req.protocol + '://' + req.get('host') +'item/'+auctionItem.id+"/h1>");
             }

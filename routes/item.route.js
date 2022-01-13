@@ -33,8 +33,8 @@ router.get('/:id', async (req, res) => {
             }
             req.session.authUser.isOwner = itemData.seller == req.session.authUser.username;
         }
-        const mainImage = await item.getMainImageUrl(proID);
-        const images = await item.getExtraImageUrls(proID);
+        // const mainImage = await item.getMainImageUrl(proID);
+        // const images = await item.getExtraImageUrls(proID);
         const pastBids = await item.getBid(proID,3);
         let highestBidder={};
         if(pastBids.length>0){
@@ -46,9 +46,9 @@ router.get('/:id', async (req, res) => {
         
         res.render('vwProduct/detail.hbs', {
             itemData,
-            mainImage,
-            images,
-            pluralImages: images.length >= 1,
+            // mainImage,
+            // images,
+            // pluralImages: images.length >= 1,
             pastBids,
             highestBidder,
     })}

@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
     let votes= await item.getItemsByOrder("bidCount",'desc',4);
 
     for(let i=0;i<votes.length;i++){
-        votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
+        // votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
     }
 
     let data=[];
@@ -29,7 +29,7 @@ router.get("/:category/:subcategory/:page", async (req, res) => {
     let itemDatas=await item.getItemsByCategory(req.params.category,req.params.subcategory);
     const end = itemDatas.length<5;
     for(let i=0;i<itemDatas.length;i++){
-        itemDatas[i].mainImage= await item.getMainImageUrl(itemDatas[i].id);
+        // itemDatas[i].mainImage= await item.getMainImageUrl(itemDatas[i].id);
     }
     const cats = await item.getAllCategories();
     const names = cats.categories;

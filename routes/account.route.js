@@ -137,7 +137,7 @@ router.get('/fav',async(req,res)=>{
 
             for(let i=0;i<ids.length;i++){
                 watchItems.push(await item.getItem(ids[i]));
-                watchItems[i]['mainImage']= await item.getMainImageUrl(ids[i]);
+                // watchItems[i]['mainImage']= await item.getMainImageUrl(ids[i]);
             }
 
             info.downvoteCount=+info.totalVote-+info.upvoteCount;
@@ -211,9 +211,44 @@ router.get('/sell',async(req,res)=>{
             }
             else{
                 info.isSeller=false;
+                res.render('vwError/404');
+                return;
+            }
+            let items= await item.getItembySeller(req.query.username);
+            res.render('vwAccount/Profile_Sell',{info: info,item:items});
+        }catch(err){
+            console.log(err);
+            res.render('vwError/404');
+        }
+    }
+    else{
+        res.render('vwError/404');
+    }
+})
+
+router.get('/bought', async(req,res)=>{
+    if (req.query.username!==undefined){
+        try{
+            let info = await user.getUser(req.query.username);
+            info.username=req.query.username;
+            if(req.session.auth){
+                if(req.session.authUser.username===req.query.username){
+                    info.isSelf=true;
+                }else{
+                    info.isSelf=false;
+                }
+            }
+            else{
+                info.isSelf=false;
+            }
+            if(info.type==='seller'){
+                info.isSeller=true;
+            }
+            else{
+                info.isSeller=false;
             }
             info.downvoteCount=+info.totalVote-+info.upvoteCount;
-            res.render('vwAccount/Profile_Sell',{info: info});
+            res.render('vwAccount/Profile_Bought',{info: info});
         }catch{
             res.render('vwError/404');
         }

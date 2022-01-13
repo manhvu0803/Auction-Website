@@ -14,21 +14,21 @@ export default function(app){
             return b.expireTime-a.expireTime;
         })
 
-        for(let i=0;i<almost.length;i++){
-            almost[i]['mainImage']= await item.getMainImageUrl(almost[i].id);
-        }
+        // for(let i=0;i<almost.length;i++){
+        //     almost[i]['mainImage']= await item.getMainImageUrl(almost[i].id);
+        // }
 
         let votes= await item.getItemsByOrder("bidCount",'desc');
 
-        for(let i=0;i<votes.length;i++){
-            votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
-        }
+        // for(let i=0;i<votes.length;i++){
+        //     votes[i]['mainImage']= await item.getMainImageUrl(votes[i].id);
+        // }
 
         let high= await item.getItemsByOrder("currentPrice",'desc')
 
-        for(let i=0;i<high.length;i++){
-            high[i]['mainImage']= await item.getMainImageUrl(high[i].id);
-        }
+        // for(let i=0;i<high.length;i++){
+        //     high[i]['mainImage']= await item.getMainImageUrl(high[i].id);
+        // }
 
         res.render("home", { items: {
             almostFinish: almost,
@@ -50,7 +50,7 @@ export default function(app){
         let data = [];
         for(let i = 0; i < idList.length; i++){
             data.push(await item.getItem(idList[i]));
-            data[i]['mainImage']= await item.getMainImageUrl(data[i].id);
+            // data[i]['mainImage']= await item.getMainImageUrl(data[i].id);
             const highestBidder = await item.getBid(data[i].id,1);
             if(highestBidder.length>0){
                 data[i].price = highestBidder[0].amount;

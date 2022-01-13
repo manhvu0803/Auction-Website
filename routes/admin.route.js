@@ -19,7 +19,14 @@ router.get('/', async (req, res) => {
 router.get('/manageuser', async (req, res) => {
     if(req.session.auth){
         if(req.session.authUser.isAdmin)
-            res.render('vwAdmin/user_list')
+        {   
+            let users= await user.getAllUser()
+            console.log(user)
+            for(let i=0;i<users.length;i++){
+                users[i].upvoteRatio=users[i].totalVote==0?100:Math.floor(+users[i].upvoteCount/+users[i].totalVote)*100
+            }
+            res.render('vwAdmin/user_list',{users:users})
+        }
         else
             res.render('vwError/404')
     }
@@ -56,13 +63,15 @@ router.post('/categories/edit/:categories', async (req, res) => {
         if(req.session.authUser.isAdmin)
         {
             const oldCat = req.params.categories;
-            const subcat = await item.getSubcategories(oldCat);
+            const cats = await item.getAllCategories();
+            const subcat = cats[oldCat];
             await item.deleteCategory(oldCat);
             await item.addCategory(req.body.category,subcat);
 
             const items=await item.getAllItems();
             for(let i=0;i<items.length;i++){
-                await item.update(items[i].id,{category:req.body.category});
+                if(items[i].category==oldCat)
+                    await item.update(items[i].id,{category:req.body.category});
             }
 
             res.redirect('/admin/managecategory')
@@ -85,7 +94,8 @@ router.post('/categories/edit/:categories/:subcategories', async (req, res) => {
             await item.addCategory(cat,req.body.subcategory);
             const items=await item.getAllItems();
             for(let i=0;i<items.length;i++){
-                await item.update(items[i].id,{category:req.body.subcategory});
+                if(items[i].subcategory==oldSubCat)
+                await item.update(items[i].id,{subcategory:req.body.subcategory});
             }
             res.redirect('/admin/managecategory')
         }

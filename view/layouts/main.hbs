@@ -48,7 +48,7 @@
                                     <li><a class="dropdown-item" href="/create">New auction</a></li>
                                 {{else}}
                                     {{#if authUser.isAdmin}}
-                                    <span> </span>
+                                    <li><a class="dropdown-item" href="/create">New auction</a></li>
                                     {{else}}
                                     <li><a class="dropdown-item" href="/account/upgrade">Upgrade to seller</a></li>
                                     {{/if}}

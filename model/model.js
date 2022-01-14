@@ -7,21 +7,28 @@ import userModel from "./userModel.js";
 import itemModel from "./itemModel.js"
 
 let serviceAccount;
+let serviceAccountStorage
 try {
 	serviceAccount = JSON.parse(fs.readFileSync("model/serviceAccountKey.json"));
+	serviceAccountStorage = JSON.parse(fs.readFileSync("model/serviceAccountStorage.json"));
 }
 catch (e) {
 	console.error(e);
 	serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
+	serviceAccountStorage = JSON.parse(process.env.SERVICE_ACCOUNT_STORAGE);
 }
 
 const app = firebase.initializeApp({
 	credential: firebase.cert(serviceAccount),
 	storageBucket: "auction-database-db506.appspot.com",
-	databaseURL: "https://auction-database-db506-default-rtdb.firebaseio.com"
 });
 
-const bucket = getStorage().bucket();
+const appStorage = firebase.initializeApp({
+	credential: firebase.cert(serviceAccountStorage),
+	storageBucket: "testdatabase-ff1d7.appspot.com",
+});
+
+const bucket = getStorage(appStorage).bucket();
 bucket.exists().then((res) => {
 	if (res[0]) 
 		console.log("Connected to bucket")

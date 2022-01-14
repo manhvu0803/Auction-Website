@@ -26,7 +26,7 @@ const app = firebase.initializeApp({
 const appStorage = firebase.initializeApp({
 	credential: firebase.cert(serviceAccountStorage),
 	storageBucket: "testdatabase-ff1d7.appspot.com",
-});
+}, "storage");
 
 const bucket = getStorage(appStorage).bucket();
 bucket.exists().then((res) => {

@@ -12,7 +12,6 @@ export default class mailing{
             service: 'gmail',
             auth: {
               user: email,
-              pass: 'NNT22102001'
             },
             tls: {
                 rejectUnauthorized: false
